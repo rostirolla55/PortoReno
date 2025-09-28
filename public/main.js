@@ -17,11 +17,16 @@ const getCurrentPageId = () => {
     const path = window.location.pathname;
     const fileName = path.substring(path.lastIndexOf('/') + 1);
 
-    if (fileName === '' || fileName === 'index.html') {
+    // 1. Rimuove il suffisso di lingua e l'estensione (es. 'index-fr.html' diventa 'index')
+    let baseId = fileName.replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
+
+    // 2. Se il file è vuoto o 'index', lo tratta come 'home'
+    if (baseId === '' || baseId === 'index') {
         return 'home';
     }
-    // Rimuove l'estensione e qualsiasi suffisso di lingua (-en, -fr, ecc.)
-    return fileName.replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
+    
+    // 3. Restituisce l'ID base (es. 'pugliole', 'lastre', ecc.)
+    return baseId;
 };
 
 // Funzione flessibile per aggiornare il contenuto solo se l'elemento esiste
