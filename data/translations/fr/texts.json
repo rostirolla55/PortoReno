@@ -35,6 +35,12 @@
         "pauseAudioButton": "Pause",
         "audioSource": "Assets/Audio/it/Lastre.mp3"
     },
+    "nav": {
+        "navHome": "Bienvenue",
+        "navAneddoti": "Anecdotes et curiosités",
+        "navLastre": "Numéros de maison sur dalles de grès",
+        "navPugliole": "Les pugliole"
+    },
     "aneddoti": {
         "pageTitle": "Anecdotes et curiosités",
         "mainText": "Bologne se dévoile avec ses monuments chargés d'histoire, des États pontificaux à Napoléon, des Bentivoglio à Renzo. Le quadrilatère est une zone du centre historique délimitée au nord par la Via del Porto, au sud par la Via di Riva Reno, à l'ouest par la Via Polese et à l'est par la Via San Carlo. À l'intérieur, des portiques ornent les murs d'objets d'époque. ",

@@ -11,6 +11,12 @@
     "pauseAudioButton": "Metti in pausa",
     "audioSource": "Assets/Audio/it/Home_Bologna.mp3"
   },
+  "nav": {
+    "navHome": "Benvenuto",
+    "navAneddoti": "Aneddoti e Curiosita'",
+    "navLastre": "Numeri civici su lastre in arenaria",
+    "navPugliole": "Le pugliole"
+  }, ,
   "pugliole": {
     "pageTitle": "Le Pugliole",
     "mainText": "Esisteva una via a Bologna che si chiamava \"Pugliole di San Bernardino\".Questa strada è scomparsa a seguito degli interventi urbanistici degli anni '30 del XX secolo che portarono alla creazione di via Guglielmo Marconi (allora via Roma).",

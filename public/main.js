@@ -39,15 +39,15 @@ const updateTextContent = (id, value) => {
 // Calcola la distanza tra due coordinate (Formula di Haversine)
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371e3; // Raggio della terra in metri
-    const φ1 = lat1 * Math.PI/180; 
-    const φ2 = lat2 * Math.PI/180;
-    const Δφ = (lat2-lat1) * Math.PI/180;
-    const Δλ = (lon2-lon1) * Math.PI/180;
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
 
-    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-              Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ/2) * Math.sin(Δλ/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c; // Distanza in metri
 };
@@ -56,25 +56,25 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 const checkProximity = (position) => {
     const userLat = position.coords.latitude;
     const userLon = position.coords.longitude;
-    const userLang = document.documentElement.lang || 'it'; 
+    const userLang = document.documentElement.lang || 'it';
 
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
 
         if (distance <= location.distanceThreshold) {
             console.log(`Vicino a ${location.id}! Distanza: ${distance.toFixed(1)}m`);
-            
+
             const currentPath = window.location.pathname;
             let targetPage = `${location.id}.html`;
-            
+
             if (userLang !== 'it') {
                 targetPage = `${location.id}-${userLang}.html`;
             }
-            
+
             if (!currentPath.includes(targetPage)) {
                 window.location.href = targetPage;
             }
-            return; 
+            return;
         }
     }
 };
@@ -89,8 +89,8 @@ const startGeolocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(checkProximity, handleGeolocationError, {
             enableHighAccuracy: true,
-            timeout: 5000,           
-            maximumAge: 0             
+            timeout: 5000,
+            maximumAge: 0
         });
         console.log("Monitoraggio GPS avviato.");
     } else {
@@ -137,7 +137,7 @@ const setLanguage = async (lang) => {
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
     }
-    
+
     // 🚀 FIX CRUCIALE: Salva e imposta la lingua immediatamente, prima del fetch
     localStorage.setItem('userLanguage', lang);
     document.documentElement.lang = lang;
@@ -147,42 +147,57 @@ const setLanguage = async (lang) => {
 
         // fetch su JSON (Qui può avvenire l'errore se il file non esiste o è vuoto)
         const response = await fetch(`data/translations/${lang}/texts.json`);
-        
+
         if (!response.ok) {
             // Se il file JSON non è raggiungibile (es. 404), lanciamo un errore
             throw new Error(`File di traduzione non trovato per la lingua: ${lang}`);
         }
-        
-        const translations = await response.json();
-        const data = translations[pageId];
 
-        if (!data) {
-             // ⚠️ L'ERRORE VERO: Se il JSON è vuoto o manca l'ID della pagina, 'data' è nullo
-             console.error(`Dati non trovati per la pagina: ${pageId} nella lingua: ${lang}. Verifica il file texts.json.`);
-             // Se i dati non ci sono, impostiamo un testo di errore e ci fermiamo.
-             updateTextContent('pageTitle', `[ERRORE] Testi ${lang} non trovati per questa pagina.`);
-             return;
+        // Recuperiamo TUTTI i dati del JSON
+        const data = await response.json(); 
+        
+        // Estraiamo i dati specifici della pagina corrente (es. 'home' o 'arco119')
+        const pageData = data[pageId]; 
+        
+        // ===============================================
+        // 🔥 NUOVO BLOCCO: AGGIORNA LA NAVIGAZIONE (MENU)
+        // ===============================================
+        if (data.nav) {
+            updateTextContent('navHome', data.nav.navHome);
+            updateTextContent('navAneddoti', data.nav.navAneddoti);
+            updateTextContent('navLastre', data.nav.navLastre);
+            updateTextContent('navPugliole', data.nav.navPugliole);
+            // AGGIUNGI QUI LE ALTRE VOCI DEL MENU SE NECESSARIO
+        }
+        // ===============================================
+
+        if (!pageData) {
+            // ⚠️ L'ERRORE VERO: Se il JSON è vuoto o manca l'ID della pagina, 'data' è nullo
+            console.error(`Dati non trovati per la pagina: ${pageId} nella lingua: ${lang}. Verifica il file texts.json.`);
+            updateTextContent('pageTitle', `[ERRORE] Testi ${lang} non trovati per questa pagina.`);
+            return;
         }
 
         // AGGIORNAMENTO DEL CONTENUTO (Questi sono i tuoi aggiornamenti)
-        updateTextContent('pageTitle', data.pageTitle);
-        updateTextContent('mainText', data.mainText);
-        updateTextContent('mainText1', data.mainText1); 
-        updateTextContent('mainText2', data.mainText2); 
-        updateTextContent('mainText3', data.mainText3); 
-        updateTextContent('mainText4', data.mainText4); 
-        updateTextContent('mainText5', data.mainText5); 
+        // Usiamo pageData perché contiene solo i dati della pagina corrente
+        updateTextContent('pageTitle', pageData.pageTitle);
+        updateTextContent('mainText', pageData.mainText);
+        updateTextContent('mainText1', pageData.mainText1);
+        updateTextContent('mainText2', pageData.mainText2);
+        updateTextContent('mainText3', pageData.mainText3);
+        updateTextContent('mainText4', pageData.mainText4);
+        updateTextContent('mainText5', pageData.mainText5);
 
-        updateTextContent('playAudio', data.playAudioButton);
+        updateTextContent('playAudio', pageData.playAudioButton);
 
         if (audioPlayer) {
-            audioPlayer.src = data.audioSource;
+            audioPlayer.src = pageData.audioSource;
         }
 
         if (playButton) {
             // SALVA I TESTI PLAY/PAUSE
-            playButton.dataset.playText = data.playAudioButton;
-            playButton.dataset.pauseText = data.pauseAudioButton;
+            playButton.dataset.playText = pageData.playAudioButton;
+            playButton.dataset.pauseText = pageData.pauseAudioButton;
 
             // APPLICA LO STILE INIZIALE CORRETTO (BLU)
             playButton.classList.remove('pause-style');
@@ -230,7 +245,7 @@ window.onload = () => {
     // Carica la lingua salvata, altrimenti usa 'it'
     const savedLang = localStorage.getItem('userLanguage') || 'it';
     setLanguage(savedLang);
-    
+
     // AVVIA IL MONITORAGGIO GPS
     startGeolocation();
 };
