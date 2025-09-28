@@ -11,6 +11,12 @@
         "pauseAudioButton": "Pausa",
         "audioSource": "Assets/Audio/es/Home_Bologna.mp3"
     },
+    "nav": {
+        "navHome": "Bienvenidos",
+        "navAneddoti": "Anécdotas y curiosidades",
+        "navLastre": "Números de casas en losas de arenisca",
+        "navPugliole": "Las pugliole"
+    },
     "pugliole": {
         "pageTitle": "Le Pugliole",
         "mainText": "Había una calle en Bologna llamada \"Pugliole di San Bernardino\". Esta calle desapareció tras las intervenciones urbanísticas de la década de 1930 que dieron lugar a la creación de la Via Guglielmo Marconi (entonces Via Roma).",

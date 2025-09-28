@@ -11,9 +11,15 @@
         "pauseAudioButton": "Pause",
         "audioSource": "Assets/Audio/fr/Home_Bologna.mp3"
     },
+    "nav": {
+        "navHome": "Bienvenue",
+        "navAneddoti": "Anecdotes et curiosités",
+        "navLastre": "Numéros de maison sur dalles de grès",
+        "navPugliole": "Les pugliole"
+    },
     "pugliole": {
         "pageTitle": "Le Pugliole",
-        "mainText": "Il existait à Bologne une rue appelée \"Pugliole di San Bernardino\". Cette rue a disparu suite aux interventions urbanistiques des années 1930 qui ont conduit à la création de la Via Guglielmo Marconi (alors Via Roma).",
+        "mainText": "Il existait à Bologna une rue appelée \"Pugliole di San Bernardino\". Cette rue a disparu suite aux interventions urbanistiques des années 1930 qui ont conduit à la création de la Via Guglielmo Marconi (alors Via Roma).",
         "mainText1": "Les \"Pugliole di San Bernardino\" tirent leur nom du monastère ou couvent de San Bernardino, situé dans le quartier de l'actuelle Piazza dei Martiri de 1943 à 1945. La rue bifurquait de Borgo Polese (aujourd'hui Via Polese) et serpentait jusqu'à la Via del Porto, suivant en partie le tracé actuel de la Via Marconi.",
         "mainText2": "Le terme \"Pugliola\" (ou, au pluriel, \"Pugliole\") est un terme ancien de la toponymie bolonaise. Il désigne une ruelle, une rue étroite ou un petit groupe de maisons. Il désignait généralement une rue de petite taille ou un quartier résidentiel secondaire, souvent issu d'une ancienne subdivision urbaine. tissu.",
         "mainText3": "De nombreuses rues et ruelles de Bologne, comme les « Pugliole di San Bernardino » ou les « Pugliole dello Spirito Santo », tirent leur nom d'églises ou de monastères voisins, combinant le nom de l'institution religieuse avec le terme « pugliola » pour indiquer la ruelle adjacente.",
@@ -34,12 +40,6 @@
         "playAudioButton": "Écouter l'histoire",
         "pauseAudioButton": "Pause",
         "audioSource": "Assets/Audio/it/Lastre.mp3"
-    },
-    "nav": {
-        "navHome": "Bienvenue",
-        "navAneddoti": "Anecdotes et curiosités",
-        "navLastre": "Numéros de maison sur dalles de grès",
-        "navPugliole": "Les pugliole"
     },
     "aneddoti": {
         "pageTitle": "Anecdotes et curiosités",
