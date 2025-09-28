@@ -1,7 +1,7 @@
 {
     "home": {
-        "pageTitle": "Bienvenido a Bolonia",
-        "mainText": "Bienvenido al sitio que habla de Bolonia con un enfoque curioso y no necesariamente didáctico. Te transportamos al pasado según el lugar donde te detengas y encontrarás un código QR que te permite acceder a una página que puedes leer o escuchar. Arriba hay una lista de páginas, pero para que te sea más fácil reconocer el tema, he incluido un breve resumen a continuación. Hay números en ciertas calles de la ciudad grabados en losas de arenisca; descubre por qué.",
+        "pageTitle": "Bienvenido a Bologna",
+        "mainText": "Bienvenido al sitio que habla de Bologna con un enfoque curioso y no necesariamente didáctico. Te transportamos al pasado según el lugar donde te detengas y encontrarás un código QR que te permite acceder a una página que puedes leer o escuchar. Arriba hay una lista de páginas, pero para que te sea más fácil reconocer el tema, he incluido un breve resumen a continuación. Hay números en ciertas calles de la ciudad grabados en losas de arenisca; descubre por qué.",
         "mainText1": "",
         "mainText2": "",
         "mainText3": "",
@@ -13,10 +13,10 @@
     },
     "pugliole": {
         "pageTitle": "Le Pugliole",
-        "mainText": "Había una calle en Bolonia llamada \"Pugliole di San Bernardino\". Esta calle desapareció tras las intervenciones urbanísticas de la década de 1930 que dieron lugar a la creación de la Via Guglielmo Marconi (entonces Via Roma).",
+        "mainText": "Había una calle en Bologna llamada \"Pugliole di San Bernardino\". Esta calle desapareció tras las intervenciones urbanísticas de la década de 1930 que dieron lugar a la creación de la Via Guglielmo Marconi (entonces Via Roma).",
         "mainText1": "Las \"Pugliole di San Bernardino\" tomaron su nombre del Monasterio o Convento de San Bernardino, que estuvo ubicado en la zona de la actual Piazza dei Martiri de 1943 a 1945. La calle se bifurcaba desde Borgo Polese (ahora Via Polese) y serpenteaba hasta Via del Porto, siguiendo en parte el trazado actual de Via Marconi.",
         "mainText2": "El término \"Pugliola\" (o, en plural, \"Pugliole\") es un término antiguo de la toponimia boloñesa. Se refiere a un callejón, una calle estrecha o un pequeño grupo de casas. Generalmente indicaba una calle de pequeño tamaño o una zona residencial secundaria, a menudo derivada de una antigua Subdivisión del tejido urbano.",
-        "mainText3": "Muchas calles y callejones de Bolonia, como \"Pugliole di San Bernardino\" o \"Pugliole dello Spirito Santo\", tomaron sus nombres de iglesias o monasterios cercanos, combinando el nombre de la institución religiosa con el término \"pugliola\" para indicar el callejón adyacente.",
+        "mainText3": "Muchas calles y callejones de Bologna, como \"Pugliole di San Bernardino\" o \"Pugliole dello Spirito Santo\", tomaron sus nombres de iglesias o monasterios cercanos, combinando el nombre de la institución religiosa con el término \"pugliola\" para indicar el callejón adyacente.",
         "mainText4": "",
         "mainText5": "",
         "playAudioButton": "Escucha la historia",
@@ -25,8 +25,8 @@
     },
     "lastre": {
         "pageTitle": "Las losas y los números",
-        "mainText": "En Bolonia, se pueden encontrar losas de arenisca en varias calles del centro histórico que no son solo decorativas, sino que tienen un significado histórico muy interesante.",
-        "mainText1": "Estos son los números. Los números de calle más antiguos de la ciudad. Se introdujeron a finales del Siglo XVIII, cuando Bolonia estaba bajo dominio napoleónico, para organizar mejor el servicio postal y la administración de la ciudad.",
+        "mainText": "En Bologna, se pueden encontrar losas de arenisca en varias calles del centro histórico que no son solo decorativas, sino que tienen un significado histórico muy interesante.",
+        "mainText1": "Estos son los números. Los números de calle más antiguos de la ciudad. Se introdujeron a finales del Siglo XVIII, cuando Bologna estaba bajo dominio napoleónico, para organizar mejor el servicio postal y la administración de la ciudad.",
         "mainText2": "Antes, las casas no tenían números, y la gente a veces se orientaba por la descripción de la fachada o el nombre de la familia que vivía allí. Las baldosas de arenisca, que aún se encuentran hoy en día, son un testimonio de este cambio.",
         "mainText3": "Muchas de las que se ven son de terracota y se fabricaron a lo largo de los siglos, a veces reemplazando las originales. Si bien las baldosas de terracota eran más fáciles de producir en masa, el grabado en la piedra era una artesanía que demuestra la importancia y la durabilidad que se pretendía dar a estas señales urbanas.",
         "mainText4": "La presencia de estos números de arenisca es un testimonio tangible de la evolución de la ciudad y de los materiales tradicionales utilizados a lo largo de los siglos.",
