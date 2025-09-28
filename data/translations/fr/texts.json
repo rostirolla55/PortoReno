@@ -1,0 +1,18 @@
+{
+    "home": {
+        "_indicazione01": "qui sotto riporta il titolo che compare in testa alla pagina",
+        "pageTitle": "Bienvenue aux portiques de San Luca",
+        "_indicazione02": "il testo che viene riporatato nella pagina puo' essere suddiviso nelle 6 chiavi qui sotto",
+        "mainText": "Vous êtes arrivé à un lieu célèbre dans le monde entier, qui est le portique qui relie le centre de la ville de Bologne à la Basilique de San Luca sur la colline de la Guardia.",
+        "mainText1": " ",
+        "mainText2": " ",
+        "mainText3": " ",
+        "mainText4": " ",
+        "mainText5": "Écoutez l'audio en français!",
+        "_indicazione03": " le due chiavi successive sono per il bottone dell'audio, non devono essere modificate!",
+        "playAudioButton": "Écoutez l'audio en français!",
+        "pauseAudioButton": "Pause",
+        "_indicazione04": " inserire il nome file audio in formato mp3; in assenza dell'audio usare un mp3 di musica",
+        "audioSource": "Assets/Audio/fr/Home_Bologna.mp3"
+    }
+}

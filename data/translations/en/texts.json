@@ -1,0 +1,18 @@
+{
+  "home": {
+    "_indicazione01": "qui sotto riporta il titolo che compare in testa alla pagina",
+    "pageTitle": "Welcome to the Portici di San Luca",
+    "_indicazione02": "il testo che viene riportato nella pagina puo' essere suddiviso nelle 6 chiavi qui sotto",
+    "mainText":  "You have arrived at a world-famous place, the portico that connects the center of Bologna to the Basilica of San Luca on the Guardia hill.",
+    "mainText1": "", 
+    "mainText2": "",
+    "mainText3": "",
+    "mainText4": "",
+    "mainText5": "",
+    "_indicazione03": " le due chiavi successive sono per il bottone dell'audio, non devono essere modificate!",
+    "playAudioButton": "Listen to the audio in English!",
+    "pauseAudioButton": "Pause",
+    "_indicazione04": " inserire il nome file audio in formato mp3; in assenza dell'audio usare un mp3 di musica",
+    "audioSource": "Assets/Audio/en/Home_Bologna.mp3"
+  }
+}
