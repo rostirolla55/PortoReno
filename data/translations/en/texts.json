@@ -7,7 +7,7 @@
         "mainText3": " ",
         "mainText4": " ",
         "mainText5": " ",
-        "playAudioButton": "Listen to the audio in Italian!",
+        "playAudioButton": "Listen to the audio in English!",
         "pauseAudioButton": "Pause",
         "audioSource": "Assets/Audio/en/Home_Bologna.mp3"
     },
