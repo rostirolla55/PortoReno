@@ -9,7 +9,7 @@
         "mainText5": "",
         "playAudioButton": "Écoutez l'audio en italien !",
         "pauseAudioButton": "Pause",
-        "audioSource": "Assets/Audio/it/Home_Bologna.mp3"
+        "audioSource": "Assets/Audio/fr/Home_Bologna.mp3"
     },
     "pugliole": {
         "pageTitle": "Le Pugliole",
