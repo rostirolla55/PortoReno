@@ -9,7 +9,7 @@
         "mainText5": "",
         "playAudioButton": "Écoutez l'audio en italien !",
         "pauseAudioButton": "Pause",
-        "audioSource": "assets/audio/it/Home_Bologna.mp3"
+        "audioSource": "Asset/Audio/it/Home_Bologna.mp3"
     },
     "pugliole": {
         "pageTitle": "Le Pugliole",
@@ -21,7 +21,7 @@
         "mainText5": "",
         "playAudioButton": "Écouter l'histoire",
         "pauseAudioButton": "Pause",
-        "audioSource": "assets/audio/it/Pugliole.mp3"
+        "audioSource": "Asset/Audio/it/Pugliole.mp3"
     },
     "lastre": {
         "pageTitle": "Les dalles et les numéros",
@@ -33,7 +33,7 @@
         "mainText5": "Au numéro 11 de la Via Tanari Vecchia, on trouve la plaque en grès portant le numéro 1202 (numéro pair), tandis que le numéro actuel de la rue est le 11 (numéro impair), se trouvant à droite dans le sens de la numérotation croissante. Conformément à la réglementation toponymique en vigueur.",
         "playAudioButton": "Écouter l'histoire",
         "pauseAudioButton": "Pause",
-        "audioSource": "assets/audio/it/Lastre.mp3"
+        "audioSource": "Asset/Audio/it/Lastre.mp3"
     },
     "aneddoti": {
         "pageTitle": "Anecdotes et curiosités",
@@ -45,6 +45,6 @@
         "mainText5": "",
         "playAudioButton": "Écouter l'histoire Histoire",
         "pauseAudioButton": "Pause",
-        "audioSource": "assets/audio/it/Anecdotes.mp3"
+        "audioSource": "Asset/Audio/it/Anecdotes.mp3"
     }
 }
