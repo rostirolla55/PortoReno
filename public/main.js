@@ -6,9 +6,10 @@ const ARCO_LOCATIONS = [
     // L'ID deve corrispondere al nome del file HTML (es. 'arco119')
     // Esempio:
     // { id: 'arco119', lat: 44.4984, lon: 11.3392, distanceThreshold: 20 },
-    { id: 'lastre', // o l'ID della pagina a cui vuoi reindirizzare
-        lat: 44.49925278, 
-        lon: 11.34074444, 
+    {
+        id: 'lastre', // o l'ID della pagina a cui vuoi reindirizzare
+        lat: 44.49925278,
+        lon: 11.34074444,
         distanceThreshold: 20 // Distanza in metri (es. 20m) 
     }
 ];
@@ -29,7 +30,7 @@ const getCurrentPageId = () => {
     if (baseId === '' || baseId === 'index') {
         return 'home';
     }
-    
+
     // 3. Restituisce l'ID base (es. 'pugliole', 'lastre', ecc.)
     return baseId;
 };
@@ -164,11 +165,11 @@ const setLanguage = async (lang) => {
         }
 
         // Recuperiamo TUTTI i dati del JSON
-        const data = await response.json(); 
-        
+        const data = await response.json();
+
         // Estraiamo i dati specifici della pagina corrente (es. 'home' o 'arco119')
-        const pageData = data[pageId]; 
-        
+        const pageData = data[pageId];
+
         // ===============================================
         // 🔥 NUOVO BLOCCO: AGGIORNA LA NAVIGAZIONE (MENU)
         // ===============================================
@@ -199,6 +200,40 @@ const setLanguage = async (lang) => {
         updateTextContent('mainText5', pageData.mainText5);
 
         updateTextContent('playAudio', pageData.playAudioButton);
+
+        // ===============================================
+        // 🔥 NUOVO BLOCCO: AGGIORNAMENTO IMMAGINI DINAMICHE (FINO A 5)
+        // ===============================================
+
+        // Funzione helper per evitare la duplicazione del codice
+        const updateImage = (index, pageData) => {
+            // Costruisce gli ID dinamici: 'pageImage1', 'imageSource1', ecc.
+            const imageId = `pageImage${index}`;
+            const sourceKey = `imageSource${index}`;
+
+            const imageElement = document.getElementById(imageId);
+            const imageSource = pageData[sourceKey]; // Legge dal JSON: pageData.imageSource1
+
+            if (imageElement) {
+                // Assegna la sorgente (o stringa vuota)
+                imageElement.src = imageSource || '';
+
+                // Gestione della visibilità: Se la sorgente nel JSON NON è vuota, mostra (block), altrimenti nascondi (none).
+                imageElement.style.display = imageSource ? 'block' : 'none';
+            }
+        };
+
+        // Esegui la funzione helper per ogni slot da 1 a 5
+        updateImage(1, pageData);
+        updateImage(2, pageData);
+        updateImage(3, pageData);
+        updateImage(4, pageData);
+        updateImage(5, pageData);
+
+        // ===============================================
+        // FINE BLOCCO IMMAGINI
+        // ===============================================
+
 
         if (audioPlayer) {
             audioPlayer.src = pageData.audioSource;

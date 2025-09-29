@@ -4,31 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numerazione dei civici</title>
+    <title>Benvenuti al quartiere Porto</title>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // 1. Legge la lingua del browser
-            const userLang = navigator.language || navigator.userLanguage;
+            const userLang = navigator.language || navigator.userLanguage; 
             const langCode = userLang.toLowerCase().split('-')[0]; // Estrae solo il codice principale (es. 'en' da 'en-US')
 
             // 2. Mappa le lingue supportate con i file di destinazione
             // I file di destinazione devono esistere nel tuo repository!
             const supportedLanguages = {
-                'it': 'lastre.html',     // Italiano come predefinito
-                'en': 'lastre-en.html',  // Versione in Inglese
-                'fr': 'lastre-fr.html',  // Versione in Francese
-                'es': 'lastre-es.html'   // Versione in Spagnolo
+                'it': 'index.html',     // Italiano come predefinito
+                'en': 'index-en.html',  // Versione in Inglese
+                'fr': 'index-fr.html',  // Versione in Francese
+                'es': 'index-es.html'   // Versione in Spagnolo
             };
 
             // 3. Esegue il reindirizzamento
             if (langCode in supportedLanguages) {
                 const destinationPage = supportedLanguages[langCode];
-
+                
                 // Reindirizza SOLO se la destinazione non è la pagina attuale (per evitare loop)
                 // Usiamo window.location.pathname per un controllo più robusto dell'URL
                 const currentPage = window.location.pathname.split('/').pop();
-
+                
                 if (currentPage !== destinationPage) {
                     window.location.href = destinationPage;
                 }
@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="public/style.css">
 </head>
 
-<body id="lastre">
+<body id="home">
 
     <header class="main-header">
         <nav class="main-nav">
@@ -59,21 +59,18 @@
     <header id="home-header">
         <h1 class="page-title" id="pageTitle"></h1>
     </header>
-    <p id="mainText">Applicazione in errore per la lingua it ...</p>
-    <p id="mainText1"></p>
-    <p id="mainText2"></p>
-    <p id="mainText3"></p>
-    <figure class="center-image-block">
-        <img id="pageImage" src="" alt="Immagine della lastra in arenaria" class="responsive-image">
-        <figcaption id="mainText4"></figcaption>
-    </figure>
-    <p id="mainText5"></p>
+        <p id="mainText">Applicazione in errore per la linga it ...</p>
+        <p id="mainText1"></p>
+        <p id="mainText2"></p>
+        <p id="mainText3"></p>
+        <p id="mainText4"></p>
+        <p id="mainText5"></p>
 
     <button id="playAudio">Ascolta l'audio in italiano!</button>
 
     <audio id="audioPlayer"></audio>
     <p>
-    <p>
+<p>
 
     </p>
     <div class="language-selector">
@@ -87,11 +84,9 @@
             <img src="public/flag/fr.png" alt="Français">
         </button>
         <button onclick="setLanguage('es')">
-            <img src="public/flag/es.png" alt="Español">
-        </button>
+            <img src="public/flag/es.png" alt="Español"> 
+        </button> 
     </div>
-
-    <script src="public/main.js"></script>
-</body>
-
+    
+    <script src="public/main.js"></script> </body>
 </html>
