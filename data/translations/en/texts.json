@@ -9,6 +9,11 @@
         "mainText5": " ",
         "playAudioButton": "Listen to the audio in English!",
         "pauseAudioButton": "Pause",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "audioSource": "Assets/Audio/en/Home_Bologna.mp3"
     },
     "nav": {
@@ -27,6 +32,11 @@
         "mainText5": " ",
         "playAudioButton": "Listen to the story",
         "pauseAudioButton": "Pause",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "audioSource": "Assets/Audio/en/Pugliole.mp3"
     },
     "lastre": {
@@ -39,6 +49,11 @@
         "mainText5": " ",
         "playAudioButton": "Listen to the story",
         "pauseAudioButton": "Pause",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "audioSource": "Assets/Audio/en/Lastre.mp3"
     },
     "aneddoti": {
@@ -51,6 +66,11 @@
         "mainText5": " ",
         "playAudioButton": "Listen to the story",
         "pauseAudioButton": "Pause",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "audioSource": "Assets/Audio/en/Aneddoti.mp3"
     }
 }

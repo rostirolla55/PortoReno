@@ -7,9 +7,9 @@
     <title>Benvenuti al quartiere Porto</title>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // 1. Legge la lingua del browser
-            const userLang = navigator.language || navigator.userLanguage; 
+            const userLang = navigator.language || navigator.userLanguage;
             const langCode = userLang.toLowerCase().split('-')[0]; // Estrae solo il codice principale (es. 'en' da 'en-US')
 
             // 2. Mappa le lingue supportate con i file di destinazione
@@ -24,11 +24,11 @@
             // 3. Esegue il reindirizzamento
             if (langCode in supportedLanguages) {
                 const destinationPage = supportedLanguages[langCode];
-                
+
                 // Reindirizza SOLO se la destinazione non è la pagina attuale (per evitare loop)
                 // Usiamo window.location.pathname per un controllo più robusto dell'URL
                 const currentPage = window.location.pathname.split('/').pop();
-                
+
                 if (currentPage !== destinationPage) {
                     window.location.href = destinationPage;
                 }
@@ -59,18 +59,23 @@
     <header id="home-header">
         <h1 class="page-title" id="pageTitle"></h1>
     </header>
-        <p id="mainText">Applicazione in errore per la linga it ...</p>
-        <p id="mainText1"></p>
-        <p id="mainText2"></p>
-        <p id="mainText3"></p>
-        <p id="mainText4"></p>
-        <p id="mainText5"></p>
+    <p id="mainText">Applicazione in errore per la linga it ...</p>
+    <p id="mainText1"></p>
+    <p id="mainText2"></p>
+    <p id="mainText3"></p>
+    <p id="mainText4"></p>
+    <p id="mainText5"></p>
+    <img id="pageImage1" src="" style="display:none;">
+    <img id="pageImage2" src="" style="display:none;">
+    <img id="pageImage3" src="" style="display:none;">
+    <img id="pageImage4" src="" style="display:none;">
+    <img id="pageImage5" src="" style="display:none;">
 
     <button id="playAudio">Ascolta l'audio in italiano!</button>
 
     <audio id="audioPlayer"></audio>
     <p>
-<p>
+    <p>
 
     </p>
     <div class="language-selector">
@@ -84,9 +89,11 @@
             <img src="public/flag/fr.png" alt="Français">
         </button>
         <button onclick="setLanguage('es')">
-            <img src="public/flag/es.png" alt="Español"> 
-        </button> 
+            <img src="public/flag/es.png" alt="Español">
+        </button>
     </div>
-    
-    <script src="public/main.js"></script> </body>
+
+    <script src="public/main.js"></script>
+</body>
+
 </html>

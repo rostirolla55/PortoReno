@@ -9,6 +9,11 @@
     "mainText5": "",
     "playAudioButton": "Ascolta l'audio in italiano!",
     "pauseAudioButton": "Metti in pausa",
+    "imageSource1": "",
+    "imageSource2": "",
+    "imageSource3": "",
+    "imageSource4": "",
+    "imageSource5": "",
     "audioSource": "Assets/Audio/it/Home_Bologna.mp3"
   },
   "nav": {
@@ -26,6 +31,11 @@
     "mainText4": "",
     "mainText5": "",
     "playAudioButton": "Ascolta la storia",
+    "imageSource1": "",
+    "imageSource2": "",
+    "imageSource3": "",
+    "imageSource4": "",
+    "imageSource5": "",
     "pauseAudioButton": "Metti in pausa",
     "audioSource": "Assets/Audio/it/Pugliole.mp3"
   },
@@ -39,7 +49,11 @@
     "mainText5": "In corrispondenza del civico 11 di via Tanari Vecchia troviamo la targhetta di arenaria riportante il numero 1202 (numero pari) mentre il civico attuale è 11 (numero dispari) essendo a destra nel verso di percorrenza dei numeri crescenti, come previsto dall'attuale norma della toponomastica.",
     "playAudioButton": "Ascolta la storia",
     "pauseAudioButton": "Metti in pausa",
-    "imageSource": "public/images/foto_targa_T_1202.jpg",
+    "imageSource1": "public/images/foto_targa_T_1202.jpg",
+    "imageSource2": "",
+    "imageSource3": "",
+    "imageSource4": "",
+    "imageSource5": "",
     "audioSource": "Assets/Audio/it/Lastre.mp3"
   },
   "aneddoti": {
@@ -52,6 +66,11 @@
     "mainText5": "",
     "playAudioButton": "Ascolta la storia",
     "pauseAudioButton": "Metti in pausa",
-    "audioSource": "Assets/Audio/it/Aneddoti.mp3"
+    "imageSource1": "",
+    "imageSource2": "",
+    "imageSource3": "",
+    "imageSource4": "",
+    "imageSource5": "",
+     "audioSource": "Assets/Audio/it/Aneddoti.mp3"
   }
 }

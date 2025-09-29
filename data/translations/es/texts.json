@@ -9,6 +9,11 @@
         "mainText5": "",
         "playAudioButton": "¡Escucha el audio en Spanish!",
         "pauseAudioButton": "Pausa",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "audioSource": "Assets/Audio/es/Home_Bologna.mp3"
     },
     "nav": {
@@ -27,6 +32,11 @@
         "mainText5": "",
         "playAudioButton": "Escucha la historia",
         "pauseAudioButton": "Pausa",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "audioSource": "Assets/Audio/es/Pugliole.mp3"
     },
     "lastre": {
@@ -39,6 +49,11 @@
         "mainText5": "En el número 11 de Via Tanari Vecchia, encontramos la placa de arenisca con el número 1202 (número par), mientras que el número actual de la calle es el 11 (impar) número), estando a la derecha en dirección de números crecientes, según lo exige la normativa toponimia vigente.",
         "playAudioButton": "Escuchar la historia",
         "pauseAudioButton": "Pausa",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "audioSource": "Assets/Audio/es/Lastre.mp3"
     },
     "aneddoti": {
@@ -50,6 +65,11 @@
         "mainText4": "",
         "mainText5": "",
         "playAudioButton": "Escucha la historia",
+        "imageSource1": "",
+        "imageSource2": "",
+        "imageSource3": "",
+        "imageSource4": "",
+        "imageSource5": "",
         "pauseAudioButton": "Pausa",
         "audioSource": "Assets/Audio/es/aneddoti.mp3"
     }
