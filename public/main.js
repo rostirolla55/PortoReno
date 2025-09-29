@@ -5,7 +5,12 @@ const ARCO_LOCATIONS = [
     // Devi popolare questa lista con le coordinate reali dei tuoi archi.
     // L'ID deve corrispondere al nome del file HTML (es. 'arco119')
     // Esempio:
-    // { id: 'arco119', lat: 44.4984, lon: 11.3392, distanceThreshold: 20 }, 
+    // { id: 'arco119', lat: 44.4984, lon: 11.3392, distanceThreshold: 20 },
+    { id: 'lastre', // o l'ID della pagina a cui vuoi reindirizzare
+        lat: 44.49925278, 
+        lon: 11.34074444, 
+        distanceThreshold: 20 // Distanza in metri (es. 20m) 
+    }
 ];
 // ===========================================
 // FINE DATI GPS
