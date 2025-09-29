@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuti al quartiere Porto</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Legge la lingua del browser
+            const userLang = navigator.language || navigator.userLanguage; 
+            const langCode = userLang.toLowerCase().split('-')[0]; // Estrae solo il codice principale (es. 'en' da 'en-US')
+
+            // 2. Mappa le lingue supportate con i file di destinazione
+            // I file di destinazione devono esistere nel tuo repository!
+            const supportedLanguages = {
+                'it': 'index.html',     // Italiano come predefinito
+                'en': 'index-en.html',  // Versione in Inglese
+                'fr': 'index-fr.html',  // Versione in Francese
+                'es': 'index-es.html'   // Versione in Spagnolo
+            };
+
+            // 3. Esegue il reindirizzamento
+            if (langCode in supportedLanguages) {
+                const destinationPage = supportedLanguages[langCode];
+                
+                // Reindirizza SOLO se la destinazione non è la pagina attuale (per evitare loop)
+                // Usiamo window.location.pathname per un controllo più robusto dell'URL
+                const currentPage = window.location.pathname.split('/').pop();
+                
+                if (currentPage !== destinationPage) {
+                    window.location.href = destinationPage;
+                }
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="public/style.css">
+</head>
+
+<body id="home">
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <button class="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-list" id="navList">
+                <li><a id="navHome" href="index.html"></a></li>
+                <li><a id="navAneddoti" href="aneddoti.html"></a></li>
+                <li><a id="navLastre" href="lastre.html"></a></li><!--  -->
+                <li><a id="navPugliole" href="pugliole.html"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <header id="home-header">
+        <h1 class="page-title" id="pageTitle"></h1>
+    </header>
+        <p id="mainText">Applicazione in errore per la linga it ...</p>
+        <p id="mainText1"></p>
+        <p id="mainText2"></p>
+        <p id="mainText3"></p>
+        <p id="mainText4"></p>
+        <p id="mainText5"></p>
+
+    <button id="playAudio">Ascolta l'audio in italiano!</button>
+
+    <audio id="audioPlayer"></audio>
+    <p>
+<p>
+
+    </p>
+    <div class="language-selector">
+        <button onclick="setLanguage('it')">
+            <img src="public/flag/it.png" alt="Italiano">
+        </button>
+        <button onclick="setLanguage('en')">
+            <img src="public/flag/en.png" alt="English">
+        </button>
+        <button onclick="setLanguage('fr')">
+            <img src="public/flag/fr.png" alt="Français">
+        </button>
+        <button onclick="setLanguage('es')">
+            <img src="public/flag/es.png" alt="Español"> 
+        </button> 
+    </div>
+    
+    <script src="public/main.js"></script> </body>
+</html>
