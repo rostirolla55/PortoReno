@@ -57,6 +57,18 @@
             /* Regola la profondità (importante per la sovrapposizione) */
             z-index: 10;
         }
+
+        /* NUOVO BLOCCO: MEDIA QUERY per Schermi Piccoli (Smartphone) */
+        @media screen and (max-width: 600px) {
+            .header-title {
+                /* Riduciamo il font-size solo sui dispositivi mobili */
+                font-size: 1.8em;
+                /* Rendi il testo più piccolo e meno probabile che venga troncato */
+
+                /* Sposta il titolo più in alto per lasciare spazio ad altri elementi, se necessario */
+                top: 10px;
+            }
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
