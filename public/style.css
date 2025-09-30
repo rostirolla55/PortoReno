@@ -52,7 +52,6 @@ p {
     /* Layout Flexbox principale per allineamento */
     display: flex;
     align-items: center; 
-    /* Padding laterale per dare spazio all'hamburger e alle bandiere */
     padding: 0 15px; 
 }
 
@@ -74,8 +73,11 @@ p {
     flex-direction: column;
     justify-content: space-between;
     
-    /* ✨ CORREZIONE MOBILE: Imposta margine destro fisso, rimuovi 'order' */
-    margin-right: 15px; 
+    /* ✨ CORREZIONE MOBILE: Rimuovi il margine a destra che interferiva */
+    margin-right: 0; 
+    
+    /* Forza la posizione su mobile */
+    order: 1;
 }
 
 /* Barre orizzontali */
@@ -154,9 +156,9 @@ p {
     padding: 0; 
     z-index: 1001;
     
-    /* ✨ CORREZIONE MOBILE: Spinge il selettore a destra su mobile */
+    /* Spinge a destra su mobile */
     margin-left: auto; 
-    /* Rimuovi la proprietà 'order' in questa sezione per evitare conflitti su mobile */
+    order: 2;
 }
 
 .language-selector button {
@@ -268,7 +270,7 @@ p {
         list-style: none;
         padding: 0;
         margin: 0;
-        display: flex; 
+        display: flex; /* Flexbox per disporre gli <li> orizzontalmente */
         flex-direction: row; 
         align-items: center;
         height: 60px; /* Altezza dell'header */
@@ -294,22 +296,30 @@ p {
         background-color: #eee;
     }
 
-    /* 6. Posizionamento delle Bandiere a destra del menu (dopo il menu) */
+    /* 6. Posizionamento delle Bandiere a destra del menu */
     .language-selector {
         position: static;
         transform: none;
-        margin-left: 15px; 
+        margin-left: 15px; /* Spazio dal menu */
         order: 2;
     }
 }
 
 
 @media (max-width: 768px) {
-    /* Le regole 'order' e 'margin-left: auto' che causavano il conflitto sono state rimosse
-       dai selettori globali e .language-selector.
-       .main-header (display: flex) e .language-selector (margin-left: auto)
-       ora gestiscono correttamente l'allineamento: Hamburger a sinistra, Bandiere a destra. */
-
+    /* ✨ CORREZIONE MOBILE: Rimuovi le regole di order forzate che causavano lo spostamento
+       e lascia che la struttura HTML e il Flexbox principale (justify-content: space-between)
+       facciano il lavoro, assicurandoti che l'hamburger sia a sinistra e le bandiere a destra. */
+       
+    .main-header {
+        /* Assicura che ci sia spazio tra gli elementi: hamburger a sinistra, bandiere a destra */
+        justify-content: space-between;
+    }
+    
+    /* Rimuoviamo gli 'order' per il .menu-toggle e .language-selector
+       e lasciamo che .menu-toggle sia il primo elemento nell'HTML.
+       La regola in .language-selector margin-left: auto; spinge le bandiere all'estrema destra. */
+       
     /* Layout a colonna su schermi piccoli */
     .image-text-container {
         flex-direction: column;
