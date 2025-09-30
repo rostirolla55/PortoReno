@@ -7,6 +7,72 @@
     <title>Numerazione dei civici</title>
 
     <link rel="stylesheet" href="public/style.css">
+
+    <style>
+        /* Passo A: Stile per il contenitore principale */
+        .header-image-container {
+            /* Stabilisce il punto di riferimento per il posizionamento assoluto */
+            position: relative;
+            /* Assicura che il testo non si estenda oltre l'immagine */
+            width: 100%;
+            /* Impedisce che elementi esterni finiscano sopra l'immagine */
+            overflow: hidden;
+            /* Aggiunge un po' di margine inferiore per separare dal contenuto */
+            margin-bottom: 20px;
+        }
+
+        /* Passo B: Stile per l'immagine */
+        .header-image-container img {
+            /* Fa in modo che l'immagine copra lo spazio senza distorcersi */
+            width: 100%;
+            height: auto;
+            /* L'opacità è solo un'opzione per rendere il testo più leggibile, se necessario */
+            /* opacity: 0.8; */
+            display: block;
+            /* Importante per pulizia visuale */
+        }
+
+        /* Passo C: Stile per il titolo sovrapposto */
+        .header-title {
+            /* Posiziona il titolo in modo assoluto rispetto al contenitore (.header-image-container) */
+            position: absolute;
+            /* Sposta il titolo al centro orizzontalmente */
+            left: 50%;
+            /* Lo trasla indietro del 50% della sua larghezza per centrarlo perfettamente */
+            transform: translateX(-50%);
+
+            /* Regolazione verticale */
+            top: 20px;
+
+            /* Lo rende bianco, come hai richiesto */
+            color: white;
+
+            /* Rende il testo grande e leggibile */
+            font-size: 3em;
+
+            /* Aggiunge una leggera ombra per aumentare la leggibilità sullo sfondo */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
+            /* Rimuove margini predefiniti dell'h1 */
+            margin: 0;
+
+            /* Regola la profondità (importante per la sovrapposizione) */
+            z-index: 10;
+        }
+
+        /* NUOVO BLOCCO: MEDIA QUERY per Schermi Piccoli (Smartphone) */
+        @media screen and (max-width: 600px) {
+            .header-title {
+                /* Riduciamo il font-size solo sui dispositivi mobili */
+                font-size: 1.8em;
+                /* Rendi il testo più piccolo e meno probabile che venga troncato */
+
+                /* Sposta il titolo più in alto per lasciare spazio ad altri elementi, se necessario */
+                top: 10px;
+            }
+        }
+    </style>
+
 </head>
 
 <body id="lastre">

@@ -7,6 +7,44 @@
     <title>Bienvenue dans le quartier de Porto</title>
     <img src="public/images/Panorama_Bologna.jpg" alt="Panorama di Bologna" style="width:100%;">
     <link rel="stylesheet" href="public/style.css">
+    <style>
+        /* Passo A: Stile per il contenitore principale */
+        .header-image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        /* Passo B: Stile per l'immagine */
+        .header-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Passo C: Stile per il titolo sovrapposto - Stile DEFAULT (Desktop) */
+        .header-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 20px;
+            color: white;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin: 0;
+            z-index: 10;
+        }
+
+        /* MEDIA QUERY per Schermi Piccoli (Smartphone) */
+        @media screen and (max-width: 600px) {
+            .header-title {
+                font-size: 1.8em;
+                /* Ridimensiona il font per non troncare */
+                top: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body id="home">
