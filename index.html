@@ -16,19 +16,25 @@
             top: 0;
             left: 0;
             width: 100%;
-            /* z-index alto per essere sopra l'immagine (z-index: 10) */
-            z-index: 100;
+            /* z-index alto per essere sopra ogni altro elemento */
+            z-index: 1000; /* Aumentato per sicurezza */
 
             /* Imposta il colore di sfondo per evitare trasparenze */
             background-color: #ffffff;
-            /* Usa il colore effettivo del tuo menu */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            /* Aggiungi altri stili del tuo menu se necessari */
         }
 
         /* Regola per spostare il body sotto il menu fisso */
         body {
-            /* Questo deve corrispondere all'altezza del tuo menu (60px è un esempio) */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            padding-bottom: 50px;
+            
+            /* ✨ CORREZIONE CRITICA: Spazio per l'header fisso (90px è l'altezza presunta) */
             padding-top: 90px !important;
         }
 
@@ -68,52 +74,60 @@
             }
         }
     </style>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // 1. Legge la lingua del browser
             const userLang = navigator.language || navigator.userLanguage;
-            const langCode = userLang.toLowerCase().split('-')[0]; // Estrae solo il codice principale (es. 'en' da 'en-US')
+            const langCode = userLang.toLowerCase().split('-')[0];
+            
+            const supportedLangs = ['en', 'fr', 'es']; 
+            
+            if (supportedLangs.includes(langCode)) {
+                const pathParts = window.location.pathname.split('/');
+                let currentPageName = pathParts.pop(); 
+                if (currentPageName === '') currentPageName = 'index.html';
+                
+                const parts = currentPageName.split('.');
+                const baseName = parts[0]; 
+                
+                const destinationPage = `${baseName}-${langCode}.html`;
 
-            // 2. Mappa le lingue supportate con i file di destinazione
-            const supportedLanguages = {
-                'it': 'index.html',     // Italiano come predefinito
-                'en': 'index-en.html',  // Versione in Inglese
-                'fr': 'index-fr.html',  // Versione in Francese
-                'es': 'index-es.html'   // Versione in Spagnolo
-            };
-
-            // 3. Esegue il reindirizzamento
-            if (langCode in supportedLanguages) {
-                const destinationPage = supportedLanguages[langCode];
-
-                // Reindirizza SOLO se la destinazione non è la pagina attuale (per evitare loop)
-                const currentPage = window.location.pathname.split('/').pop();
-
-                if (currentPage !== destinationPage) {
-                    window.location.href = destinationPage;
+                if (currentPageName !== destinationPage) {
+                    window.location.replace(destinationPage);
                 }
             }
         });
     </script>
+
     <link rel="stylesheet" href="public/style.css">
 </head>
 
 <body id="home">
 
     <header class="main-header">
-        <nav class="main-nav">
-            <button class="menu-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            <ul class="nav-list" id="navList">
+        <nav class="nav-bar">
+            <ul class="nav-links">
                 <li><a id="navHome" href="index.html"></a></li>
-                <li><a id="navAneddoti" href="aneddoti.html"></a></li>
-                <li><a id="navLastre" href="lastre.html"></a></li>
                 <li><a id="navPugliole" href="pugliole.html"></a></li>
+                <li><a id="navLastre" href="lastre.html"></a></li>
+                <li><a id="navAneddoti" href="aneddoti.html"></a></li>
             </ul>
         </nav>
+
+        <div class="language-selector">
+            <button onclick="setLanguage('it')">
+                <img src="public/flag/it.png" alt="Italiano">
+            </button>
+            <button onclick="setLanguage('en')">
+                <img src="public/flag/en.png" alt="English">
+            </button>
+            <button onclick="setLanguage('fr')">
+                <img src="public/flag/fr.png" alt="Français">
+            </button>
+            <button onclick="setLanguage('es')">
+                <img src="public/flag/es.png" alt="Español">
+            </button>
+        </div>
     </header>
 
     <div class="header-image-container">
@@ -121,7 +135,17 @@
         <h1 class="header-title" id="pageTitle"></h1>
     </div>
 
-    <p id="mainText">Applicazione in errore per la linga it ...</p>
+    <div class="content-body"> 
+        <p id="mainText">Applicazione in errore per la lingua it ...</p>
+        <p id="mainText1"></p>
+
+        <p id="mainText3"></p>
+        <p id="mainText5"></p>
+
+        <button id="playAudio">Ascolta l'audio in italiano!</button>
+        <audio id="audioPlayer"></audio>
+    </div>
+
     <script src="public/main.js"></script>
 </body>
 
