@@ -7,6 +7,31 @@
     <title>Benvenuti al quartiere Porto</title>
 
     <style>
+        /* ------------------------------------------ */
+        /* NUOVI STILI PER FISSARE IL MENU */
+        /* ------------------------------------------ */
+        .main-header {
+            /* Rende il menu fisso nella parte alta della finestra */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* z-index alto per essere sopra l'immagine (z-index: 10) */
+            z-index: 100;
+
+            /* Imposta il colore di sfondo per evitare trasparenze */
+            background-color: #ffffff;
+            /* Usa il colore effettivo del tuo menu */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Aggiungi altri stili del tuo menu se necessari */
+        }
+
+        /* Regola per spostare il body sotto il menu fisso */
+        body {
+            /* Questo deve corrispondere all'altezza del tuo menu (60px è un esempio) */
+            padding-top: 60px;
+        }
+
         /* Passo A: Stile per il contenitore principale */
         .header-image-container {
             position: relative;
@@ -75,11 +100,6 @@
 
 <body id="home">
 
-    <div class="header-image-container">
-        <img src="public/images/Panorama_Bologna.jpg" alt="Panorama di Bologna">
-        <h1 class="header-title" id="pageTitle"></h1> 
-    </div>
-    
     <header class="main-header">
         <nav class="main-nav">
             <button class="menu-toggle">
@@ -96,40 +116,12 @@
         </nav>
     </header>
 
-    <p id="mainText">Applicazione in errore per la linga it ...</p>
-    <p id="mainText1"></p>
-    <p id="mainText2"></p>
-    <p id="mainText3"></p>
-    <p id="mainText4"></p>
-    <p id="mainText5"></p>
-    <img id="pageImage1" src="" style="display:none;">
-    <img id="pageImage2" src="" style="display:none;">
-    <img id="pageImage3" src="" style="display:none;">
-    <img id="pageImage4" src="" style="display:none;">
-    <img id="pageImage5" src="" style="display:none;">
-
-    <button id="playAudio">Ascolta l'audio in italiano!</button>
-
-    <audio id="audioPlayer"></audio>
-    <p>
-    <p>
-
-    </p>
-    <div class="language-selector">
-        <button onclick="setLanguage('it')">
-            <img src="public/flag/it.png" alt="Italiano">
-        </button>
-        <button onclick="setLanguage('en')">
-            <img src="public/flag/en.png" alt="English">
-        </button>
-        <button onclick="setLanguage('fr')">
-            <img src="public/flag/fr.png" alt="Français">
-        </button>
-        <button onclick="setLanguage('es')">
-            <img src="public/flag/es.png" alt="Español">
-        </button>
+    <div class="header-image-container">
+        <img src="public/images/Panorama_Bologna.jpg" alt="Panorama di Bologna">
+        <h1 class="header-title" id="pageTitle"></h1>
     </div>
 
+    <p id="mainText">Applicazione in errore per la linga it ...</p>
     <script src="public/main.js"></script>
 </body>
 
