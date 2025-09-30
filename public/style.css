@@ -10,7 +10,7 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     padding-bottom: 50px;
-    /* ✨ CORREZIONE: Imposta il padding-top in base all'altezza fissa dell'header (60px + margine) */
+    /* Spazio per l'header fisso (60px + margine) */
     padding-top: 70px;
 }
 
@@ -43,14 +43,13 @@ p {
     width: 100%;
     z-index: 1000; 
     
-    /* ✨ CORREZIONE: Altezza fissa e sfondo bianco, elimina padding interno superfluo */
+    /* Altezza fissa e sfondo bianco */
     height: 60px;
     background-color: #ffffff;
-    padding: 0; /* Rimosso padding interno che faceva collassare l'altezza */
+    padding: 0;
     
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     
-    /* Necessario per posizionare gli elementi interni (Hamburger, Bandiere) */
     display: flex;
     align-items: center; 
 }
@@ -60,7 +59,7 @@ p {
 /* 2. MENU HAMBURGER (Stili unificati) */
 /* ======================================= */
 
-/* Pulsante Hamburger */
+/* Pulsante Hamburger - ORA SEMPRE VISIBILE */
 .menu-toggle {
     position: absolute;
     top: 50%;
@@ -83,7 +82,6 @@ p {
     display: block;
     width: 100%;
     height: 3px;
-    /* ✨ CORREZIONE: Colore scuro per contrastare lo sfondo bianco dell'header */
     background-color: #333; 
     border-radius: 2px;
     transition: all 0.3s ease-in-out;
@@ -108,18 +106,17 @@ p {
     width: 70%; 
     max-width: 300px;
     height: 100%; 
-    background-color: #222222; /* Sfondo scuro per contrasto */
+    background-color: #222222; 
     
-    /* ✨ CORREZIONE: Usa 'transform' per l'animazione di entrata/uscita */
-    padding-top: 60px; /* Spazio per l'header fisso */
+    /* Usa 'transform' per l'animazione di entrata/uscita */
+    padding-top: 60px; 
     transform: translateX(-100%); /* Nascosto a sinistra */
     transition: transform 0.4s ease-in-out;
     
     z-index: 500; 
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     
-    /* Forziamo un layout a scomparsa */
-    display: block; /* Deve essere 'display: block' per usare transform */
+    display: block;
 }
 
 .nav-list.active {
@@ -132,7 +129,7 @@ p {
     padding: 0;
     margin: 0;
     display: flex;
-    flex-direction: column; /* Link uno sotto l'altro */
+    flex-direction: column;
 }
 
 .nav-list .nav-links li {
@@ -141,7 +138,7 @@ p {
 }
 
 .nav-list .nav-links a {
-    color: #ffffff !important; /* Testo bianco su sfondo scuro */
+    color: #ffffff !important; 
     text-decoration: none;
     padding: 15px 20px;
     display: block;
@@ -247,20 +244,8 @@ p {
 
 
 /* ======================================= */
-/* 6. MEDIA QUERIES (Desktop vs. Mobile) */
+/* 6. MEDIA QUERIES (Layout adattivo) */
 /* ======================================= */
-
-@media screen and (min-width: 768px) {
-    /* ✨ NUOVA REGOLA: Nascondi hamburger su desktop se non lo usi */
-    .menu-toggle {
-        display: none !important;
-    }
-    
-    /* Se non hai un menu desktop separato, assicurati che nav-list sia nascosto */
-    .nav-list {
-        display: none !important;
-    }
-}
 
 @media (max-width: 768px) {
     /* Layout a colonna su schermi piccoli */
