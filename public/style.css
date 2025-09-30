@@ -54,7 +54,14 @@ p {
 }
 
 .main-header {
-    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
+    /* ✨ CORREZIONE: Aggiungi un'altezza fissa */
+    height: 60px; /* Altezza fissa (ad esempio 60px) */
+    background-color: #ffffff;
     padding: 10px 0;
     margin-bottom: 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
