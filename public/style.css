@@ -46,14 +46,14 @@ p {
     /* Altezza fissa */
     height: 60px;
     background-color: #ffffff;
+    
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     
     /* Layout Flexbox principale per allineamento */
     display: flex;
     align-items: center; 
-    
-    /* ✨ CORREZIONE CRITICA: Rimuovi il padding dal contenitore principale */
-    padding: 0; 
+    /* Padding laterale per dare spazio all'hamburger e alle bandiere */
+    padding: 0 15px; 
 }
 
 
@@ -61,7 +61,7 @@ p {
 /* 2. MENU HAMBURGER (Mobile/A Scomparsa) */
 /* ======================================= */
 
-/* Pulsante Hamburger */
+/* Pulsante Hamburger (Visibile di default, nascosto su desktop) */
 .menu-toggle {
     width: 30px;
     height: 24px;
@@ -74,8 +74,7 @@ p {
     flex-direction: column;
     justify-content: space-between;
     
-    /* ✨ AGGIUNTA: Padding a sinistra per separarsi dal bordo dello schermo */
-    padding-left: 15px; 
+    /* ✨ CORREZIONE MOBILE: Imposta margine destro fisso, rimuovi 'order' */
     margin-right: 15px; 
 }
 
@@ -155,10 +154,9 @@ p {
     padding: 0; 
     z-index: 1001;
     
+    /* ✨ CORREZIONE MOBILE: Spinge il selettore a destra su mobile */
     margin-left: auto; 
-    
-    /* ✨ AGGIUNTA: Padding a destra per separarsi dal bordo dello schermo */
-    padding-right: 15px;
+    /* Rimuovi la proprietà 'order' in questa sezione per evitare conflitti su mobile */
 }
 
 .language-selector button {
@@ -261,7 +259,7 @@ p {
 
         /* Imposta la navigazione orizzontale */
         display: block !important;
-        margin: 0;
+        margin-left: auto; /* Spinge il menu verso destra */
         order: 1; 
     }
 
@@ -273,10 +271,7 @@ p {
         display: flex; 
         flex-direction: row; 
         align-items: center;
-        height: 60px;
-        
-        /* Spinge la nav a destra su desktop */
-        margin-left: auto; 
+        height: 60px; /* Altezza dell'header */
     }
     
     /* 4. Stile degli ITEM della lista (li) */
@@ -304,20 +299,17 @@ p {
         position: static;
         transform: none;
         margin-left: 15px; 
-        padding-right: 15px;
         order: 2;
     }
 }
 
 
 @media (max-width: 768px) {
-    /* Regole per Mobile: Assicurano la spaziatura e l'allineamento corretti */
-    
-    .main-header {
-        /* Distribuisce lo spazio tra gli elementi: Hamburger | Nav (nascosta) | Bandiere */
-        justify-content: space-between;
-    }
-    
+    /* Le regole 'order' e 'margin-left: auto' che causavano il conflitto sono state rimosse
+       dai selettori globali e .language-selector.
+       .main-header (display: flex) e .language-selector (margin-left: auto)
+       ora gestiscono correttamente l'allineamento: Hamburger a sinistra, Bandiere a destra. */
+
     /* Layout a colonna su schermi piccoli */
     .image-text-container {
         flex-direction: column;
