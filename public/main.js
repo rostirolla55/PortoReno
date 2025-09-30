@@ -18,6 +18,17 @@ const ARCO_LOCATIONS = [
 // ===========================================
 
 
+// ===========================================
+// VARIABILI GLOBALI (Per l'audio)
+// ===========================================
+const audioPlayer = document.getElementById('audioPlayer');
+const playButton = document.getElementById('playAudio');
+
+
+// ===========================================
+// FUNZIONI UTILITY
+// ===========================================
+
 // Funzione per determinare l'ID della pagina corrente
 const getCurrentPageId = () => {
     const path = window.location.pathname;
@@ -42,6 +53,7 @@ const updateTextContent = (id, value) => {
         element.textContent = value || '';
     }
 };
+
 
 // ===========================================
 // FUNZIONI UTILITY PER GPS
@@ -114,83 +126,49 @@ const startGeolocation = () => {
 // ===========================================
 
 
-// Gestione del menu a scomparsa e dell'evento 'ended'
-document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navList = document.querySelector('.nav-list');
+// ===========================================
+// 3. FUNZIONE setLanguage (CORRETTA)
+// ===========================================
 
-    menuToggle.addEventListener('click', () => {
-        navList.classList.toggle('active');
-    });
-
-    const audioPlayer = document.getElementById('audioPlayer');
-    const playButton = document.getElementById('playAudio');
-
-    if (audioPlayer && playButton) {
-        audioPlayer.addEventListener('ended', () => {
-            audioPlayer.currentTime = 0;
-            // Usa il testo play salvato in data-
-            playButton.textContent = playButton.dataset.playText || "Ascolta l'audio!";
-            playButton.classList.remove('pause-style');
-            playButton.classList.add('play-style');
-        });
-    }
-});
-
-
-// Funzione principale per impostare la lingua
 const setLanguage = async (lang) => {
-
-    const audioPlayer = document.getElementById('audioPlayer');
-    const playButton = document.getElementById('playAudio');
 
     if (audioPlayer) {
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
     }
 
-    // 🚀 FIX CRUCIALE: Salva e imposta la lingua immediatamente, prima del fetch
+    // FIX CRUCIALE: Salva e imposta la lingua immediatamente, prima del fetch
     localStorage.setItem('userLanguage', lang);
     document.documentElement.lang = lang;
 
     try {
         const pageId = getCurrentPageId();
 
-        // fetch su JSON (Qui può avvenire l'errore se il file non esiste o è vuoto)
+        // fetch su JSON (Assicurati che il percorso 'data/translations/' sia corretto)
         const response = await fetch(`data/translations/${lang}/texts.json`);
 
         if (!response.ok) {
-            // Se il file JSON non è raggiungibile (es. 404), lanciamo un errore
             throw new Error(`File di traduzione non trovato per la lingua: ${lang}`);
         }
 
-        // Recuperiamo TUTTI i dati del JSON
         const data = await response.json();
-
-        // Estraiamo i dati specifici della pagina corrente (es. 'home' o 'arco119')
         const pageData = data[pageId];
 
-        // ===============================================
-        // 🔥 NUOVO BLOCCO: AGGIORNA LA NAVIGAZIONE (MENU)
-        // ===============================================
+        // AGGIORNAMENTO NAVIGAZIONE (MENU)
         if (data.nav) {
             updateTextContent('navHome', data.nav.navHome);
             updateTextContent('navAneddoti', data.nav.navAneddoti);
             updateTextContent('navLastre', data.nav.navLastre);
             updateTextContent('navPugliole', data.nav.navPugliole);
-            // AGGIUNGI QUI LE ALTRE VOCI DEL MENU SE NECESSARIO
         }
-        // ===============================================
 
         if (!pageData) {
-            // ⚠️ L'ERRORE VERO: Se il JSON è vuoto o manca l'ID della pagina, 'data' è nullo
             console.error(`Dati non trovati per la pagina: ${pageId} nella lingua: ${lang}. Verifica il file texts.json.`);
             updateTextContent('pageTitle', `[ERRORE] Testi ${lang} non trovati per questa pagina.`);
             return;
         }
 
-        // AGGIORNAMENTO DEL CONTENUTO (Questi sono i tuoi aggiornamenti)
-        // Usiamo pageData perché contiene solo i dati della pagina corrente
+        // AGGIORNAMENTO DEL CONTENUTO (Testi principali)
         updateTextContent('pageTitle', pageData.pageTitle);
         updateTextContent('mainText', pageData.mainText);
         updateTextContent('mainText1', pageData.mainText1);
@@ -199,98 +177,112 @@ const setLanguage = async (lang) => {
         updateTextContent('mainText4', pageData.mainText4);
         updateTextContent('mainText5', pageData.mainText5);
 
-        updateTextContent('playAudio', pageData.playAudioButton);
+        // AGGIORNAMENTO AUDIO E BOTTONE
+        if (audioPlayer && playButton) {
+            // Aggiorna l'elemento del bottone audio con il testo tradotto
+            playButton.textContent = pageData.playAudioButton;
+            
+            // SALVA I TESTI PLAY/PAUSE NEI data-attributes per la logica toggleAudio
+            playButton.dataset.playText = pageData.playAudioButton;
+            playButton.dataset.pauseText = pageData.pauseAudioButton;
+            
+            // APPLICA LO STILE INIZIALE CORRETTO (BLU)
+            playButton.classList.remove('pause-style');
+            playButton.classList.add('play-style');
+            
+            audioPlayer.src = pageData.audioSource;
+            audioPlayer.load();
+        }
 
-        // ===============================================
-        // 🔥 NUOVO BLOCCO: AGGIORNAMENTO IMMAGINI DINAMICHE (FINO A 5)
-        // ===============================================
-
-        // Funzione helper per evitare la duplicazione del codice
+        // AGGIORNAMENTO IMMAGINI DINAMICHE
         const updateImage = (index, pageData) => {
-            // Costruisce gli ID dinamici: 'pageImage1', 'imageSource1', ecc.
             const imageId = `pageImage${index}`;
             const sourceKey = `imageSource${index}`;
 
             const imageElement = document.getElementById(imageId);
-            const imageSource = pageData[sourceKey]; // Legge dal JSON: pageData.imageSource1
+            const imageSource = pageData[sourceKey];
 
             if (imageElement) {
-                // Assegna la sorgente (o stringa vuota)
                 imageElement.src = imageSource || '';
-
-                // Gestione della visibilità: Se la sorgente nel JSON NON è vuota, mostra (block), altrimenti nascondi (none).
                 imageElement.style.display = imageSource ? 'block' : 'none';
             }
         };
 
-        // Esegui la funzione helper per ogni slot da 1 a 5
         updateImage(1, pageData);
         updateImage(2, pageData);
         updateImage(3, pageData);
         updateImage(4, pageData);
         updateImage(5, pageData);
 
-        // ===============================================
-        // FINE BLOCCO IMMAGINI
-        // ===============================================
-
-
-        if (audioPlayer) {
-            audioPlayer.src = pageData.audioSource;
-        }
-
-        if (playButton) {
-            // SALVA I TESTI PLAY/PAUSE
-            playButton.dataset.playText = pageData.playAudioButton;
-            playButton.dataset.pauseText = pageData.pauseAudioButton;
-
-            // APPLICA LO STILE INIZIALE CORRETTO (BLU)
-            playButton.classList.remove('pause-style');
-            playButton.classList.add('play-style');
-        }
-
         console.log(`Lingua impostata su: ${lang}`);
 
     } catch (error) {
-        // Gestisce gli errori di rete o parsing JSON
         console.error('Errore critico nel caricamento dei testi:', error);
         updateTextContent('pageTitle', `[ERRORE DI CARICAMENTO] Lingua ${lang} fallita. Controlla i file JSON.`);
     }
 };
 
 
-// Funzione per gestire la riproduzione e pausa dell'audio (invariato)
-const toggleAudio = () => {
-    const audioPlayer = document.getElementById('audioPlayer');
-    const playButton = document.getElementById('playAudio');
+// ===========================================
+// 4. GESTIONE PLAY/PAUSE AUDIO (CORRETTA)
+// ===========================================
 
-    playButton.addEventListener('click', function() {
-    if (audioPlayer.paused) {
-        audioPlayer.play();
-        // Aggiunge lo stile di PAUSA (rosso) e rimuove lo stile di PLAY (blu)
-        playButton.classList.add('pause-style');
-        playButton.classList.remove('play-style');
-    } else {
-        audioPlayer.pause();
-        // Aggiunge lo stile di PLAY (blu) e rimuove lo stile di PAUSA (rosso)
-        playButton.classList.add('play-style');
-        playButton.classList.remove('pause-style');
+const setupAudioControl = () => {
+    if (audioPlayer && playButton) {
+        // Logica per il click Play/Pause (toggle)
+        playButton.addEventListener('click', function() {
+            // I testi sono letti dai data-attributes impostati in setLanguage
+            const currentPlayText = playButton.dataset.playText || "Ascolta l'audio";
+            const currentPauseText = playButton.dataset.pauseText || "Metti in pausa";
+
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                
+                // Cambia a PAUSA (Arancione)
+                playButton.textContent = currentPauseText; 
+                playButton.classList.add('pause-style');
+                playButton.classList.remove('play-style');
+            } else {
+                audioPlayer.pause();
+                
+                // Cambia a PLAY (Blu)
+                playButton.textContent = currentPlayText;
+                playButton.classList.add('play-style');
+                playButton.classList.remove('pause-style');
+            }
+        });
+
+        // Logica per quando l'audio finisce (ritorna a PLAY/Blu)
+        audioPlayer.addEventListener('ended', function() {
+            const currentPlayText = playButton.dataset.playText || "Ascolta l'audio";
+            
+            // Riposiziona l'audio all'inizio per poterlo riavviare
+            audioPlayer.currentTime = 0; 
+            
+            playButton.textContent = currentPlayText;
+            playButton.classList.add('play-style');
+            playButton.classList.remove('pause-style');
+        });
     }
-});
 };
 
-// Imposta la lingua di default al caricamento della pagina
-window.onload = () => {
-    const playButton = document.getElementById('playAudio');
 
-    if (playButton) {
-        playButton.addEventListener('click', toggleAudio);
-    }
+// ===========================================
+// 5. INIZIALIZZAZIONE (window.onload)
+// ===========================================
+
+// Gestione del menu a scomparsa e dell'evento 'ended'
+document.addEventListener('DOMContentLoaded', () => {
+    // Chiama la configurazione audio una sola volta al caricamento del DOM
+    setupAudioControl(); 
+
+    // Avvia il monitoraggio GPS
+    startGeolocation(); 
 
     // Carica la lingua salvata, altrimenti usa 'it'
     const savedLang = localStorage.getItem('userLanguage') || 'it';
     setLanguage(savedLang);
-
-    // AVVIA IL MONITORAGGIO GPS
-    startGeolocation();
-};
+    
+    // Non ho incluso la logica del menu hamburger (menuToggle) perché manca
+    // l'elemento HTML 'menu-toggle' e 'nav-list' nel tuo codice.
+});
