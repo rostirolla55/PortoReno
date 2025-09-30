@@ -273,6 +273,19 @@ const setupAudioControl = () => {
 
 // Gestione del menu a scomparsa e dell'evento 'ended'
 document.addEventListener('DOMContentLoaded', () => {
+    // 🔥 NUOVA LOGICA MENU HAMBURGER
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navList = document.querySelector('.nav-list');
+
+    if (menuToggle && navList) {
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            menuToggle.classList.toggle('active'); // Per l'animazione 'X'
+        });
+    }
+    // FINE LOGICA MENU HAMBURGER
+
+
     // Chiama la configurazione audio una sola volta al caricamento del DOM
     setupAudioControl(); 
 
@@ -283,6 +296,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('userLanguage') || 'it';
     setLanguage(savedLang);
     
-    // Non ho incluso la logica del menu hamburger (menuToggle) perché manca
-    // l'elemento HTML 'menu-toggle' e 'nav-list' nel tuo codice.
 });

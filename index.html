@@ -105,15 +105,13 @@
 <body id="home">
 
     <header class="main-header">
-        <nav class="nav-bar">
-            <ul class="nav-links">
-                <li><a id="navHome" href="index.html"></a></li>
-                <li><a id="navPugliole" href="pugliole.html"></a></li>
-                <li><a id="navLastre" href="lastre.html"></a></li>
-                <li><a id="navAneddoti" href="aneddoti.html"></a></li>
-            </ul>
-        </nav>
-
+        
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        
         <div class="language-selector">
             <button onclick="setLanguage('it')">
                 <img src="public/flag/it.png" alt="Italiano">
@@ -128,7 +126,17 @@
                 <img src="public/flag/es.png" alt="Español">
             </button>
         </div>
+        
+        <nav class="nav-bar nav-list"> 
+            <ul class="nav-links">
+                <li><a id="navHome" href="index.html">Home</a></li>
+                <li><a id="navPugliole" href="pugliole.html">Pugliole</a></li>
+                <li><a id="navLastre" href="lastre.html">Lastre</a></li>
+                <li><a id="navAneddoti" href="aneddoti.html">Aneddoti</a></li>
+                </ul>
+        </nav>
     </header>
+
 
     <div class="header-image-container">
         <img src="public/images/Panorama_Bologna.jpg" alt="Panorama di Bologna">
