@@ -10,6 +10,7 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     padding-bottom: 50px;
+    /* Spazio per l'header fisso (60px) */
     padding-top: 60px;
 }
 
@@ -42,10 +43,12 @@ p {
     width: 100%;
     z-index: 1000; 
     
+    /* Altezza fissa */
     height: 60px;
     background-color: #ffffff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     
+    /* Layout Flexbox principale per allineamento */
     display: flex;
     align-items: center; 
     
@@ -258,10 +261,7 @@ p {
 
         /* Imposta la navigazione orizzontale */
         display: block !important;
-        
-        /* ✨ RIMOZIONE: Rimosso margin-left: auto; per evitare conflitti */
-        margin: 0; 
-        
+        margin: 0;
         order: 1; 
     }
 
@@ -304,7 +304,7 @@ p {
         position: static;
         transform: none;
         margin-left: 15px; 
-        padding-right: 0; /* Rimuovi il padding destro da desktop */
+        padding-right: 15px;
         order: 2;
     }
 }
@@ -312,6 +312,11 @@ p {
 
 @media (max-width: 768px) {
     /* Regole per Mobile: Assicurano la spaziatura e l'allineamento corretti */
+    
+    .main-header {
+        /* Distribuisce lo spazio tra gli elementi: Hamburger | Nav (nascosta) | Bandiere */
+        justify-content: space-between;
+    }
     
     /* Layout a colonna su schermi piccoli */
     .image-text-container {
