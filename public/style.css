@@ -10,6 +10,7 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     padding-bottom: 50px;
+    padding-top: 100px;
 }
 
 main {
@@ -125,15 +126,24 @@ p {
 }
 
 /* ======================================= */
-/* 4. SELETTORE LINGUA */
+/* 4. SELETTORE LINGUA (Corretto per Header Fisso) */
 /* ======================================= */
 
 .language-selector {
-    margin-top: 20px;
+    /* ✨ CORREZIONE CRITICA: Posizionamento assoluto all'interno del genitore fisso (.main-header) */
+    position: absolute; 
+    top: 50%; /* Sposta il blocco a metà altezza dell'header */
+    right: 15px; /* Lo sposta a destra, lontano dal bordo */
+    transform: translateY(-50%); /* Centra perfettamente verticalmente */
+    
+    /* Regole Flex mantenute per l'allineamento orizzontale */
     display: flex;
     gap: 10px;
-    padding: 10px 0;
-    border-top: 1px solid #eee;
+    padding: 0; /* Rimosso padding superfluo se posizionato in alto */
+    
+    /* Rimosso border-top e margin-top che sono superflui per un elemento fisso */
+    border-top: none; 
+    margin-top: 0;
 }
 
 .language-selector button {
@@ -149,7 +159,6 @@ p {
     border: 1px solid #ccc;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
 /* ======================================= */
 /* 5. LAYOUT IMMAGINI RESPONSIVE */
 /* ======================================= */
