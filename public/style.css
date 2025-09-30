@@ -10,8 +10,8 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     padding-bottom: 50px;
-    /* Spazio per l'header fisso (60px) */
-    padding-top: 60px;
+    /* ✨ CORREZIONE: Imposta il padding-top in base all'altezza fissa dell'header (60px + margine) */
+    padding-top: 70px;
 }
 
 main {
@@ -43,25 +43,29 @@ p {
     width: 100%;
     z-index: 1000; 
     
-    /* Altezza fissa */
+    /* ✨ CORREZIONE: Altezza fissa e sfondo bianco, elimina padding interno superfluo */
     height: 60px;
     background-color: #ffffff;
+    padding: 0; /* Rimosso padding interno che faceva collassare l'altezza */
     
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     
-    /* Layout Flexbox principale per allineamento */
+    /* Necessario per posizionare gli elementi interni (Hamburger, Bandiere) */
     display: flex;
     align-items: center; 
-    padding: 0 15px; 
 }
 
 
 /* ======================================= */
-/* 2. MENU HAMBURGER (Mobile/A Scomparsa) */
+/* 2. MENU HAMBURGER (Stili unificati) */
 /* ======================================= */
 
-/* Pulsante Hamburger (Visibile di default, nascosto su desktop) */
+/* Pulsante Hamburger */
 .menu-toggle {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
     width: 30px;
     height: 24px;
     background: none;
@@ -72,12 +76,6 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
-    /* ✨ CORREZIONE MOBILE: Rimuovi il margine a destra che interferiva */
-    margin-right: 0; 
-    
-    /* Forza la posizione su mobile */
-    order: 1;
 }
 
 /* Barre orizzontali */
@@ -85,15 +83,22 @@ p {
     display: block;
     width: 100%;
     height: 3px;
+    /* ✨ CORREZIONE: Colore scuro per contrastare lo sfondo bianco dell'header */
     background-color: #333; 
     border-radius: 2px;
     transition: all 0.3s ease-in-out;
 }
 
 /* Animazione X */
-.menu-toggle.active .bar:nth-child(2) { opacity: 0; }
-.menu-toggle.active .bar:nth-child(1) { transform: translateY(10.5px) rotate(45deg); }
-.menu-toggle.active .bar:nth-child(3) { transform: translateY(-10.5px) rotate(-45deg); }
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+}
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+}
 
 /* Menu Navigazione a Scomparsa (.nav-list) */
 .nav-list {
@@ -103,28 +108,31 @@ p {
     width: 70%; 
     max-width: 300px;
     height: 100%; 
-    background-color: #222222; 
+    background-color: #222222; /* Sfondo scuro per contrasto */
     
-    padding-top: 60px; 
-    transform: translateX(-100%); 
+    /* ✨ CORREZIONE: Usa 'transform' per l'animazione di entrata/uscita */
+    padding-top: 60px; /* Spazio per l'header fisso */
+    transform: translateX(-100%); /* Nascosto a sinistra */
     transition: transform 0.4s ease-in-out;
     
     z-index: 500; 
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-    display: block;
+    
+    /* Forziamo un layout a scomparsa */
+    display: block; /* Deve essere 'display: block' per usare transform */
 }
 
 .nav-list.active {
-    transform: translateX(0);
+    transform: translateX(0); /* Mostrato */
 }
 
-/* Stile per i link interni del menu a scomparsa */
+/* Stile per i link interni */
 .nav-list .nav-links {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Link uno sotto l'altro */
 }
 
 .nav-list .nav-links li {
@@ -133,7 +141,7 @@ p {
 }
 
 .nav-list .nav-links a {
-    color: #ffffff !important; 
+    color: #ffffff !important; /* Testo bianco su sfondo scuro */
     text-decoration: none;
     padding: 15px 20px;
     display: block;
@@ -151,14 +159,14 @@ p {
 /* ======================================= */
 
 .language-selector {
+    position: absolute; 
+    top: 50%; 
+    right: 15px; 
+    transform: translateY(-50%); 
     display: flex;
     gap: 10px;
     padding: 0; 
     z-index: 1001;
-    
-    /* Spinge a destra su mobile */
-    margin-left: auto; 
-    order: 2;
 }
 
 .language-selector button {
@@ -243,83 +251,18 @@ p {
 /* ======================================= */
 
 @media screen and (min-width: 768px) {
-    /* 1. NASCONDI IL PULSANTE HAMBURGER SU DESKTOP */
+    /* ✨ NUOVA REGOLA: Nascondi hamburger su desktop se non lo usi */
     .menu-toggle {
         display: none !important;
     }
     
-    /* 2. TRASFORMA LA LISTA A SCOMPARSA IN MENU ORIZZONTALE */
+    /* Se non hai un menu desktop separato, assicurati che nav-list sia nascosto */
     .nav-list {
-        /* Rimuovi tutte le proprietà di menu a scomparsa */
-        position: static; 
-        height: auto;
-        width: auto;
-        background: none;
-        transform: none; 
-        box-shadow: none;
-        padding-top: 0;
-
-        /* Imposta la navigazione orizzontale */
-        display: block !important;
-        margin-left: auto; /* Spinge il menu verso destra */
-        order: 1; 
-    }
-
-    /* 3. Stile della LISTA di link orizzontali */
-    .nav-list .nav-links {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex; /* Flexbox per disporre gli <li> orizzontalmente */
-        flex-direction: row; 
-        align-items: center;
-        height: 60px; /* Altezza dell'header */
-    }
-    
-    /* 4. Stile degli ITEM della lista (li) */
-    .nav-list .nav-links li {
-        border-bottom: none;
-        margin: 0 5px; 
-        white-space: nowrap; 
-    }
-
-    /* 5. Stile dei LINK (a) su desktop */
-    .nav-list .nav-links a {
-        color: #333 !important; 
-        padding: 10px 15px; 
-        font-size: 1em;
-        line-height: normal; 
-        border-radius: 4px;
-    }
-
-    .nav-list .nav-links a:hover {
-        background-color: #eee;
-    }
-
-    /* 6. Posizionamento delle Bandiere a destra del menu */
-    .language-selector {
-        position: static;
-        transform: none;
-        margin-left: 15px; /* Spazio dal menu */
-        order: 2;
+        display: none !important;
     }
 }
 
-
 @media (max-width: 768px) {
-    /* ✨ CORREZIONE MOBILE: Rimuovi le regole di order forzate che causavano lo spostamento
-       e lascia che la struttura HTML e il Flexbox principale (justify-content: space-between)
-       facciano il lavoro, assicurandoti che l'hamburger sia a sinistra e le bandiere a destra. */
-       
-    .main-header {
-        /* Assicura che ci sia spazio tra gli elementi: hamburger a sinistra, bandiere a destra */
-        justify-content: space-between;
-    }
-    
-    /* Rimuoviamo gli 'order' per il .menu-toggle e .language-selector
-       e lasciamo che .menu-toggle sia il primo elemento nell'HTML.
-       La regola in .language-selector margin-left: auto; spinge le bandiere all'estrema destra. */
-       
     /* Layout a colonna su schermi piccoli */
     .image-text-container {
         flex-direction: column;
