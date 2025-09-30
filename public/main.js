@@ -264,19 +264,19 @@ const toggleAudio = () => {
     const audioPlayer = document.getElementById('audioPlayer');
     const playButton = document.getElementById('playAudio');
 
-    if (!audioPlayer || !playButton) return;
-
+    playButton.addEventListener('click', function() {
     if (audioPlayer.paused) {
         audioPlayer.play();
-        playButton.textContent = playButton.dataset.pauseText;
-        playButton.classList.remove('play-style');
+        // Aggiunge lo stile di PAUSA (rosso) e rimuove lo stile di PLAY (blu)
         playButton.classList.add('pause-style');
+        playButton.classList.remove('play-style');
     } else {
         audioPlayer.pause();
-        playButton.textContent = playButton.dataset.playText;
-        playButton.classList.remove('pause-style');
+        // Aggiunge lo stile di PLAY (blu) e rimuove lo stile di PAUSA (rosso)
         playButton.classList.add('play-style');
+        playButton.classList.remove('pause-style');
     }
+});
 };
 
 // Imposta la lingua di default al caricamento della pagina
