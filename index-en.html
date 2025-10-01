@@ -86,6 +86,8 @@
             // Legge la lingua dall'attributo <html lang="en">, ecc.
             const currentPageLang = document.documentElement.lang;
 
+            let shouldRedirect = false; // Flag di controllo
+
             // Reindirizza SOLO se la lingua del browser è DIVERSA da quella della pagina corrente
             if (langCode !== currentPageLang) {
 
@@ -94,13 +96,21 @@
                 // Reindirizza se la lingua del browser è supportata e non siamo già nella destinazione
                 if (destinationPage !== getDestinationPageName(currentPageLang)) {
                     window.location.replace(destinationPage);
+                    shouldRedirect = true;
                 }
+            }
+
+            // 🛑 Chiama la funzione di caricamento solo SE NON C'È STATO REINDIRIZZAMENTO AUTOMATICO
+            // (La funzione 'loadContentForLanguage' è definita nel tuo main.js)
+            if (!shouldRedirect && typeof loadContentForLanguage === 'function') {
+                // Usa la lingua della pagina corrente per caricare i contenuti (es. 'en' per index-en.html)
+                const langToLoad = document.documentElement.lang;
+                loadContentForLanguage(langToLoad);
             }
         });
 
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera nell'HTML)
         function setLanguage(langCode) {
-            // La logica di reindirizzamento e navigazione avviene qui
             const destinationPage = getDestinationPageName(langCode);
             window.location.href = destinationPage;
         }
