@@ -69,39 +69,45 @@
         }
     </style>
 
-    <script>
-        // 🛠️ FUNZIONE HELPER: Corregge il targeting del file 'it'
-        function getDestinationPageName(langCode) {
-            if (langCode === 'it') {
-                return 'index.html'; // Destinazione italiana corretta
-            }
-            return `index-${langCode}.html`;
+<script>
+    // 🛠️ FUNZIONE HELPER: Corregge il targeting del file 'it'
+    function getDestinationPageName(langCode) {
+        if (langCode === 'it') {
+            return 'index.html';
         }
+        return `index-${langCode}.html`;
+    }
 
-        // ➡️ REINDIRIZZAMENTO AUTOMATICO (Controlla lingua browser e reindirizza se non è italiano)
-        document.addEventListener('DOMContentLoaded', function () {
-            const userLang = navigator.language || navigator.userLanguage;
-            const langCode = userLang.toLowerCase().split('-')[0];
+    // ➡️ REINDIRIZZAMENTO AUTOMATICO (Controlla lingua browser e reindirizza se non è italiano)
+    document.addEventListener('DOMContentLoaded', function () {
+        const userLang = navigator.language || navigator.userLanguage;
+        const langCode = userLang.toLowerCase().split('-')[0];
+        
+        const supportedLangs = ['en', 'fr', 'es'];
+        let shouldRedirect = false; // Flag di controllo
 
-            const supportedLangs = ['en', 'fr', 'es']; // Lingue verso cui reindirizzare
-
-            if (supportedLangs.includes(langCode)) {
-                const destinationPage = getDestinationPageName(langCode);
-
-                // Reindirizza se si è sulla pagina principale (index.html)
-                if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
-                    window.location.replace(destinationPage);
-                }
-            }
-        });
-
-        // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera nell'HTML)
-        function setLanguage(langCode) {
-            // La logica di reindirizzamento e navigazione avviene qui
+        if (supportedLangs.includes(langCode)) {
             const destinationPage = getDestinationPageName(langCode);
-            window.location.href = destinationPage;
+
+            if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+                window.location.replace(destinationPage);
+                shouldRedirect = true;
+            }
         }
-    </script>
+        
+        // 🛑 Chiama la funzione di caricamento solo SE NON C'È STATO REINDIRIZZAMENTO AUTOMATICO
+        if (!shouldRedirect && typeof loadContentForLanguage === 'function') {
+            const savedLang = localStorage.getItem('userLanguage') || document.documentElement.lang;
+            loadContentForLanguage(savedLang);
+        }
+    });
+
+    // ... (La funzione setLanguage rimane identica) ...
+    function setLanguage(langCode) {
+        const destinationPage = getDestinationPageName(langCode);
+        window.location.href = destinationPage;
+    }
+</script>
 
     <link rel="stylesheet" href="public/style.css">
 </head>
