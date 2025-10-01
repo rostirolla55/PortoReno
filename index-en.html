@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Porto neighborhood</title>
-    <img src="public/images/Panorama_Bologna.jpg" alt="Panorama di Bologna" style="width:100%;">
-    <link rel="stylesheet" href="public/style.css">
+    <title>Welcome to the Porto district</title>
+
     <style>
-        /* Passo A: Stile per il contenitore principale */
+        /* ------------------------------------------ */
+        /* STILI INLINE PER LA STABILITÀ DELL'HEADER */
+        /* ------------------------------------------ */
+        .main-header {
+            /* Rende il menu fisso nella parte alta della finestra */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Regola per spostare il body sotto il menu fisso */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            padding-bottom: 50px;
+            /* Altezza esatta dell'header fissato (60px) */
+            padding-top: 60px;
+        }
+
+        /* Stili dell'immagine */
         .header-image-container {
             position: relative;
             width: 100%;
@@ -16,14 +42,13 @@
             margin-bottom: 20px;
         }
 
-        /* Passo B: Stile per l'immagine */
         .header-image-container img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        /* Passo C: Stile per il titolo sovrapposto - Stile DEFAULT (Desktop) */
+        /* Stile per il titolo sovrapposto */
         .header-title {
             position: absolute;
             left: 50%;
@@ -36,68 +61,107 @@
             z-index: 10;
         }
 
-        /* MEDIA QUERY per Schermi Piccoli (Smartphone) */
         @media screen and (max-width: 600px) {
             .header-title {
                 font-size: 1.8em;
-                /* Ridimensiona il font per non troncare */
                 top: 10px;
             }
         }
     </style>
+
+    <script>
+        // Funzione per reindirizzamento automatico
+        document.addEventListener('DOMContentLoaded', function () {
+            const userLang = navigator.language || navigator.userLanguage;
+            const langCode = userLang.toLowerCase().split('-')[0];
+
+            const supportedLangs = ['it', 'fr', 'es'];
+
+            if (supportedLangs.includes(langCode)) {
+                const pathParts = window.location.pathname.split('/');
+                let currentPageName = pathParts.pop();
+                if (currentPageName === '' || currentPageName.startsWith('index-en')) currentPageName = 'index-en.html';
+
+                const destinationPage = `index-${langCode}.html`;
+
+                if (langCode !== 'en' && currentPageName !== destinationPage) {
+                    window.location.replace(destinationPage);
+                }
+            }
+        });
+
+        // Funzione per cambiare lingua (usata dai pulsanti)
+        function setLanguage(langCode) {
+            window.location.href = `index-${langCode}.html`;
+        }
+    </script>
+
+    <link rel="stylesheet" href="public/style.css">
 </head>
 
 <body id="home">
 
     <header class="main-header">
-        <nav class="main-nav">
-            <button class="menu-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            <ul class="nav-list" id="navList">
-                <li><a id="navHome" href="index.html"></a></li>
-                <li><a id="navAneddoti" href="aneddoti.html"></a></li>
-                <li><a id="navLastre" href="lastre.html"></a></li><!--  -->
-                <li><a id="navPugliole" href="pugliole.html"></a></li>
+
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="nav-bar nav-list">
+            <ul class="nav-links">
+                <li><a id="navHome" href="index-en.html">Home</a></li>
+                <li><a id="navPugliole" href="pugliole-en.html">Pugliole</a></li>
+                <li><a id="navLastre" href="lastre-en.html">Lastre</a></li>
+                <li><a id="navAneddoti" href="aneddoti-en.html">Anecdotes</a></li>
             </ul>
         </nav>
+
+        <div class="language-selector">
+            <button onclick="setLanguage('it')">
+                <img src="public/flag/it.png" alt="Italiano">
+            </button>
+            <button onclick="setLanguage('en')">
+                <img src="public/flag/en.png" alt="English">
+            </button>
+            <button onclick="setLanguage('fr')">
+                <img src="public/flag/fr.png" alt="Français">
+            </button>
+            <button onclick="setLanguage('es')">
+                <img src="public/flag/es.png" alt="Español">
+            </button>
+        </div>
     </header>
 
-    <p id="mainText">Applicazione in errore per la linga en ...</p>
-    <p id="mainText1"></p>
-    <p id="mainText2"></p>
-    <p id="mainText3"></p>
-    <p id="mainText4"></p>
-    <p id="mainText5"></p>
-    <img id="pageImage1" src="" style="display:none;">
-    <img id="pageImage2" src="" style="display:none;">
-    <img id="pageImage3" src="" style="display:none;">
-    <img id="pageImage4" src="" style="display:none;">
-    <img id="pageImage5" src="" style="display:none;">
 
-    <button id="playAudio">Ascolta l'audio in italiano!</button>
-
-    <audio id="audioPlayer"></audio>
-    <p>
-    <p>
-
-    </p>
-    <div class="language-selector">
-        <button onclick="setLanguage('it')">
-            <img src="public/flag/it.png" alt="Italiano">
-        </button>
-        <button onclick="setLanguage('en')">
-            <img src="public/flag/en.png" alt="English">
-        </button>
-        <button onclick="setLanguage('fr')">
-            <img src="public/flag/fr.png" alt="Français">
-        </button>
-        <button onclick="setLanguage('es')">
-            <img src="public/flag/es.png" alt="Español">
-        </button>
+    <div class="header-image-container">
+        <img src="public/images/Panorama_Bologna.jpg" alt="Bologna Panorama">
+        <h1 class="header-title" id="pageTitle">Welcome to the Porto district</h1>
     </div>
+
+    <main class="content-body">
+        <p id="mainText">The Porto district, the beating heart of Bologna, is a crossroads of history, culture, and
+            modernity. Famous for its ancient arcaded streets and proximity to the historic center, it offers an
+            authentic experience of Bolognese life. Explore its main sections: Pugliole, Lastre, and the anecdotes that
+            have shaped its identity.</p>
+        <p id="mainText1">This is a welcome page. Use the menu to navigate through the 40 detail pages.</p>
+        <p id="mainText2"></p>
+        <p id="mainText3">The district's history is rich and fascinating, from the artisan workshops of the past to the
+            renovated urban spaces that now host student residences and innovative start-ups. It is a place where the
+            past meets the future.</p>
+        <p id="mainText4"></p>
+        <p id="mainText5">Don't forget to activate the audio for an immersive experience!</p>
+
+        <button id="playAudio" class="play-style">Listen to the audio in English!</button>
+        <audio id="audioPlayer"></audio>
+
+        <img id="pageImage1" src="" style="display:none;">
+        <img id="pageImage2" src="" style="display:none;">
+        <img id="pageImage3" src="" style="display:none;">
+        <img id="pageImage4" src="" style="display:none;">
+        <img id="pageImage5" src="" style="display:none;">
+    </main>
 
     <script src="public/main.js"></script>
 </body>
