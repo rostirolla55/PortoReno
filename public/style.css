@@ -117,6 +117,7 @@ body {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* Stili Mobile/Hamburger (Si applicano di default) */
 .nav-bar {
     position: fixed;
     top: 0;
@@ -124,43 +125,40 @@ body {
     width: 100%;
     height: 100%;
     
-    /* 🔥 FIX 1: Fondo nero opaco */
+    /* FIX: Fondo nero opaco e non trasparente */
     background-color: #000000; 
     
-    transform: translateX(-100%); 
+    transform: translateX(-100%); /* Nascosto per default */
     transition: transform 0.3s ease-in-out;
     padding-top: 60px; /* Spazio sotto l'header */
     z-index: 999;
-    overflow-y: auto; /* Consente lo scorrimento del menu */
+    overflow-y: auto; 
 }
 
 .nav-bar.active {
-    transform: translateX(0);
+    transform: translateX(0); /* Mostrato quando ha la classe 'active' */
 }
 
+/* Link del menu in colonna */
 .nav-bar .nav-links {
     list-style: none;
     margin: 0; 
     padding: 0; 
-    display: flex;
-    flex-direction: column;
+    display: flex; /* Mantiene flexbox */
+    flex-direction: column; /* FORZA la colonna */
     text-align: center;
 }
 
 .nav-bar .nav-links li a {
-    color: white;
+    color: white; /* I link sono bianchi sullo sfondo nero */
     text-decoration: none;
     font-size: 1.2em;
     display: block;
     padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Se vuoi eliminare le righe alternate, RIMUOVI questa riga: */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
 }
-
-/* 🔥 FIX 2: Spinge il primo link (Home) più in basso per non farlo coprire */
-.nav-bar .nav-links li:first-child a {
-    padding-top: 25px; 
-}
-
 
 /* --- Selettore Lingua --- */
 .language-selector button {
