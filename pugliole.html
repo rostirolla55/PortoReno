@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it"> 
 <head>
     <meta charset="UTF-8">
-    <title>Caricamento Sito...</title>
+    <title>Caricamento Pagina Pugliole...</title>
     
     <script>
+        // *** CAMBIA SOLO LA STRINGA QUI SOTTO PER LE ALTRE PAGINE ***
         function getDestinationPageName(langCode) {
-            return `index-${langCode}.html`;
+            return `pugliole-${langCode}.html`; 
         }
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             const savedLang = localStorage.getItem('userLanguage');
             const userLang = navigator.language || navigator.userLanguage;
@@ -22,13 +23,13 @@
             } else if (supportedLangs.includes(browserLangCode)) {
                  finalLangCode = browserLangCode;
             }
-
+            
             const destinationPage = getDestinationPageName(finalLangCode);
             window.location.replace(destinationPage);
         });
     </script>
 </head>
 <body>
-    <p>Reindirizzamento alla pagina corretta in base alla lingua del browser...</p>
+    <p>Reindirizzamento in corso...</p>
 </body>
 </html>
