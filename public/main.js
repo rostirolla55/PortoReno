@@ -79,7 +79,8 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 const checkProximity = (position) => {
     const userLat = position.coords.latitude;
     const userLon = position.coords.longitude;
-    const userLang = document.documentElement.lang || 'it';
+    // Usa l'attributo lang dell'HTML per determinare la lingua corrente
+    const currentLang = document.documentElement.lang || 'it'; 
 
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
@@ -90,8 +91,8 @@ const checkProximity = (position) => {
             const currentPath = window.location.pathname;
             let targetPage = `${location.id}.html`;
 
-            if (userLang !== 'it') {
-                targetPage = `${location.id}-${userLang}.html`;
+            if (currentLang !== 'it') {
+                targetPage = `${location.id}-${currentLang}.html`;
             }
 
             if (!currentPath.includes(targetPage)) {
@@ -126,20 +127,21 @@ const startGeolocation = () => {
 // ===========================================
 
 
-// ===========================================
-// 3. FUNZIONE setLanguage (CORRETTA)
-// ===========================================
+// =================================================================================
+// 3. FUNZIONE loadContentForLanguage (Gestisce SOLO il caricamento dei contenuti)
+// ⚠️ Rimosso il reindirizzamento e i click della bandiera, gestiti nell'HTML in linea
+// =================================================================================
 
-const setLanguage = async (lang) => {
+const loadContentForLanguage = async (lang) => {
 
     if (audioPlayer) {
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
     }
 
-    // FIX CRUCIALE: Salva e imposta la lingua immediatamente, prima del fetch
+    // FIX CRUCIALE: Imposta la lingua nell'attributo HTML, utile per il GPS
+    document.documentElement.lang = lang; 
     localStorage.setItem('userLanguage', lang);
-    document.documentElement.lang = lang;
 
     try {
         const pageId = getCurrentPageId();
@@ -156,6 +158,14 @@ const setLanguage = async (lang) => {
 
         // AGGIORNAMENTO NAVIGAZIONE (MENU)
         if (data.nav) {
+            // I link nella navbar devono puntare alla versione localizzata (es. pugliole-en.html)
+            const suffix = lang === 'it' ? '' : `-${lang}`;
+            document.getElementById('navHome').href = `index${suffix}.html`;
+            document.getElementById('navAneddoti').href = `aneddoti${suffix}.html`;
+            document.getElementById('navLastre').href = `lastre${suffix}.html`;
+            document.getElementById('navPugliole').href = `pugliole${suffix}.html`;
+
+            // Aggiorna il testo dei link
             updateTextContent('navHome', data.nav.navHome);
             updateTextContent('navAneddoti', data.nav.navAneddoti);
             updateTextContent('navLastre', data.nav.navLastre);
@@ -204,7 +214,8 @@ const setLanguage = async (lang) => {
 
             if (imageElement) {
                 imageElement.src = imageSource || '';
-                imageElement.style.display = imageSource ? 'block' : 'none';
+                // Mostra o nasconde l'immagine in base al fatto che esista una sorgente
+                imageElement.style.display = imageSource ? 'block' : 'none'; 
             }
         };
 
@@ -214,7 +225,7 @@ const setLanguage = async (lang) => {
         updateImage(4, pageData);
         updateImage(5, pageData);
 
-        console.log(`Lingua impostata su: ${lang}`);
+        console.log(`Contenuto caricato per la lingua: ${lang}`);
 
     } catch (error) {
         console.error('Errore critico nel caricamento dei testi:', error);
@@ -224,14 +235,14 @@ const setLanguage = async (lang) => {
 
 
 // ===========================================
-// 4. GESTIONE PLAY/PAUSE AUDIO (CORRETTA)
+// 4. GESTIONE PLAY/PAUSE AUDIO
 // ===========================================
 
 const setupAudioControl = () => {
     if (audioPlayer && playButton) {
         // Logica per il click Play/Pause (toggle)
         playButton.addEventListener('click', function() {
-            // I testi sono letti dai data-attributes impostati in setLanguage
+            // I testi sono letti dai data-attributes impostati in loadContentForLanguage
             const currentPlayText = playButton.dataset.playText || "Ascolta l'audio";
             const currentPauseText = playButton.dataset.pauseText || "Metti in pausa";
 
@@ -271,9 +282,8 @@ const setupAudioControl = () => {
 // 5. INIZIALIZZAZIONE (window.onload)
 // ===========================================
 
-// Gestione del menu a scomparsa e dell'evento 'ended'
 document.addEventListener('DOMContentLoaded', () => {
-    // 🔥 NUOVA LOGICA MENU HAMBURGER
+    // 🔥 LOGICA MENU HAMBURGER: Gestisce il menu a scomparsa
     const menuToggle = document.querySelector('.menu-toggle');
     const navList = document.querySelector('.nav-list');
 
@@ -292,8 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Avvia il monitoraggio GPS
     startGeolocation(); 
 
-    // Carica la lingua salvata, altrimenti usa 'it'
+    // Carica la lingua salvata dall'ultima sessione, altrimenti usa 'it'
     const savedLang = localStorage.getItem('userLanguage') || 'it';
-    setLanguage(savedLang);
     
+    // Carica i contenuti (titoli, testi, audio source, immagini) nella lingua salvata.
+    // L'HTML si occupa del reindirizzamento tra pagine (es. index.html -> index-en.html).
+    loadContentForLanguage(savedLang);
 });
