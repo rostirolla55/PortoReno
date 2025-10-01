@@ -70,29 +70,39 @@
     </style>
 
     <script>
-        // Funzione per reindirizzamento automatico
+        // 🛠️ FUNZIONE HELPER: Corregge il targeting del file 'it'
+        function getDestinationPageName(langCode) {
+            if (langCode === 'it') {
+                return 'index.html';
+            }
+            return `index-${langCode}.html`;
+        }
+
+        // ➡️ REINDIRIZZAMENTO AUTOMATICO (solo se il browser NON corrisponde alla pagina)
         document.addEventListener('DOMContentLoaded', function () {
             const userLang = navigator.language || navigator.userLanguage;
             const langCode = userLang.toLowerCase().split('-')[0];
 
-            const supportedLangs = ['it', 'fr', 'es'];
+            // Determina la lingua della pagina corrente in base al nome del file (es. 'en' per index-en.html)
+            const currentPageLang = document.documentElement.lang;
 
-            if (supportedLangs.includes(langCode)) {
-                const pathParts = window.location.pathname.split('/');
-                let currentPageName = pathParts.pop();
-                if (currentPageName === '' || currentPageName.startsWith('index-en')) currentPageName = 'index-en.html';
+            // Se la lingua del browser NON corrisponde alla lingua della pagina corrente
+            if (langCode !== currentPageLang) {
 
-                const destinationPage = `index-${langCode}.html`;
+                const destinationPage = getDestinationPageName(langCode);
+                const currentPage = getDestinationPageName(currentPageLang);
 
-                if (langCode !== 'en' && currentPageName !== destinationPage) {
+                // Reindirizza SOLO se la lingua del browser è supportata
+                if (destinationPage !== currentPage) {
                     window.location.replace(destinationPage);
                 }
             }
         });
 
-        // Funzione per cambiare lingua (usata dai pulsanti)
+        // 🖱️ CAMBIO MANUALE LINGUA (per i pulsanti bandiera)
         function setLanguage(langCode) {
-            window.location.href = `index-${langCode}.html`;
+            const destinationPage = getDestinationPageName(langCode);
+            window.location.href = destinationPage;
         }
     </script>
 

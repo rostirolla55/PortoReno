@@ -70,30 +70,35 @@
     </style>
 
     <script>
-        // Funzione per reindirizzamento automatico
+        // 🛠️ FUNZIONE HELPER: Corregge il targeting del file 'it'
+        function getDestinationPageName(langCode) {
+            if (langCode === 'it') {
+                return 'index.html';
+            }
+            return `index-${langCode}.html`;
+        }
+
+        // ➡️ REINDIRIZZAMENTO AUTOMATICO (solo se il browser è in lingua supportata MA NON ITALIANO)
         document.addEventListener('DOMContentLoaded', function () {
             const userLang = navigator.language || navigator.userLanguage;
             const langCode = userLang.toLowerCase().split('-')[0];
-            
-            const supportedLangs = ['en', 'fr', 'es']; 
-            
-            if (supportedLangs.includes(langCode)) {
-                const pathParts = window.location.pathname.split('/');
-                let currentPageName = pathParts.pop(); 
-                if (currentPageName === '' || currentPageName === 'index.html') currentPageName = 'index.html';
-                
-                const destinationPage = `index-${langCode}.html`;
 
-                // Evita il reindirizzamento se siamo già nella pagina italiana
-                if (langCode !== 'it' && currentPageName !== destinationPage) {
+            const supportedLangs = ['en', 'fr', 'es']; // Lingue VERSO cui reindirizzare
+
+            if (supportedLangs.includes(langCode)) {
+                const destinationPage = getDestinationPageName(langCode);
+
+                // Se siamo su index.html e la lingua browser non è 'it', reindirizza
+                if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
                     window.location.replace(destinationPage);
                 }
             }
         });
-        
-        // Funzione per cambiare lingua (usata dai pulsanti)
+
+        // 🖱️ CAMBIO MANUALE LINGUA (per i pulsanti bandiera)
         function setLanguage(langCode) {
-            window.location.href = `index-${langCode}.html`;
+            const destinationPage = getDestinationPageName(langCode);
+            window.location.href = destinationPage;
         }
     </script>
 
@@ -103,20 +108,20 @@
 <body id="home">
 
     <header class="main-header">
-        
+
         <button class="menu-toggle" aria-label="Toggle menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
-        
-        <nav class="nav-bar nav-list"> 
+
+        <nav class="nav-bar nav-list">
             <ul class="nav-links">
                 <li><a id="navHome" href="index.html">Home</a></li>
                 <li><a id="navPugliole" href="pugliole.html">Pugliole</a></li>
                 <li><a id="navLastre" href="lastre.html">Lastre</a></li>
                 <li><a id="navAneddoti" href="aneddoti.html">Aneddoti</a></li>
-                </ul>
+            </ul>
         </nav>
 
         <div class="language-selector">
@@ -141,11 +146,17 @@
         <h1 class="header-title" id="pageTitle">Benvenuti al quartiere Porto</h1>
     </div>
 
-    <main class="content-body"> 
-        <p id="mainText">Il quartiere Porto, cuore pulsante di Bologna, è un crocevia di storia, cultura e modernità. Famoso per le sue antiche vie porticate e la vicinanza al centro storico, offre un'esperienza autentica della vita bolognese. Esplora le sue sezioni principali: le Pugliole, le Lastre e gli aneddoti che ne hanno plasmato l'identità.</p>
-        <p id="mainText1">Questa è una pagina di benvenuto. Utilizza il menu per navigare tra le 40 pagine di approfondimento.</p>
+    <main class="content-body">
+        <p id="mainText">Il quartiere Porto, cuore pulsante di Bologna, è un crocevia di storia, cultura e modernità.
+            Famoso per le sue antiche vie porticate e la vicinanza al centro storico, offre un'esperienza autentica
+            della vita bolognese. Esplora le sue sezioni principali: le Pugliole, le Lastre e gli aneddoti che ne hanno
+            plasmato l'identità.</p>
+        <p id="mainText1">Questa è una pagina di benvenuto. Utilizza il menu per navigare tra le 40 pagine di
+            approfondimento.</p>
         <p id="mainText2"></p>
-        <p id="mainText3">La storia del quartiere è ricca e affascinante, dalle botteghe artigiane di un tempo agli spazi urbani rinnovati che vedono oggi la presenza di studentati e start-up innovative. È un luogo dove il passato incontra il futuro.</p>
+        <p id="mainText3">La storia del quartiere è ricca e affascinante, dalle botteghe artigiane di un tempo agli
+            spazi urbani rinnovati che vedono oggi la presenza di studentati e start-up innovative. È un luogo dove il
+            passato incontra il futuro.</p>
         <p id="mainText4"></p>
         <p id="mainText5">Non dimenticare di attivare l'audio per un'esperienza immersiva!</p>
 
@@ -157,7 +168,7 @@
         <img id="pageImage4" src="" style="display:none;">
         <img id="pageImage5" src="" style="display:none;">
     </main>
-    
+
     <script src="public/main.js"></script>
 </body>
 
