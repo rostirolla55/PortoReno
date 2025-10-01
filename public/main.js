@@ -4,28 +4,29 @@
 const ARCO_LOCATIONS = [
     { id: 'lastre', lat: 44.49925278, lon: 11.34074444, distanceThreshold: 20 }
 ];
+
 // ===========================================
-// VARIABILI GLOBALI
+// VARIABILI GLOBALI (Dichiarate, non inizializzate subito)
 // ===========================================
-const audioPlayer = document.getElementById('audioPlayer');
-const playButton = document.getElementById('playAudio');
+let audioPlayer;
+let playButton;
 
 
 // ===========================================
 // FUNZIONI UTILITY
 // ===========================================
 
-// Restituisce l'ID base della pagina (es. 'index', 'pugliole') leggendolo dall'ID del body
+// Restituisce l'ID base della pagina (es. 'home', 'pugliole') leggendolo dall'ID del body
 const getCurrentPageId = () => {
-    // Legge l'ID dal tag body (es. <body id="pugliole">)
+    // Legge l'ID dal tag body (es. <body id="home">)
     const bodyId = document.body.id;
     if (bodyId) {
         return bodyId.toLowerCase();
     }
-    // Fallback se l'ID non è impostato
+    // Fallback se l'ID non è impostato o è index, usa 'home'
     const path = window.location.pathname;
     let baseId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
-    return baseId || 'index'; 
+    return baseId || 'home'; 
 };
 
 // Aggiorna il testo solo se l'elemento esiste
@@ -42,11 +43,10 @@ const updateTextContent = (id, value) => {
 
 const loadContent = async (lang) => {
 
-    // Aggiorna l'attributo lang dell'HTML per coerenza
     document.documentElement.lang = lang; 
 
     try {
-        const pageId = getCurrentPageId(); // ID del body (es. 'index', 'pugliole')
+        const pageId = getCurrentPageId();
 
         const response = await fetch(`data/translations/${lang}/texts.json`);
 
@@ -108,10 +108,12 @@ const loadContent = async (lang) => {
                  audioPlayer.currentTime = 0;
             }
             
+            // Imposta i testi del bottone
             playButton.textContent = pageData.playAudioButton;
             playButton.dataset.playText = pageData.playAudioButton;
             playButton.dataset.pauseText = pageData.pauseAudioButton;
             
+            // Imposta la sorgente audio
             audioPlayer.src = pageData.audioSource;
             audioPlayer.load();
 
@@ -139,34 +141,47 @@ const loadContent = async (lang) => {
 };
 
 // ===========================================
+// FUNZIONI DI GESTIONE EVENTI AUDIO
+// ===========================================
+
+const handleAudioClick = function() {
+    const currentPlayText = playButton.dataset.playText || "Ascolta";
+    const currentPauseText = playButton.dataset.pauseText || "Pausa";
+
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        playButton.textContent = currentPauseText; 
+        playButton.classList.replace('play-style', 'pause-style');
+    } else {
+        audioPlayer.pause();
+        playButton.textContent = currentPlayText;
+        playButton.classList.replace('pause-style', 'play-style');
+    }
+};
+
+const handleAudioEnded = function() {
+    const currentPlayText = playButton.dataset.playText || "Ascolta";
+    audioPlayer.currentTime = 0; 
+    playButton.textContent = currentPlayText;
+    playButton.classList.replace('pause-style', 'play-style');
+};
+
+
+// ===========================================
 // LOGICA AUDIO E GPS
 // ===========================================
 
 // Gestione Play/Pause (Requisito 3)
 const setupAudioControl = () => {
     if (audioPlayer && playButton) {
-        playButton.addEventListener('click', function() {
-            const currentPlayText = playButton.dataset.playText || "Ascolta";
-            const currentPauseText = playButton.dataset.pauseText || "Pausa";
-
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playButton.textContent = currentPauseText; 
-                playButton.classList.replace('play-style', 'pause-style');
-            } else {
-                audioPlayer.pause();
-                playButton.textContent = currentPlayText;
-                playButton.classList.replace('pause-style', 'play-style');
-            }
-        });
-
-        // Requisito 3: Ritorna ad "ascolta" quando l'audio finisce
-        audioPlayer.addEventListener('ended', function() {
-            const currentPlayText = playButton.dataset.playText || "Ascolta";
-            audioPlayer.currentTime = 0; 
-            playButton.textContent = currentPlayText;
-            playButton.classList.replace('pause-style', 'play-style');
-        });
+        
+        // Rimuovi listener precedenti (più robusto)
+        playButton.removeEventListener('click', handleAudioClick); 
+        audioPlayer.removeEventListener('ended', handleAudioEnded);
+        
+        // Aggiungi listener usando le funzioni nominate
+        playButton.addEventListener('click', handleAudioClick);
+        audioPlayer.addEventListener('ended', handleAudioEnded);
     }
 };
 
@@ -198,7 +213,7 @@ const checkProximity = (position) => {
             console.log(`GPS: Vicino a ${location.id}! Distanza: ${distance.toFixed(1)}m`);
 
             const currentPath = window.location.pathname;
-            const targetPage = `${location.id}-${currentLang}.html`; // Coerenza nome file
+            const targetPage = `${location.id}-${currentLang}.html`; 
 
             if (!currentPath.includes(targetPage)) {
                 window.location.href = targetPage;
@@ -224,6 +239,11 @@ const startGeolocation = () => {
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // 🔥 ASSEGNAZIONE SICURA DELLE VARIABILI GLOBALI
+    audioPlayer = document.getElementById('audioPlayer');
+    playButton = document.getElementById('playAudio');
+    
     // Gestione Menu Hamburger (Requisito 5)
     const menuToggle = document.querySelector('.menu-toggle');
     const navList = document.querySelector('.nav-list');

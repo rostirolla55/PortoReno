@@ -2,7 +2,8 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding-top: 60px; /* Spazio per l'header fisso */
+    padding-top: 60px;
+    /* Spazio per l'header fisso */
     color: #333;
     line-height: 1.6;
     background-color: #f4f4f4;
@@ -20,7 +21,8 @@ body {
     z-index: 1000;
     background-color: #ffffff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    display: flex; /* Abilita flexbox per allineamento */
+    display: flex;
+    /* Abilita flexbox per allineamento */
     align-items: center;
     justify-content: space-between;
     padding: 0 15px;
@@ -30,12 +32,14 @@ body {
 /* REQUISITO 5: Menu Hamburger (Mobile First) */
 /* ------------------------------------------ */
 .menu-toggle {
-    display: block; /* Mostrato di default su mobile */
+    display: block;
+    /* Mostrato di default su mobile */
     background: none;
     border: none;
     cursor: pointer;
     padding: 10px;
-    z-index: 1001; /* Sopra la nav-bar per chiusura */
+    z-index: 1001;
+    /* Sopra la nav-bar per chiusura */
 }
 
 .menu-toggle .bar {
@@ -53,15 +57,35 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Fondo nero semi-trasparente */
-    transform: translateX(-100%); /* Nascosto fuori dallo schermo */
+    /* 🔥 CORREZIONE 1: Rendi il background completamente opaco (Nero) */
+    background-color: #000000; 
+    /* Fondo nero semi-trasparente */
+    transform: translateX(-100%);
+    /* Nascosto fuori dallo schermo */
     transition: transform 0.3s ease-in-out;
-    padding-top: 60px; 
+    padding-top: 60px; /* Manteniamo il padding per l'intestazione */
     z-index: 999;
+    overflow-y: auto;
+}
+
+/* File: public/style.css (AGGIUNTA) */
+
+/* Assicurati che il contenuto della lista non parta esattamente dal bordo */
+.nav-bar .nav-links {
+    /* Rimuovi l'eventuale margine di default (solitamente presente in <ul>) */
+    margin: 0; 
+    padding: 0; /* Rimuovi il padding di default di ul */
+    list-style: none; /* Rimuovi i pallini */
+}
+
+/* 🛑 Spingi il primo elemento (Home) un po' più in basso rispetto al padding-top: 60px */
+.nav-bar .nav-links li:first-child a {
+    padding-top: 25px; /* Aumenta il padding superiore del PRIMO elemento */
 }
 
 .nav-bar.active {
-    transform: translateX(0); /* Mostrato */
+    transform: translateX(0);
+    /* Mostrato */
 }
 
 .nav-list {
@@ -74,7 +98,8 @@ body {
     display: block;
     padding: 15px 20px;
     text-decoration: none;
-    color: white; /* Scritte in bianco (Requisito 5) */
+    color: white;
+    /* Scritte in bianco (Requisito 5) */
     font-size: 1.2em;
     border-bottom: 1px solid #444;
 }
@@ -83,9 +108,11 @@ body {
 .menu-toggle.active .bar:nth-child(2) {
     opacity: 0;
 }
+
 .menu-toggle.active .bar:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
+
 .menu-toggle.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
 }
@@ -116,20 +143,33 @@ body {
 /* REQUISITO 1: Responsive (Desktop) */
 /* ------------------------------------------ */
 @media screen and (min-width: 768px) {
+
     /* Il menu hamburger scompare su desktop */
     .menu-toggle {
         display: none;
     }
-    
+
     /* La nav-bar si trasforma in barra orizzontale */
     .nav-bar {
-        position: static;
-        width: auto;
-        height: auto;
-        background-color: transparent;
-        transform: translateX(0);
-        padding-top: 0;
-        z-index: auto;
+        position: fixed;
+        top: 0;
+        /* Mantenuto a 0 per coprire l'intera area */
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* Copre l'intera altezza del viewport */
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Fondo nero semi-trasparente */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+
+        /* 🔥 CORREZIONE: Usa il padding per spostare i link SOTTO l'header */
+        padding-top: 60px;
+        /* Deve corrispondere all'altezza di .main-header */
+
+        z-index: 999;
+        /* 🔥 CORREZIONE AGGIUNTIVA: Rendi il contenuto del menu scorrevole se necessario */
+        overflow-y: auto;
     }
 
     .nav-list {
@@ -138,11 +178,12 @@ body {
     }
 
     .nav-list li a {
-        color: #333; /* Testo menu scuro su desktop */
+        color: #333;
+        /* Testo menu scuro su desktop */
         border-bottom: none;
         padding: 10px 0;
     }
-    
+
     /* Assicuriamo che l'header sia ben allineato */
     .main-header {
         justify-content: flex-start;
@@ -151,7 +192,7 @@ body {
 
     /* Sposta il selettore lingua a destra */
     .language-selector {
-        margin-left: auto; 
+        margin-left: auto;
     }
 }
 
@@ -161,7 +202,8 @@ body {
 .header-image-container {
     position: relative;
     width: 100%;
-    max-height: 250px; /* Limita l'altezza per non occupare troppo spazio */
+    max-height: 250px;
+    /* Limita l'altezza per non occupare troppo spazio */
     overflow: hidden;
     margin-bottom: 20px;
 }
@@ -176,7 +218,8 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 50%; /* Centra verticalmente */
+    top: 50%;
+    /* Centra verticalmente */
     transform: translate(-50%, -50%);
     color: white;
     font-size: 2.5em;
@@ -198,7 +241,8 @@ body {
     width: 100%;
     height: auto;
     margin: 20px 0;
-    display: block; /* Sarà gestito da main.js */
+    display: block;
+    /* Sarà gestito da main.js */
 }
 
 /* ------------------------------------------ */
@@ -218,11 +262,13 @@ body {
 }
 
 .play-style {
-    background-color: #007bff; /* Blu */
+    background-color: #007bff;
+    /* Blu */
     color: white;
 }
 
 .pause-style {
-    background-color: #ffc107; /* Giallo/Arancione */
+    background-color: #ffc107;
+    /* Giallo/Arancione */
     color: #333;
 }
