@@ -26,7 +26,7 @@ const getCurrentPageId = () => {
     // Fallback se l'ID non è impostato o è index, usa 'home'
     const path = window.location.pathname;
     let baseId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
-    return baseId || 'home'; 
+    return baseId || 'home';
 };
 
 // Aggiorna il testo solo se l'elemento esiste
@@ -43,7 +43,7 @@ const updateTextContent = (id, value) => {
 
 const loadContent = async (lang) => {
 
-    document.documentElement.lang = lang; 
+    document.documentElement.lang = lang;
 
     try {
         const pageId = getCurrentPageId();
@@ -71,7 +71,7 @@ const loadContent = async (lang) => {
         // AGGIORNAMENTO NAVIGAZIONE (Requisito 5)
         if (data.nav) {
             const suffix = `-${lang}.html`;
-            
+
             // Aggiorna gli href del menu (usando i nuovi nomi file XX-lingua.html)
             document.getElementById('navHome').href = `index${suffix}`;
             document.getElementById('navAneddoti').href = `aneddoti${suffix}`;
@@ -84,7 +84,7 @@ const loadContent = async (lang) => {
             updateTextContent('navLastre', data.nav.navLastre);
             updateTextContent('navPugliole', data.nav.navPugliole);
         }
-        
+
         // AGGIORNAMENTO IMMAGINE DI FONDO TESTATA (Requisito 8)
         const headerImage = document.getElementById('headerImage');
         if (headerImage && pageData.headerImageSource) {
@@ -99,20 +99,32 @@ const loadContent = async (lang) => {
         updateTextContent('mainText3', pageData.mainText3);
         updateTextContent('mainText4', pageData.mainText4);
         updateTextContent('mainText5', pageData.mainText5);
+        // 🔥 AGGIORNAMENTO INFORMAZIONI SULLA FONTE E DATA
+        if (pageData.sourceText) {
+            // Usiamo il testo come etichetta e valore
+            updateTextContent('infoSource', `Fonte: ${pageData.sourceText}`);
+        }
 
+        if (pageData.creationDate) {
+            updateTextContent('infoCreatedDate', pageData.creationDate);
+        }
+
+        if (pageData.lastUpdate) {
+            updateTextContent('infoUpdatedDate', pageData.lastUpdate);
+        }
 
         // AGGIORNAMENTO AUDIO E BOTTONE (Requisito 3)
         if (audioPlayer && playButton && pageData.audioSource) {
             if (!audioPlayer.paused) {
-                 audioPlayer.pause();
-                 audioPlayer.currentTime = 0;
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
             }
-            
+
             // Imposta i testi del bottone
             playButton.textContent = pageData.playAudioButton;
             playButton.dataset.playText = pageData.playAudioButton;
             playButton.dataset.pauseText = pageData.pauseAudioButton;
-            
+
             // Imposta la sorgente audio
             audioPlayer.src = pageData.audioSource;
             audioPlayer.load();
@@ -128,7 +140,7 @@ const loadContent = async (lang) => {
 
             if (imageElement) {
                 imageElement.src = imageSource || '';
-                imageElement.style.display = imageSource ? 'block' : 'none'; 
+                imageElement.style.display = imageSource ? 'block' : 'none';
             }
         }
 
@@ -144,13 +156,13 @@ const loadContent = async (lang) => {
 // FUNZIONI DI GESTIONE EVENTI AUDIO
 // ===========================================
 
-const handleAudioClick = function() {
+const handleAudioClick = function () {
     const currentPlayText = playButton.dataset.playText || "Ascolta";
     const currentPauseText = playButton.dataset.pauseText || "Pausa";
 
     if (audioPlayer.paused) {
         audioPlayer.play();
-        playButton.textContent = currentPauseText; 
+        playButton.textContent = currentPauseText;
         playButton.classList.replace('play-style', 'pause-style');
     } else {
         audioPlayer.pause();
@@ -159,9 +171,9 @@ const handleAudioClick = function() {
     }
 };
 
-const handleAudioEnded = function() {
+const handleAudioEnded = function () {
     const currentPlayText = playButton.dataset.playText || "Ascolta";
-    audioPlayer.currentTime = 0; 
+    audioPlayer.currentTime = 0;
     playButton.textContent = currentPlayText;
     playButton.classList.replace('pause-style', 'play-style');
 };
@@ -174,11 +186,11 @@ const handleAudioEnded = function() {
 // Gestione Play/Pause (Requisito 3)
 const setupAudioControl = () => {
     if (audioPlayer && playButton) {
-        
+
         // Rimuovi listener precedenti (più robusto)
-        playButton.removeEventListener('click', handleAudioClick); 
+        playButton.removeEventListener('click', handleAudioClick);
         audioPlayer.removeEventListener('ended', handleAudioEnded);
-        
+
         // Aggiungi listener usando le funzioni nominate
         playButton.addEventListener('click', handleAudioClick);
         audioPlayer.addEventListener('ended', handleAudioEnded);
@@ -187,7 +199,7 @@ const setupAudioControl = () => {
 
 // Funzioni GPS (Requisito 6.3)
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371e3; 
+    const R = 6371e3;
     const φ1 = lat1 * Math.PI / 180;
     const φ2 = lat2 * Math.PI / 180;
     const Δφ = (lat2 - lat1) * Math.PI / 180;
@@ -198,13 +210,13 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
         Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; 
+    return R * c;
 };
 
 const checkProximity = (position) => {
     const userLat = position.coords.latitude;
     const userLon = position.coords.longitude;
-    const currentLang = document.documentElement.lang || 'it'; 
+    const currentLang = document.documentElement.lang || 'it';
 
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
@@ -213,7 +225,7 @@ const checkProximity = (position) => {
             console.log(`GPS: Vicino a ${location.id}! Distanza: ${distance.toFixed(1)}m`);
 
             const currentPath = window.location.pathname;
-            const targetPage = `${location.id}-${currentLang}.html`; 
+            const targetPage = `${location.id}-${currentLang}.html`;
 
             if (!currentPath.includes(targetPage)) {
                 window.location.href = targetPage;
@@ -225,8 +237,8 @@ const checkProximity = (position) => {
 
 const startGeolocation = () => {
     if (navigator.geolocation && ARCO_LOCATIONS.length > 0) {
-        navigator.geolocation.watchPosition(checkProximity, 
-            (error) => console.warn(`ERRORE GPS: ${error.code}: ${error.message}`), 
+        navigator.geolocation.watchPosition(checkProximity,
+            (error) => console.warn(`ERRORE GPS: ${error.code}: ${error.message}`),
             { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
         );
         console.log("GPS: Monitoraggio avviato.");
@@ -239,11 +251,11 @@ const startGeolocation = () => {
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // 🔥 ASSEGNAZIONE SICURA DELLE VARIABILI GLOBALI
     audioPlayer = document.getElementById('audioPlayer');
     playButton = document.getElementById('playAudio');
-    
+
     // Gestione Menu Hamburger (Requisito 5)
     const menuToggle = document.querySelector('.menu-toggle');
     const navList = document.querySelector('.nav-list');
@@ -251,12 +263,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle && navList) {
         menuToggle.addEventListener('click', () => {
             navList.classList.toggle('active');
-            menuToggle.classList.toggle('active'); 
+            menuToggle.classList.toggle('active');
         });
     }
 
-    setupAudioControl(); 
-    startGeolocation(); 
+    setupAudioControl();
+    startGeolocation();
 
     // Carica i contenuti nella lingua dell'HTML
     const currentHTMLlang = document.documentElement.lang;

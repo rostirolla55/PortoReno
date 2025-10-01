@@ -14,6 +14,9 @@
     "imageSource3": "",
     "imageSource4": "",
     "imageSource5": "",
+    "sourceText": "Archivio Storico del Comune di Bologna.",
+    "creationDate": "2025-08-30",
+    "lastUpdate": "2025-10-01",
     "audioSource": "Assets/Audio/it/Home_Bologna.mp3"
   },
   "nav": {
@@ -30,6 +33,9 @@
     "mainText3": "Molte strade e vicoli a Bologna, come \"Pugliole di San Bernardino\" o \"Pugliole dello Spirito Santo,\" prendevano il nome da chiese o monasteri che si trovavano in prossimità, unendo il nome dell'istituzione religiosa al termine \"pugliola\" per indicare il vicolo adiacente.",
     "mainText4": "",
     "mainText5": "",
+    "sourceText": "Archivio Storico del Comune di Bologna.",
+    "creationDate": "2025-08-30",
+    "lastUpdate": "2025-10-01",
     "playAudioButton": "Ascolta la storia",
     "imageSource1": "",
     "imageSource2": "",
@@ -54,6 +60,9 @@
     "imageSource3": "",
     "imageSource4": "",
     "imageSource5": "",
+    "sourceText": "Archivio Storico del Comune di Bologna.",
+    "creationDate": "2025-08-30",
+    "lastUpdate": "2025-10-01",
     "audioSource": "Assets/Audio/it/Lastre.mp3"
   },
   "aneddoti": {
@@ -71,6 +80,9 @@
     "imageSource3": "",
     "imageSource4": "",
     "imageSource5": "",
-     "audioSource": "Assets/Audio/it/Aneddoti.mp3"
+    "sourceText": "Archivio Storico del Comune di Bologna.",
+    "creationDate": "2025-08-30",
+    "lastUpdate": "2025-10-01",
+    "audioSource": "Assets/Audio/it/Aneddoti.mp3"
   }
 }

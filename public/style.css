@@ -206,3 +206,18 @@ body {
 #audioPlayer {
     display: none; /* Nasconde il player nativo */
 }
+
+/* File: public/style.css (Aggiungi alla fine del file) */
+
+.info-footer {
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+    margin-top: 30px;
+    font-size: 0.85em; 
+    color: #666;
+    line-height: 1.4;
+}
+
+.info-footer p {
+    margin: 5px 0;
+}
