@@ -73,30 +73,31 @@
         // 🛠️ FUNZIONE HELPER: Corregge il targeting del file 'it'
         function getDestinationPageName(langCode) {
             if (langCode === 'it') {
-                return 'index.html';
+                return 'index.html'; // Destinazione italiana corretta
             }
             return `index-${langCode}.html`;
         }
 
-        // ➡️ REINDIRIZZAMENTO AUTOMATICO (solo se il browser è in lingua supportata MA NON ITALIANO)
+        // ➡️ REINDIRIZZAMENTO AUTOMATICO (Controlla lingua browser e reindirizza se non è italiano)
         document.addEventListener('DOMContentLoaded', function () {
             const userLang = navigator.language || navigator.userLanguage;
             const langCode = userLang.toLowerCase().split('-')[0];
 
-            const supportedLangs = ['en', 'fr', 'es']; // Lingue VERSO cui reindirizzare
+            const supportedLangs = ['en', 'fr', 'es']; // Lingue verso cui reindirizzare
 
             if (supportedLangs.includes(langCode)) {
                 const destinationPage = getDestinationPageName(langCode);
 
-                // Se siamo su index.html e la lingua browser non è 'it', reindirizza
+                // Reindirizza se si è sulla pagina principale (index.html)
                 if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
                     window.location.replace(destinationPage);
                 }
             }
         });
 
-        // 🖱️ CAMBIO MANUALE LINGUA (per i pulsanti bandiera)
+        // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera nell'HTML)
         function setLanguage(langCode) {
+            // La logica di reindirizzamento e navigazione avviene qui
             const destinationPage = getDestinationPageName(langCode);
             window.location.href = destinationPage;
         }

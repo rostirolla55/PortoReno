@@ -73,34 +73,34 @@
         // 🛠️ FUNZIONE HELPER: Corregge il targeting del file 'it'
         function getDestinationPageName(langCode) {
             if (langCode === 'it') {
-                return 'index.html';
+                return 'index.html'; // Destinazione italiana corretta
             }
             return `index-${langCode}.html`;
         }
 
-        // ➡️ REINDIRIZZAMENTO AUTOMATICO (solo se il browser NON corrisponde alla pagina)
+        // ➡️ REINDIRIZZAMENTO AUTOMATICO (Previeni il loop: reindirizza solo se lingua browser e lingua pagina NON coincidono)
         document.addEventListener('DOMContentLoaded', function () {
             const userLang = navigator.language || navigator.userLanguage;
             const langCode = userLang.toLowerCase().split('-')[0];
 
-            // Determina la lingua della pagina corrente in base al nome del file (es. 'en' per index-en.html)
+            // Legge la lingua dall'attributo <html lang="en">, ecc.
             const currentPageLang = document.documentElement.lang;
 
-            // Se la lingua del browser NON corrisponde alla lingua della pagina corrente
+            // Reindirizza SOLO se la lingua del browser è DIVERSA da quella della pagina corrente
             if (langCode !== currentPageLang) {
 
                 const destinationPage = getDestinationPageName(langCode);
-                const currentPage = getDestinationPageName(currentPageLang);
 
-                // Reindirizza SOLO se la lingua del browser è supportata
-                if (destinationPage !== currentPage) {
+                // Reindirizza se la lingua del browser è supportata e non siamo già nella destinazione
+                if (destinationPage !== getDestinationPageName(currentPageLang)) {
                     window.location.replace(destinationPage);
                 }
             }
         });
 
-        // 🖱️ CAMBIO MANUALE LINGUA (per i pulsanti bandiera)
+        // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera nell'HTML)
         function setLanguage(langCode) {
+            // La logica di reindirizzamento e navigazione avviene qui
             const destinationPage = getDestinationPageName(langCode);
             window.location.href = destinationPage;
         }
