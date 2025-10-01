@@ -1,105 +1,87 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue dans le quartier de Porto</title>
-    <img src="public/images/Panorama_Bologna.jpg" alt="Panorama di Bologna" style="width:100%;">
+    <title>Benvenuto nel Quartiere Porto</title>
+
     <link rel="stylesheet" href="public/style.css">
-    <style>
-        /* Passo A: Stile per il contenitore principale */
-        .header-image-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            margin-bottom: 20px;
+
+    <script>
+        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
+        function getDestinationPageName(pageId, langCode) {
+            // Es. ('index', 'en') -> index-en.html
+            // Es. ('pugliole', 'it') -> pugliole-it.html
+            return `${pageId}-${langCode}.html`;
         }
 
-        /* Passo B: Stile per l'immagine */
-        .header-image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
+        // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
+        function setLanguage(langCode) {
+            // 1. Salva la lingua scelta dall'utente (Requisito 11)
+            localStorage.setItem('userLanguage', langCode);
+            
+            // 2. Determina l'ID base della pagina corrente (es. 'index', 'pugliole')
+            const path = window.location.pathname;
+            let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
+            if (pageId === '') pageId = 'index';
+            
+            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
+            const destinationPage = getDestinationPageName(pageId, langCode);
+            window.location.href = destinationPage;
         }
-
-        /* Passo C: Stile per il titolo sovrapposto - Stile DEFAULT (Desktop) */
-        .header-title {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 20px;
-            color: white;
-            font-size: 3em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            margin: 0;
-            z-index: 10;
-        }
-
-        /* MEDIA QUERY per Schermi Piccoli (Smartphone) */
-        @media screen and (max-width: 600px) {
-            .header-title {
-                font-size: 1.8em;
-                /* Ridimensiona il font per non troncare */
-                top: 10px;
-            }
-        }
-    </style>
+    </script>
 </head>
 
 <body id="home">
-
     <header class="main-header">
-        <nav class="main-nav">
-            <button class="menu-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            <ul class="nav-list" id="navList">
-                <li><a id="navHome" href="index.html"></a></li>
-                <li><a id="navAneddoti" href="aneddoti.html"></a></li>
-                <li><a id="navLastre" href="lastre.html"></a></li><!--  -->
-                <li><a id="navPugliole" href="pugliole.html"></a></li>
+        
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        
+        <nav class="nav-bar nav-list"> 
+            <ul class="nav-links">
+                <li><a id="navHome" href="index-it.html">Home</a></li>
+                <li><a id="navPugliole" href="pugliole-it.html">Pugliole</a></li>
+                <li><a id="navLastre" href="lastre-it.html">Lastre</a></li>
+                <li><a id="navAneddoti" href="aneddoti-it.html">Aneddoti</a></li>
             </ul>
         </nav>
+
+        <div class="language-selector">
+            <button onclick="setLanguage('it')"><img src="public/flag/it.png" alt="Italiano"></button>
+            <button onclick="setLanguage('en')"><img src="public/flag/en.png" alt="English"></button>
+            <button onclick="setLanguage('fr')"><img src="public/flag/fr.png" alt="Français"></button>
+            <button onclick="setLanguage('es')"><img src="public/flag/es.png" alt="Español"></button>
+        </div>
     </header>
 
-    <p id="mainText">Applicazione in errore per la linga fr ...</p>
-    <p id="mainText1">Errore di caricamento...</p>
-    <p id="mainText2">Errore di caricamento...</p>
-    <p id="mainText3">Errore di caricamento...</p>
-    <p id="mainText4">Errore di caricamento...</p>
-    <p id="mainText5">Errore di caricamento...</p>
-    <img id="pageImage1" src="" style="display:none;">
-    <img id="pageImage2" src="" style="display:none;">
-    <img id="pageImage3" src="" style="display:none;">
-    <img id="pageImage4" src="" style="display:none;">
-    <img id="pageImage5" src="" style="display:none;">
-
-
-    <button id="playAudio">Ascolta l'audio in italiano!</button>
-
-    <audio id="audioPlayer"></audio>
-    <p>
-
-    </p>
-    <div class="language-selector">
-        <button onclick="setLanguage('it')">
-            <img src="public/flag/it.png" alt="Italiano">
-        </button>
-        <button onclick="setLanguage('en')">
-            <img src="public/flag/en.png" alt="English">
-        </button>
-        <button onclick="setLanguage('fr')">
-            <img src="public/flag/fr.png" alt="Français">
-        </button>
-        <button onclick="setLanguage('es')">
-            <img src="public/flag/es.png" alt="Español">
-        </button>
+    <div class="header-image-container">
+        <img id="headerImage" src="public/images/Panorama_Bologna.jpg" alt="Bologna Panorama">
+        <h1 class="header-title" id="pageTitle">Benvenuto nel Quartiere Porto</h1>
     </div>
 
+    <main class="content-body"> 
+        <p id="mainText"></p>
+        <p id="mainText1"></p>
+        <p id="mainText2"></p> 
+        <p id="mainText3"></p>
+        <p id="mainText4"></p> 
+        <p id="mainText5"></p>
+
+        <button id="playAudio" class="play-style">Ascolta l'audio!</button>
+        <audio id="audioPlayer"></audio>
+        
+        <img id="pageImage1" src="" style="display:none;">
+        <img id="pageImage2" src="" style="display:none;">
+        <img id="pageImage3" src="" style="display:none;">
+        <img id="pageImage4" src="" style="display:none;">
+        <img id="pageImage5" src="" style="display:none;">
+    </main>
+    
     <script src="public/main.js"></script>
 </body>
-
 </html>
