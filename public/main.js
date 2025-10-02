@@ -290,4 +290,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carica i contenuti nella lingua dell'HTML
     const currentHTMLlang = document.documentElement.lang;
     loadContent(currentHTMLlang);
+
+        // 🔥 NUOVO BLOCCO: Invia la lingua corrente a Google Analytics
+    if (typeof gtag === 'function') {
+        gtag('set', {'lingua_pagina': currentHTMLlang});
+        
+        // Invia un evento di visualizzazione di pagina con il dato della lingua associato
+        gtag('event', 'page_view', {
+            'page_title': document.title,
+            'page_location': window.location.href,
+            'lingua_pagina': currentHTMLlang // Parametro da tracciare!
+        });
+    }
 });
