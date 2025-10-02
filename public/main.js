@@ -2,7 +2,13 @@
 // DATI: Punti di Interesse GPS (DA COMPILARE)
 // ===========================================
 const ARCO_LOCATIONS = [
-    { id: 'lastre', lat: 44.49925278, lon: 11.34074444, distanceThreshold: 20 }
+    { id: 'lastre', lat: 44.49925278, lon: 11.34074444, distanceThreshold: 20 },
+    { id: 'home', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 20 },
+    { id: 'pugliole', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 20 },
+    { id: 'lastre', lat: 44.5000722222222, lon: 11.3404333333333, distanceThreshold: 20 },
+    { id: 'lastre', lat: 44.5004194444444, lon: 11.3406333333333, distanceThreshold: 20 },
+    { id: 'lastre', lat: 44.5004361111111, lon: 11.3406416666667, distanceThreshold: 20 },
+    { id: 'lastre', lat: 44.5005194444444, lon: 11.3407111111111, distanceThreshold: 20 }
 ];
 
 // ===========================================
