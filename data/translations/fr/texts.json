@@ -14,6 +14,9 @@
         "imageSource3": "",
         "imageSource4": "",
         "imageSource5": "",
+        "SourceText": "Archives historiques de la municipalité de Bologne.",
+        "CreationDate": "30/08/2025",
+        "LastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/fr/Home_Bologna.mp3"
     },
     "nav": {
@@ -37,6 +40,9 @@
         "imageSource3": "",
         "imageSource4": "",
         "imageSource5": "",
+        "SourceText": "Archives historiques de la municipalité de Bologne.",
+        "CreationDate": "30/08/2025",
+        "LastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/it/Pugliole.mp3"
     },
     "lastre": {
@@ -54,6 +60,9 @@
         "imageSource3": "",
         "imageSource4": "",
         "imageSource5": "",
+        "SourceText": "Archives historiques de la municipalité de Bologne.",
+        "CreationDate": "30/08/2025",
+        "LastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/it/Lastre.mp3"
     },
     "aneddoti": {
@@ -71,6 +80,9 @@
         "imageSource3": "",
         "imageSource4": "",
         "imageSource5": "",
+        "SourceText": "Archives historiques de la municipalité de Bologne.",
+        "CreationDate": "30/08/2025",
+        "LastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/it/Anecdotes.mp3"
     }
 }
