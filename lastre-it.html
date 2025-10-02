@@ -50,6 +50,28 @@
 <body id="lastre">
 
     <header class="main-header">
+
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="nav-bar nav-list">
+            <ul class="nav-links">
+                <li><a id="navHome" href="index-it.html">Home</a></li>
+                <li><a id="navPugliole" href="pugliole-it.html">Pugliole</a></li>
+                <li><a id="navLastre" href="lastre-it.html">Lastre</a></li>
+                <li><a id="navAneddoti" href="aneddoti-it.html">Aneddoti</a></li>
+            </ul>
+        </nav>
+
+        <div class="language-selector">
+            <button onclick="setLanguage('it')"><img src="public/flag/it.png" alt="Italiano"></button>
+            <button onclick="setLanguage('en')"><img src="public/flag/en.png" alt="English"></button>
+            <button onclick="setLanguage('fr')"><img src="public/flag/fr.png" alt="Français"></button>
+            <button onclick="setLanguage('es')"><img src="public/flag/es.png" alt="Español"></button>
+        </div>
     </header>
 
     <main class="content-body">
