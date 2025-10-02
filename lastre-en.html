@@ -1,137 +1,112 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+
     <title>Numerazione dei civici</title>
 
     <link rel="stylesheet" href="public/style.css">
 
-    <style>
-        /* Passo A: Stile per il contenitore principale */
-        .header-image-container {
-            /* Stabilisce il punto di riferimento per il posizionamento assoluto */
-            position: relative;
-            /* Assicura che il testo non si estenda oltre l'immagine */
-            width: 100%;
-            /* Impedisce che elementi esterni finiscano sopra l'immagine */
-            overflow: hidden;
-            /* Aggiunge un po' di margine inferiore per separare dal contenuto */
-            margin-bottom: 20px;
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-28GJXYWCQW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        // 🔥 CONFIGURAZIONE: Associa 'dimension1' al nome parametro 'lingua_pagina'
+        gtag('config', 'G-28GJXYWCQW', {
+            'custom_map': { 'dimension1': 'lingua_pagina' }
+        });
+    </script>
+
+    <script>
+        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
+        function getDestinationPageName(pageId, langCode) {
+            // Es. ('index', 'en') -> index-en.html
+            // Es. ('pugliole', 'it') -> pugliole-it.html
+            return `${pageId}-${langCode}.html`;
         }
 
-        /* Passo B: Stile per l'immagine */
-        .header-image-container img {
-            /* Fa in modo che l'immagine copra lo spazio senza distorcersi */
-            width: 100%;
-            height: auto;
-            /* L'opacità è solo un'opzione per rendere il testo più leggibile, se necessario */
-            /* opacity: 0.8; */
-            display: block;
-            /* Importante per pulizia visuale */
+        // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
+        function setLanguage(langCode) {
+            // 1. Salva la lingua scelta dall'utente (Requisito 11)
+            localStorage.setItem('userLanguage', langCode);
+
+            // 2. Determina l'ID base della pagina corrente (es. 'index', 'pugliole')
+            const path = window.location.pathname;
+            let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
+            if (pageId === '') pageId = 'index';
+
+            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
+            const destinationPage = getDestinationPageName(pageId, langCode);
+            window.location.href = destinationPage;
         }
-
-        /* Passo C: Stile per il titolo sovrapposto */
-        .header-title {
-            /* Posiziona il titolo in modo assoluto rispetto al contenitore (.header-image-container) */
-            position: absolute;
-            /* Sposta il titolo al centro orizzontalmente */
-            left: 50%;
-            /* Lo trasla indietro del 50% della sua larghezza per centrarlo perfettamente */
-            transform: translateX(-50%);
-
-            /* Regolazione verticale */
-            top: 20px;
-
-            /* Lo rende bianco, come hai richiesto */
-            color: white;
-
-            /* Rende il testo grande e leggibile */
-            font-size: 3em;
-
-            /* Aggiunge una leggera ombra per aumentare la leggibilità sullo sfondo */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-
-            /* Rimuove margini predefiniti dell'h1 */
-            margin: 0;
-
-            /* Regola la profondità (importante per la sovrapposizione) */
-            z-index: 10;
-        }
-
-        /* NUOVO BLOCCO: MEDIA QUERY per Schermi Piccoli (Smartphone) */
-        @media screen and (max-width: 600px) {
-            .header-title {
-                /* Riduciamo il font-size solo sui dispositivi mobili */
-                font-size: 1.8em;
-                /* Rendi il testo più piccolo e meno probabile che venga troncato */
-
-                /* Sposta il titolo più in alto per lasciare spazio ad altri elementi, se necessario */
-                top: 10px;
-            }
-        }
-    </style>
-
+    </script>
 </head>
 
 <body id="lastre">
 
     <header class="main-header">
-        <nav class="main-nav">
-            <button class="menu-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            <ul class="nav-list" id="navList">
-                <li><a id="navHome" href="index.html"></a></li>
-                <li><a id="navAneddoti" href="aneddoti.html"></a></li>
-                <li><a id="navLastre" href="lastre.html"></a></li><!--  -->
-                <li><a id="navPugliole" href="pugliole.html"></a></li>
+
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="nav-bar nav-list">
+            <ul class="nav-links">
+                <li><a id="navHome" href="index-it.html">Home</a></li>
+                <li><a id="navPugliole" href="pugliole-it.html">Pugliole</a></li>
+                <li><a id="navLastre" href="lastre-it.html">Lastre</a></li>
+                <li><a id="navAneddoti" href="aneddoti-it.html">Aneddoti</a></li>
             </ul>
         </nav>
+
+        <div class="language-selector">
+            <button onclick="setLanguage('it')"><img src="public/flag/it.png" alt="Italiano"></button>
+            <button onclick="setLanguage('en')"><img src="public/flag/en.png" alt="English"></button>
+            <button onclick="setLanguage('fr')"><img src="public/flag/fr.png" alt="Français"></button>
+            <button onclick="setLanguage('es')"><img src="public/flag/es.png" alt="Español"></button>
+        </div>
     </header>
 
-    <header id="home-header">
-        <h1 class="page-title" id="pageTitle"></h1>
-    </header>
-    <p id="mainText">Applicazione in errore per la lingua it ...</p>
-    <p id="mainText1"></p>
-    <p id="mainText2"></p>
-    <p id="mainText3"></p>
-    <figure class="center-image-block">
-        <img id="pageImage1" src="" alt="Immagine della lastra in arenaria" class="responsive-image">
-        <figcaption id="mainText4"></figcaption>
-    </figure>
-    <p id="mainText5"></p>
-    <img id="pageImage2" src="" style="display:none;">
-    <img id="pageImage3" src="" style="display:none;">
-    <img id="pageImage4" src="" style="display:none;">
-    <img id="pageImage5" src="" style="display:none;">
-    <button id="playAudio">Ascolta l'audio in italiano!</button>
+    <main class="content-body">
 
-    <audio id="audioPlayer"></audio>
-    <p>
-    <p>
+        <div class="header-image-container">
+            <img id="headerImage" src="" alt="Immagine di testata">
+            <h1 class="header-title" id="pageTitle">Titolo Pagina</h1>
+        </div>
 
-    </p>
-    <div class="language-selector">
-        <button onclick="setLanguage('it')">
-            <img src="public/flag/it.png" alt="Italiano">
-        </button>
-        <button onclick="setLanguage('en')">
-            <img src="public/flag/en.png" alt="English">
-        </button>
-        <button onclick="setLanguage('fr')">
-            <img src="public/flag/fr.png" alt="Français">
-        </button>
-        <button onclick="setLanguage('es')">
-            <img src="public/flag/es.png" alt="Español">
-        </button>
-    </div>
+        <p id="mainText"></p>
+
+        <img id="pageImage1" src="" alt="Immagine di lastre" style="display: none;">
+
+        <p id="mainText1"></p>
+
+        <p id="mainText2"></p>
+
+        <p id="mainText3"></p>
+
+        <p id="mainText4"></p>
+
+        <audio id="audioPlayer" preload="auto"></audio>
+        <button id="playAudio" class="play-style">Ascolta</button>
+
+
+        <div class="info-footer">
+            <p><span id="infoSource"></span></p>
+            <p>Data Creazione: <span id="infoCreatedDate"></span></p>
+            <p>Ultimo Aggiornamento: <span id="infoUpdatedDate"></span></p>
+        </div>
+
+    </main>
 
     <script src="public/main.js"></script>
+
 </body>
 
 </html>
