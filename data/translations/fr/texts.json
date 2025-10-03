@@ -65,9 +65,9 @@
         "LastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/it/Lastre.mp3"
     },
-    "aneddoti": {
+    "caracci": {
         "pageTitle": "Anecdotes et curiosités",
-        "mainText": "Bologne se dévoile avec ses monuments chargés d'histoire, des États pontificaux à Napoléon, des Bentivoglio à Renzo. Le quadrilatère est une zone du centre historique délimitée au nord par la Via del Porto, au sud par la Via di Riva Reno, à l'ouest par la Via Polese et à l'est par la Via San Carlo. À l'intérieur, des portiques ornent les murs d'objets d'époque. ",
+        "mainText": "Ludivico Caracci (1555 - 1619) a vécu dans cette maison, au 19 de la Via San Carlo. Certains plafonds, aujourd'hui recouverts pour éviter la détérioration de l'environnement, ont été décorés de fresques par Ludovico alors qu'il était jeune.",
         "mainText1": "",
         "mainText2": "",
         "mainText3": "",
@@ -83,6 +83,6 @@
         "SourceText": "Archives historiques de la municipalité de Bologne.",
         "CreationDate": "30/08/2025",
         "LastUpdate": "01/10/2025",
-        "audioSource": "Assets/Audio/it/Anecdotes.mp3"
+        "audioSource": "Assets/Audio/fr/Caracci.mp3"
     }
 }

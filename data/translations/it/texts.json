@@ -21,7 +21,7 @@
   },
   "nav": {
     "navHome": "Benvenuto",
-    "navAneddoti": "Aneddoti e Curiosita'",
+    "navCaracci": "Casa nativa ",
     "navLastre": "Numeri civici su lastre in arenaria",
     "navPugliole": "Le pugliole"
   },
@@ -65,10 +65,10 @@
     "lastUpdate": "2025-10-01",
     "audioSource": "Assets/Audio/it/Lastre.mp3"
   },
-  "aneddoti": {
-    "pageTitle": "Aneddoti Curiosita'",
-    "mainText": "Bologna si presenta con i suoi monumenti carica di storia , dallo stato pontificio a Napoleone, dai Bentivoglio a Renzo. Il quadrilatero è una zona del centro storico delimitato a Nord da via del porto, a Sud da via di Riva Reno, a Ovest da via Polese ed a Est da via San Carlo. All'interno si percorrono portici che riportano  sulle pareti oggetti di altri tempi.",
-    "mainText1": "",
+  "caracci": {
+    "pageTitle": "Caracci",
+    "mainText": "Ludivico Caracci (1555 - 1619) ha vissuto in questa casa, in via San Carlo 19. Alcuni soffitti, oggi coperti per evitare deterioramento ambientale, sono stati affrescati da Ludovico in giovane età.",
+    "mainText1": "", 
     "mainText2": "",
     "mainText3": "",
     "mainText4": "",
@@ -83,6 +83,6 @@
     "sourceText": "Archivio Storico del Comune di Bologna.",
     "creationDate": "2025-08-30",
     "lastUpdate": "2025-10-01",
-    "audioSource": "Assets/Audio/it/Aneddoti.mp3"
+    "audioSource": "Assets/Audio/it/Caracci.mp3"
   }
 }
