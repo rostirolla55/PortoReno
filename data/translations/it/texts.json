@@ -21,7 +21,7 @@
   },
   "nav": {
     "navHome": "Benvenuto",
-    "navCaracci": "Casa nativa ",
+    "navCarracci": "Casa nativa ",
     "navLastre": "Numeri civici su lastre in arenaria",
     "navPugliole": "Le pugliole"
   },
@@ -65,9 +65,9 @@
     "lastUpdate": "2025-10-01",
     "audioSource": "Assets/Audio/it/Lastre.mp3"
   },
-  "caracci": {
-    "pageTitle": "Caracci",
-    "mainText": "Ludivico Caracci (1555 - 1619) ha vissuto in questa casa, in via San Carlo 19. Alcuni soffitti, oggi coperti per evitare deterioramento ambientale, sono stati affrescati da Ludovico in giovane età.",
+  "carracci": {
+    "pageTitle": "Carracci",
+    "mainText": "Ludivico Carracci (1555 - 1619) ha vissuto in questa casa, in via San Carlo 19. Alcuni soffitti, oggi coperti per evitare deterioramento ambientale, sono stati affrescati da Ludovico in giovane età.",
     "mainText1": "", 
     "mainText2": "",
     "mainText3": "",
@@ -83,6 +83,6 @@
     "sourceText": "Archivio Storico del Comune di Bologna.",
     "creationDate": "2025-08-30",
     "lastUpdate": "2025-10-01",
-    "audioSource": "Assets/Audio/it/Caracci.mp3"
+    "audioSource": "Assets/Audio/it/Carracci.mp3"
   }
 }

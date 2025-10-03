@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
-
-    <title>Numerazione dei civici</title>
+    
+    <title>Casa di Ludovico Carracci</title>
 
     <link rel="stylesheet" href="public/style.css">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-28GJXYWCQW"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-        // 🔥 CONFIGURAZIONE: Associa 'dimension1' al nome parametro 'lingua_pagina'
-        gtag('config', 'G-28GJXYWCQW', {
-            'custom_map': { 'dimension1': 'lingua_pagina' }
-        });
+      // 🔥 CONFIGURAZIONE: Associa 'dimension1' al nome parametro 'lingua_pagina'
+      gtag('config', 'G-28GJXYWCQW', {
+          'custom_map': {'dimension1': 'lingua_pagina'} 
+      });
     </script>
 
     <script>
@@ -46,9 +46,7 @@
         }
     </script>
 </head>
-
-<body id="lastre">
-
+<body id="carracci">
     <header class="main-header">
 
         <button class="menu-toggle" aria-label="Toggle menu">
@@ -62,7 +60,7 @@
                 <li><a id="navHome" href="index-it.html">Home</a></li>
                 <li><a id="navPugliole" href="pugliole-it.html">Pugliole</a></li>
                 <li><a id="navLastre" href="lastre-it.html">Lastre</a></li>
-                <li><a id="navCarracci" href="carracci-it.html">Carracci</a></li>
+                <li><a id="navCarracci" href="carracci-it.html">carracci</a></li>
             </ul>
         </nav>
 
@@ -74,39 +72,36 @@
         </div>
     </header>
 
+    <div class="header-image-container">
+        <img id="headerImage" src="public/images/Casa_Carracci.jpg" alt="Casa Carracci">
+        <h1 class="header-title" id="pageTitle">Benvenuto nel Quartiere Porto</h1>
+    </div>
+
     <main class="content-body">
-
-        <div class="header-image-container">
-            <img id="headerImage" src="public/images/Panorama_Bologna.jpg" alt="Immagine di testata">
-            <h1 class="header-title" id="pageTitle">Titolo Pagina</h1>
-        </div>
-
         <p id="mainText"></p>
-
-        <img id="pageImage1" src="" alt="Immagine di lastre" style="display: none;">
-
         <p id="mainText1"></p>
-
         <p id="mainText2"></p>
-
         <p id="mainText3"></p>
-
         <p id="mainText4"></p>
+        <p id="mainText5"></p>
 
-        <audio id="audioPlayer" preload="auto"></audio>
-        <button id="playAudio" class="play-style">Ascolta</button>
+        <button id="playAudio" class="play-style">Ascolta l'audio!</button>
+        <audio id="audioPlayer"></audio>
 
+        <img id="pageImage1" src="" style="display:none;">
+        <img id="pageImage2" src="" style="display:none;">
+        <img id="pageImage3" src="" style="display:none;">
+        <img id="pageImage4" src="" style="display:none;">
+        <img id="pageImage5" src="" style="display:none;">
 
         <div class="info-footer">
             <p><span id="infoSource"></span></p>
             <p>Data Creazione: <span id="infoCreatedDate"></span></p>
             <p>Ultimo Aggiornamento: <span id="infoUpdatedDate"></span></p>
         </div>
-
     </main>
 
     <script src="public/main.js"></script>
-
 </body>
 
 </html>

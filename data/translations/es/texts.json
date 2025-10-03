@@ -21,7 +21,7 @@
     },
     "nav": {
         "navHome": "Bienvenidos",
-        "navAneddoti": "Anécdotas y curiosidades",
+        "navCarracci": "Carracci",
         "navLastre": "Números de casas en losas de arenisca",
         "navPugliole": "Las pugliole"
     },
@@ -65,9 +65,9 @@
         "lastUpdate": "2025-10-01",
         "audioSource": "Assets/Audio/es/Lastre.mp3"
     },
-    "caracci": {
+    "carracci": {
         "pageTitle": "Anécdotas y curiosidades",
-        "mainText": "Ludivico Caracci (1555-1619) vivió en esta casa, en Via San Carlo 19. Algunos techos, ahora cubiertos para evitar el deterioro ambiental, fueron pintados al fresco por Ludovico a temprana edad.",
+        "mainText": "Ludivico Carracci (1555-1619) vivió en esta casa, en Via San Carlo 19. Algunos techos, ahora cubiertos para evitar el deterioro ambiental, fueron pintados al fresco por Ludovico a temprana edad.",
         "mainText1": "",
         "mainText2": "",
         "mainText3": "",
@@ -83,6 +83,6 @@
         "creationDate": "2025-08-30",
         "lastUpdate": "2025-10-01",
         "pauseAudioButton": "Pausa",
-        "audioSource": "Assets/Audio/es/Caracci.mp3"
+        "audioSource": "Assets/Audio/es/Carracci.mp3"
     }
 }

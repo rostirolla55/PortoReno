@@ -21,7 +21,7 @@
     },
     "nav": {
         "navHome": "Bienvenue",
-        "navAneddoti": "Anecdotes et curiosités",
+        "navCarracci": "Carracci",
         "navLastre": "Numéros de maison sur dalles de grès",
         "navPugliole": "Les pugliole"
     },
@@ -65,9 +65,9 @@
         "LastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/it/Lastre.mp3"
     },
-    "caracci": {
-        "pageTitle": "Anecdotes et curiosités",
-        "mainText": "Ludivico Caracci (1555 - 1619) a vécu dans cette maison, au 19 de la Via San Carlo. Certains plafonds, aujourd'hui recouverts pour éviter la détérioration de l'environnement, ont été décorés de fresques par Ludovico alors qu'il était jeune.",
+    "carracci": {
+        "pageTitle": "Carracci",
+        "mainText": "Ludivico Carracci (1555 - 1619) a vécu dans cette maison, au 19 de la Via San Carlo. Certains plafonds, aujourd'hui recouverts pour éviter la détérioration de l'environnement, ont été décorés de fresques par Ludovico alors qu'il était jeune.",
         "mainText1": "",
         "mainText2": "",
         "mainText3": "",
@@ -83,6 +83,6 @@
         "SourceText": "Archives historiques de la municipalité de Bologne.",
         "CreationDate": "30/08/2025",
         "LastUpdate": "01/10/2025",
-        "audioSource": "Assets/Audio/fr/Caracci.mp3"
+        "audioSource": "Assets/Audio/fr/Carracci.mp3"
     }
 }
