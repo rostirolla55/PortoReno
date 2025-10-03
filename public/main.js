@@ -92,13 +92,13 @@ const loadContent = async (lang) => {
 
             // Aggiorna gli href del menu (usando i nuovi nomi file XX-lingua.html)
             document.getElementById('navHome').href = `index${suffix}`;
-            document.getElementById('navAneddoti').href = `aneddoti${suffix}`;
+            document.getElementById('navCarracci').href = `carracci${suffix}`;
             document.getElementById('navLastre').href = `lastre${suffix}`;
             document.getElementById('navPugliole').href = `pugliole${suffix}`;
 
             // Aggiorna il testo dei link
             updateTextContent('navHome', data.nav.navHome);
-            updateTextContent('navAneddoti', data.nav.navAneddoti);
+            updateTextContent('navCarracci', data.nav.navCarracci);
             updateTextContent('navLastre', data.nav.navLastre);
             updateTextContent('navPugliole', data.nav.navPugliole);
         }
