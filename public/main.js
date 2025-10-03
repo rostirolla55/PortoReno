@@ -231,24 +231,52 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     return R * c;
 };
 
+// ===========================================
+// FUNZIONI DI GEOLOCALIZZAZIONE (GPS) - Versione Stabile
+// ===========================================
 const checkProximity = (position) => {
     const userLat = position.coords.latitude;
     const userLon = position.coords.longitude;
     const currentLang = document.documentElement.lang || 'it';
+    
+    const currentPageId = document.body.id;
+    const isOnHomePage = (currentPageId === 'index' || currentPageId === 'home');
+    
+    // 🔥 FILTRO CRITICO: REINDIRIZZA SOLO DALLA HOME
+    // Se l'utente è su una pagina POI o Aneddoto, il GPS non interviene mai.
+    if (!isOnHomePage) {
+        return; 
+    }
 
+    let closestLocation = null;
+    let minDistance = Infinity;
+
+    // 1. SCORRI TUTTI I POI PER TROVARE QUELLO PIÙ VICINO (CONFORME ALLA SOGLIA)
+    // Questo gestisce la tua necessità di avere più punti di innesco per la stessa pagina (es. 'lastre').
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
 
         if (distance <= location.distanceThreshold) {
-            console.log(`GPS: Vicino a ${location.id}! Distanza: ${distance.toFixed(1)}m`);
-
-            const currentPath = window.location.pathname;
-            const targetPage = `${location.id}-${currentLang}.html`;
-
-            if (!currentPath.includes(targetPage)) {
-                window.location.href = targetPage;
+            // Se è più vicino della distanza minima trovata finora, aggiorna
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestLocation = location;
             }
-            return;
+        }
+    }
+    
+    // 2. REINDIRIZZAMENTO AL POI PIÙ VICINO (SE TROVATO)
+    if (closestLocation) {
+        const targetPageId = closestLocation.id;
+        const targetPage = `${targetPageId}-${currentLang}.html`;
+        const currentPath = window.location.pathname;
+
+        console.log(`GPS: Trovato POI più vicino: ${targetPageId} a ${minDistance.toFixed(1)}m`);
+
+        // Evita un reindirizzamento infinito
+        if (!currentPath.includes(targetPage)) {
+            console.log(`GPS: Reindirizzamento dalla Home a ${targetPage}`);
+            window.location.href = targetPage;
         }
     }
 };
