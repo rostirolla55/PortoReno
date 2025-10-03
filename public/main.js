@@ -8,9 +8,9 @@ const ARCO_LOCATIONS = [
     // viaPolese_f.jpg
     { id: 'pugliole', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 20 },
     // ViaSanCarlo19_f.jpg
-    { id: 'aneddoti', lat: 44.5000722222222, lon: 11.3404333333333, distanceThreshold: 20 },
+    { id: 'carracci', lat: 44.5000722222222, lon: 11.3404333333333, distanceThreshold: 20 },
     // ViaSanCarlo45_f.jpg
-    { id: 'aneddoti', lat: 44.5005194444444, lon: 11.3407111111111, distanceThreshold: 20 },
+    { id: 'carracci', lat: 44.5005194444444, lon: 11.3407111111111, distanceThreshold: 20 },
     // ViaSanCarlo45_f.jpg
     { id: 'lastre', lat: 44.49925278, lon: 11.34074444, distanceThreshold: 20 },
     // ViaSanCarlo42Dett_f.jpg
