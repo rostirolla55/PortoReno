@@ -47,16 +47,26 @@ body {
 }
 
 .header-title {
+    /* Manteniamo 'position: absolute' per sovrapporre all'immagine */
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    
+    /* 🔥 FIX CRITICO: Rimuovi 'width: 100%' e usa 'display: inline-block' */
+    /* Questo fa restringere il blocco alla larghezza del suo contenuto (il testo) */
+    width: auto; /* Annulliamo l'effetto di width: 100% */
+    display: inline-block; 
+    
+    /* Manteniamo gli stili di sfondo e testo */
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
     padding: 10px 15px;
     margin: 0;
     font-size: 1.5em;
     box-sizing: border-box;
+    
+    /* Opzionale: Aggiungiamo un piccolo margine sinistro per staccarlo dall'angolo */
+    margin-left: 10px; 
 }
 
 /* --- LOGICA MENU HAMBURGER (Requisito 5) --- */
