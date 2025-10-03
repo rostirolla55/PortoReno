@@ -17,7 +17,7 @@ const ARCO_LOCATIONS = [
     // ViaSanCarlo42_f.jpg
     { id: 'lastre', lat: 44.5004361111111, lon: 11.3406416666667, distanceThreshold: 20 },
     // Tanari_11.jpg
-    { id: 'lastre', lat: 44.4992472222222, lon: 11.3407194444444, distanceThreshold: 20 }, 
+    { id: 'lastre', lat: 44.4992472222222, lon: 11.3407194444444, distanceThreshold: 20 },
     // Tanari_11.jpg
     { id: 'lastre', lat: 44.49925278, lon: 11.34074444, distanceThreshold: 20 }
 ];
@@ -234,20 +234,31 @@ const checkProximity = (position) => {
     const userLat = position.coords.latitude;
     const userLon = position.coords.longitude;
     const currentLang = document.documentElement.lang || 'it';
+    
+    const currentPageId = document.body.id;
+    const isOnHomePage = (currentPageId === 'index' || currentPageId === 'home');
+    
+    // 🔥 Reindirizza via GPS SOLO se l'utente è sulla Home Page
+    if (!isOnHomePage) {
+        return; 
+    }
 
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
 
         if (distance <= location.distanceThreshold) {
+            
             console.log(`GPS: Vicino a ${location.id}! Distanza: ${distance.toFixed(1)}m`);
-
-            const currentPath = window.location.pathname;
+            
             const targetPage = `${location.id}-${currentLang}.html`;
+            const currentPath = window.location.pathname;
 
+            // Se l'utente è sulla Home e non è già arrivato, reindirizza
             if (!currentPath.includes(targetPage)) {
+                console.log(`GPS: Reindirizzamento dalla Home a ${location.id}`);
                 window.location.href = targetPage;
             }
-            return;
+            return; 
         }
     }
 };
@@ -291,10 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentHTMLlang = document.documentElement.lang;
     loadContent(currentHTMLlang);
 
-        // 🔥 NUOVO BLOCCO: Invia la lingua corrente a Google Analytics
+    // 🔥 NUOVO BLOCCO: Invia la lingua corrente a Google Analytics
     if (typeof gtag === 'function') {
-        gtag('set', {'lingua_pagina': currentHTMLlang});
-        
+        gtag('set', { 'lingua_pagina': currentHTMLlang });
+
         // Invia un evento di visualizzazione di pagina con il dato della lingua associato
         gtag('event', 'page_view', {
             'page_title': document.title,
