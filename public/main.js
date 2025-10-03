@@ -1,6 +1,9 @@
 // ===========================================
-// DATI: Punti di Interesse GPS (DA COMPILARE)
+// CONFIGURAZIONE GLOBALE e VARIABILI
 // ===========================================
+
+// L'array ARCO_LOCATIONS deve essere completo qui.
+// La nuova logica gestisce più POI che puntano allo stesso ID di pagina (es. 'lastre').
 const ARCO_LOCATIONS = [
     // ViaPoleseVerticale_F.jpg
     { id: 'pugliole', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 20 },
@@ -22,213 +25,192 @@ const ARCO_LOCATIONS = [
     { id: 'lastre', lat: 44.49925278, lon: 11.34074444, distanceThreshold: 20 }
 ];
 
-// ===========================================
-// VARIABILI GLOBALI (Dichiarate, non inizializzate subito)
-// ===========================================
-let audioPlayer;
-let playButton;
-
-
-// ===========================================
-// FUNZIONI UTILITY
-// ===========================================
-
-// Restituisce l'ID base della pagina (es. 'home', 'pugliole') leggendolo dall'ID del body
-const getCurrentPageId = () => {
-    // Legge l'ID dal tag body (es. <body id="home">)
-    const bodyId = document.body.id;
-    if (bodyId) {
-        return bodyId.toLowerCase();
-    }
-    // Fallback se l'ID non è impostato o è index, usa 'home'
-    const path = window.location.pathname;
-    let baseId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
-    return baseId || 'home';
-};
-
-// Aggiorna il testo solo se l'elemento esiste
-const updateTextContent = (id, value) => {
+// Funzione Helper per aggiornare il contenuto di un elemento tramite ID
+const updateTextContent = (id, text) => {
     const element = document.getElementById(id);
-    if (element) {
-        element.textContent = value || '';
+    if (element && text) {
+        element.textContent = text;
     }
 };
 
-// ===========================================
-// LOGICA CARICAMENTO CONTENUTI (Requisito 5, 7, 8, 9, 11)
-// ===========================================
-
-const loadContent = async (lang) => {
-
-    document.documentElement.lang = lang;
-
-    try {
-        const pageId = getCurrentPageId();
-
-        const response = await fetch(`data/translations/${lang}/texts.json`);
-
-        if (!response.ok) {
-            console.error(`File di traduzione non trovato per la lingua: ${lang}. Tentativo di fallback su 'it'.`);
-            if (lang !== 'it') {
-                loadContent('it');
-                return;
-            }
-            throw new Error(`Impossibile caricare i dati per ${lang}.`);
-        }
-
-        const data = await response.json();
-        const pageData = data[pageId];
-
-        if (!pageData) {
-            console.warn(`Dati non trovati per la chiave pagina: ${pageId} nel file JSON per la lingua: ${lang}.`);
-            updateTextContent('pageTitle', `[ERRORE] Dati mancanti (${pageId}/${lang})`);
-            return;
-        }
-
-        // AGGIORNAMENTO NAVIGAZIONE (Requisito 5)
-        if (data.nav) {
-            const suffix = `-${lang}.html`;
-
-            // Aggiorna gli href del menu (usando i nuovi nomi file XX-lingua.html)
-            document.getElementById('navHome').href = `index${suffix}`;
-            document.getElementById('navAneddoti').href = `aneddoti${suffix}`;
-            document.getElementById('navLastre').href = `lastre${suffix}`;
-            document.getElementById('navPugliole').href = `pugliole${suffix}`;
-
-            // Aggiorna il testo dei link
-            updateTextContent('navHome', data.nav.navHome);
-            updateTextContent('navAneddoti', data.nav.navAneddoti);
-            updateTextContent('navLastre', data.nav.navLastre);
-            updateTextContent('navPugliole', data.nav.navPugliole);
-        }
-
-        // AGGIORNAMENTO IMMAGINE DI FONDO TESTATA (Requisito 8)
-        const headerImage = document.getElementById('headerImage');
-        if (headerImage && pageData.headerImageSource) {
-            headerImage.src = pageData.headerImageSource;
-        }
-
-        // AGGIORNAMENTO DEL CONTENUTO (Requisito 7: Testi principali)
-        updateTextContent('pageTitle', pageData.pageTitle);
-        updateTextContent('mainText', pageData.mainText);
-        updateTextContent('mainText1', pageData.mainText1);
-        updateTextContent('mainText2', pageData.mainText2);
-        updateTextContent('mainText3', pageData.mainText3);
-        updateTextContent('mainText4', pageData.mainText4);
-        updateTextContent('mainText5', pageData.mainText5);
-        // 🔥 AGGIORNAMENTO INFORMAZIONI SULLA FONTE E DATA
-        if (pageData.sourceText) {
-            // Usiamo il testo come etichetta e valore
-            updateTextContent('infoSource', `Fonte: ${pageData.sourceText}`);
-        }
-
-        if (pageData.creationDate) {
-            updateTextContent('infoCreatedDate', pageData.creationDate);
-        }
-
-        if (pageData.lastUpdate) {
-            updateTextContent('infoUpdatedDate', pageData.lastUpdate);
-        }
-
-        // AGGIORNAMENTO AUDIO E BOTTONE (Requisito 3)
-        if (audioPlayer && playButton && pageData.audioSource) {
-            if (!audioPlayer.paused) {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-            }
-
-            // Imposta i testi del bottone
-            playButton.textContent = pageData.playAudioButton;
-            playButton.dataset.playText = pageData.playAudioButton;
-            playButton.dataset.pauseText = pageData.pauseAudioButton;
-
-            // Imposta la sorgente audio
-            audioPlayer.src = pageData.audioSource;
-            audioPlayer.load();
-
-            playButton.classList.remove('pause-style');
-            playButton.classList.add('play-style');
-        }
-
-        // AGGIORNAMENTO IMMAGINI DINAMICHE (Requisito 9: Max 5 immagini)
-        for (let i = 1; i <= 5; i++) {
-            const imageElement = document.getElementById(`pageImage${i}`);
-            const imageSource = pageData[`imageSource${i}`];
-
-            if (imageElement) {
-                imageElement.src = imageSource || '';
-                imageElement.style.display = imageSource ? 'block' : 'none';
-            }
-        }
-
-        console.log(`✅ Contenuto caricato con successo per la lingua: ${lang} e pagina: ${pageId}`);
-
-    } catch (error) {
-        console.error('Errore critico nel caricamento dei testi:', error);
-        updateTextContent('pageTitle', `[ERRORE CRITICO] Caricamento fallito.`);
-    }
-};
-
-// ===========================================
-// FUNZIONI DI GESTIONE EVENTI AUDIO
-// ===========================================
-
-const handleAudioClick = function () {
-    const currentPlayText = playButton.dataset.playText || "Ascolta";
-    const currentPauseText = playButton.dataset.pauseText || "Pausa";
-
-    if (audioPlayer.paused) {
-        audioPlayer.play();
-        playButton.textContent = currentPauseText;
-        playButton.classList.replace('play-style', 'pause-style');
-    } else {
-        audioPlayer.pause();
-        playButton.textContent = currentPlayText;
-        playButton.classList.replace('pause-style', 'play-style');
-    }
-};
-
-const handleAudioEnded = function () {
-    const currentPlayText = playButton.dataset.playText || "Ascolta";
-    audioPlayer.currentTime = 0;
-    playButton.textContent = currentPlayText;
-    playButton.classList.replace('pause-style', 'play-style');
-};
-
-
-// ===========================================
-// LOGICA AUDIO E GPS
-// ===========================================
-
-// Gestione Play/Pause (Requisito 3)
-const setupAudioControl = () => {
-    if (audioPlayer && playButton) {
-
-        // Rimuovi listener precedenti (più robusto)
-        playButton.removeEventListener('click', handleAudioClick);
-        audioPlayer.removeEventListener('ended', handleAudioEnded);
-
-        // Aggiungi listener usando le funzioni nominate
-        playButton.addEventListener('click', handleAudioClick);
-        audioPlayer.addEventListener('ended', handleAudioEnded);
-    }
-};
-
-// Funzioni GPS (Requisito 6.3)
+// Funzione Helper per calcolare la distanza tra due punti GPS (formula Haversine)
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371e3;
+    const R = 6371e3; // Raggio della Terra in metri
     const φ1 = lat1 * Math.PI / 180;
     const φ2 = lat2 * Math.PI / 180;
     const Δφ = (lat2 - lat1) * Math.PI / 180;
     const Δλ = (lon2 - lon1) * Math.PI / 180;
 
     const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-        Math.cos(φ1) * Math.cos(φ2) *
-        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c;
+    return R * c; // Distanza in metri
 };
+
+// ===========================================
+// FUNZIONI DI CARICAMENTO CONTENUTI (loadContent)
+// ===========================================
+
+const loadContent = (lang) => {
+    const pageId = document.body.id;
+    const jsonPath = `data/translations/${lang}/texts.json`;
+
+    try {
+        fetch(jsonPath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Errore HTTP ${response.status} durante il caricamento di ${jsonPath}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const pageData = data[pageId];
+                if (!pageData) {
+                    console.error(`Dati non trovati per la pagina ID: ${pageId} nella lingua: ${lang}`);
+                    return;
+                }
+
+                // 1. AGGIORNAMENTO NAVIGAZIONE (Requisito 5)
+                if (data.nav) {
+                    const suffix = `-${lang}.html`;
+
+                    // Aggiorna gli href del menu (assicurati che gli ID esistano nell'HTML!)
+                    const navHome = document.getElementById('navHome');
+                    if(navHome) navHome.href = `index${suffix}`;
+                    const navAneddoti = document.getElementById('navAneddoti');
+                    if(navAneddoti) navAneddoti.href = `aneddoti${suffix}`;
+                    const navLastre = document.getElementById('navLastre');
+                    if(navLastre) navLastre.href = `lastre${suffix}`;
+                    const navPugliole = document.getElementById('navPugliole');
+                    if(navPugliole) navPugliole.href = `pugliole${suffix}`;
+                    // Ho aggiunto un controllo "if(element)" per maggiore robustezza.
+
+                    // Aggiorna il testo dei link
+                    updateTextContent('navHome', data.nav.navHome);
+                    updateTextContent('navAneddoti', data.nav.navAneddoti);
+                    updateTextContent('navLastre', data.nav.navLastre);
+                    updateTextContent('navPugliole', data.nav.navPugliole);
+                }
+
+                // 2. AGGIORNAMENTO DEL CONTENUTO DELLA PAGINA (Requisito 7: Testi principali)
+                updateTextContent('pageTitle', pageData.pageTitle);
+                updateTextContent('mainText', pageData.mainText);
+                updateTextContent('mainText1', pageData.mainText1);
+                updateTextContent('mainText2', pageData.mainText2);
+                updateTextContent('mainText3', pageData.mainText3);
+                updateTextContent('mainText4', pageData.mainText4);
+                updateTextContent('mainText5', pageData.mainText5);
+                // ... aggiungi qui tutti i placeholder di testo che hai nel body ...
+
+                // 3. AGGIORNAMENTO DEL BOTTONE AUDIO (Requisito 3)
+                updateTextContent('playAudio', pageData.playAudioButton);
+
+                // 4. AGGIORNAMENTO IMMAGINI (Requisito 8 & 9)
+                const headerImage = document.getElementById('headerImage');
+                if (headerImage && pageData.headerImageSource) {
+                    headerImage.src = pageData.headerImageSource;
+                }
+                
+                // Aggiornamento Immagine dinamica 1 (a metà testo)
+                const pageImage1 = document.getElementById('pageImage1');
+                if (pageImage1) {
+                    if (pageData.imageSource1) {
+                        pageImage1.src = pageData.imageSource1;
+                        pageImage1.style.display = 'block'; // Mostra l'immagine
+                    } else {
+                        pageImage1.style.display = 'none'; // Nasconde se non c'è sorgente
+                    }
+                }
+                // ... gestisci qui pageImage2, pageImage3, ecc. ...
+
+                // 5. AGGIORNAMENTO INFORMAZIONI SU FONTE E DATA (Requisito extra)
+                if (pageData.sourceText) {
+                    updateTextContent('infoSource', `Fonte: ${pageData.sourceText}`);
+                }
+                if (pageData.creationDate) {
+                    updateTextContent('infoCreatedDate', pageData.creationDate); 
+                }
+                if (pageData.lastUpdate) {
+                    updateTextContent('infoUpdatedDate', pageData.lastUpdate); 
+                }
+
+                // 6. CARICAMENTO SORGENTE AUDIO (Requisito 3)
+                const audioPlayer = document.getElementById('audioPlayer');
+                if (audioPlayer && pageData.audioSource) {
+                    audioPlayer.src = pageData.audioSource;
+                    audioPlayer.load();
+                }
+
+                // 7. INVIA LA LINGUA CORRENTE A GOOGLE ANALYTICS (chiamata qui dopo che i dati sono caricati)
+                if (typeof gtag === 'function') {
+                    const currentHTMLlang = document.documentElement.lang || 'it'; 
+                    gtag('set', {'lingua_pagina': currentHTMLlang});
+                    
+                    gtag('event', 'page_view', {
+                        'page_title': document.title,
+                        'page_location': window.location.href,
+                        'lingua_pagina': currentHTMLlang
+                    });
+                }
+
+
+            })
+            .catch(error => {
+                console.error("Errore Critico caricamento fallito:", error);
+                // Potresti mostrare un messaggio di errore all'utente qui
+            });
+
+    } catch (error) {
+        console.error("Errore Critico nel caricamento dei testi:", error);
+    }
+};
+
+// ===========================================
+// FUNZIONI DI CONTROLLO AUDIO (Audio Control)
+// ===========================================
+
+const setupAudioControl = () => {
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playButton = document.getElementById('playAudio');
+
+    if (audioPlayer && playButton) {
+        playButton.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                const currentLang = document.documentElement.lang || 'it';
+                fetch(`data/translations/${currentLang}/texts.json`)
+                    .then(r => r.json())
+                    .then(data => {
+                        playButton.textContent = data[document.body.id].pauseAudioButton || 'Metti in pausa';
+                    });
+            } else {
+                audioPlayer.pause();
+                const currentLang = document.documentElement.lang || 'it';
+                fetch(`data/translations/${currentLang}/texts.json`)
+                    .then(r => r.json())
+                    .then(data => {
+                        playButton.textContent = data[document.body.id].playAudioButton || 'Ascolta';
+                    });
+            }
+        });
+
+        // Ripristina il testo del bottone alla fine dell'audio
+        audioPlayer.addEventListener('ended', () => {
+             const currentLang = document.documentElement.lang || 'it';
+             fetch(`data/translations/${currentLang}/texts.json`)
+                 .then(r => r.json())
+                 .then(data => {
+                     playButton.textContent = data[document.body.id].playAudioButton || 'Ascolta';
+                 });
+        });
+    }
+};
+
+// ===========================================
+// FUNZIONI DI GEOLOCALIZZAZIONE (GPS)
+// ===========================================
 
 const checkProximity = (position) => {
     const userLat = position.coords.latitude;
@@ -238,79 +220,77 @@ const checkProximity = (position) => {
     const currentPageId = document.body.id;
     const isOnHomePage = (currentPageId === 'index' || currentPageId === 'home');
     
-    // 🔥 Reindirizza via GPS SOLO se l'utente è sulla Home Page
+    // 🔥 FILTRO 1: REINDIRIZZA SOLO DALLA HOME (garantisce libertà di navigazione)
     if (!isOnHomePage) {
         return; 
     }
 
+    let closestLocation = null;
+    let minDistance = Infinity;
+
+    // 1. SCORRI TUTTI I POI E TROVA QUELLO PIÙ VICINO (E CONFORME ALLA SOGLIA)
+    // Questa logica risolve il problema delle duplicazioni e garantisce la massima precisione.
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
 
         if (distance <= location.distanceThreshold) {
-            
-            console.log(`GPS: Vicino a ${location.id}! Distanza: ${distance.toFixed(1)}m`);
-            
-            const targetPage = `${location.id}-${currentLang}.html`;
-            const currentPath = window.location.pathname;
-
-            // Se l'utente è sulla Home e non è già arrivato, reindirizza
-            if (!currentPath.includes(targetPage)) {
-                console.log(`GPS: Reindirizzamento dalla Home a ${location.id}`);
-                window.location.href = targetPage;
+            // Se è più vicino della distanza minima trovata finora, aggiorna
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestLocation = location;
             }
-            return; 
+        }
+    }
+    
+    // 2. REINDIRIZZAMENTO AL POI PIÙ VICINO (SE TROVATO)
+    if (closestLocation) {
+        const targetPageId = closestLocation.id;
+        const targetPage = `${targetPageId}-${currentLang}.html`;
+        const currentPath = window.location.pathname;
+
+        console.log(`GPS: Trovato POI più vicino: ${targetPageId} a ${minDistance.toFixed(1)}m`);
+
+        // Evita un reindirizzamento infinito
+        if (!currentPath.includes(targetPage)) {
+            console.log(`GPS: Reindirizzamento dalla Home a ${targetPage}`);
+            window.location.href = targetPage;
         }
     }
 };
 
 const startGeolocation = () => {
-    if (navigator.geolocation && ARCO_LOCATIONS.length > 0) {
-        navigator.geolocation.watchPosition(checkProximity,
-            (error) => console.warn(`ERRORE GPS: ${error.code}: ${error.message}`),
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    if ('geolocation' in navigator) {
+        const watchID = navigator.geolocation.watchPosition(checkProximity, 
+            (error) => {
+                console.error("Errore GPS:", error.message);
+            }, 
+            {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            }
         );
         console.log("GPS: Monitoraggio avviato.");
+    } else {
+        console.log("GPS: Geolocalizzazione non supportata dal browser.");
     }
 };
 
-
 // ===========================================
-// INIZIALIZZAZIONE
+// AVVIO ALL'AVVIO DELLA PAGINA (DOMContentLoaded)
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 🔥 ASSEGNAZIONE SICURA DELLE VARIABILI GLOBALI
-    audioPlayer = document.getElementById('audioPlayer');
-    playButton = document.getElementById('playAudio');
-
-    // Gestione Menu Hamburger (Requisito 5)
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navList = document.querySelector('.nav-list');
-
-    if (menuToggle && navList) {
-        menuToggle.addEventListener('click', () => {
-            navList.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
-    }
-
-    setupAudioControl();
+    // 1. Avvia il monitoraggio GPS
+    // Lo avviamo prima, ma la funzione checkProximity si attiverà solo quando il GPS trova una posizione.
     startGeolocation();
-
-    // Carica i contenuti nella lingua dell'HTML
-    const currentHTMLlang = document.documentElement.lang;
+    
+    // 2. Carica i contenuti nella lingua corretta
+    // Ho spostato l'invio di GA dentro loadContent.then() per sicurezza.
+    const currentHTMLlang = document.documentElement.lang || 'it'; 
     loadContent(currentHTMLlang);
 
-    // 🔥 NUOVO BLOCCO: Invia la lingua corrente a Google Analytics
-    if (typeof gtag === 'function') {
-        gtag('set', { 'lingua_pagina': currentHTMLlang });
-
-        // Invia un evento di visualizzazione di pagina con il dato della lingua associato
-        gtag('event', 'page_view', {
-            'page_title': document.title,
-            'page_location': window.location.href,
-            'lingua_pagina': currentHTMLlang // Parametro da tracciare!
-        });
-    }
+    // 3. Setup del controllo audio
+    setupAudioControl();
+    
 });
