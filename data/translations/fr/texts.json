@@ -16,7 +16,7 @@
         "imageSource5": "",
         "sourceText": "Archives historiques de la municipalité de Bologne.",
         "creationDate": "30/08/2025",
-        "LastUpdate": "01/10/2025",
+        "lastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/fr/Home_Bologna.mp3"
     },
     "nav": {
@@ -42,7 +42,7 @@
         "imageSource5": "",
         "sourceText": "Archives historiques de la municipalité de Bologne.",
         "creationDate": "30/08/2025",
-        "LastUpdate": "01/10/2025",
+        "lastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/fr/Pugliole.mp3"
     },
     "lastre": {
@@ -62,7 +62,7 @@
         "imageSource5": "",
         "sourceText": "Archives historiques de la municipalité de Bologne.",
         "creationDate": "30/08/2025",
-        "LastUpdate": "01/10/2025",
+        "lastUpdate": "01/10/2025",
         "audioSource": "Assets/Audio/fr/Lastre.mp3"
     },
     "carracci": {
