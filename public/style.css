@@ -4,6 +4,17 @@ body {
     margin: 0;
     padding-top: 60px; /* Spazio per l'header fisso */
     background-color: #f4f4f4;
+    box-sizing: border-box;
+
+    /* 🔥 CORREZIONE FOUT: Nasconde il contenuto statico all'avvio */
+    opacity: 0;
+    /* Aggiunge una transizione per un effetto di dissolvenza più fluido */
+    transition: opacity 0.3s ease-in; 
+}
+
+/* 🔥 CORREZIONE FOUT: La classe per rendere il contenuto visibile quando il JS è pronto */
+body.content-loaded {
+    opacity: 1;
 }
 
 /* Header Fisso */
@@ -52,9 +63,8 @@ body {
     bottom: 0;
     left: 0;
     
-    /* 🔥 FIX CRITICO: Rimuovi 'width: 100%' e usa 'display: inline-block' */
-    /* Questo fa restringere il blocco alla larghezza del suo contenuto (il testo) */
-    width: auto; /* Annulliamo l'effetto di width: 100% */
+    /* FIX: Assicura che la larghezza si adatti al contenuto */
+    width: auto; 
     display: inline-block; 
     
     /* Manteniamo gli stili di sfondo e testo */
@@ -206,7 +216,7 @@ body {
 }
 
 .play-style {
-    background-color: #3d1ce3; /* Verde */
+    background-color: #3d1ce3; /* Blu */
 }
 
 .pause-style {
@@ -217,8 +227,7 @@ body {
     display: none; /* Nasconde il player nativo */
 }
 
-/* File: public/style.css (Aggiungi alla fine del file) */
-
+/* --- Informazioni Footer --- */
 .info-footer {
     border-top: 1px solid #ccc;
     padding-top: 15px;

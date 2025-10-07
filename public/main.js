@@ -59,6 +59,10 @@ const updateTextContent = (id, value) => {
 // LOGICA CARICAMENTO CONTENUTI (Requisito 5, 7, 8, 9, 11)
 // ===========================================
 
+// ===========================================
+// LOGICA CARICAMENTO CONTENUTI (Requisito 5, 7, 8, 9, 11)
+// ===========================================
+
 const loadContent = async (lang) => {
 
     document.documentElement.lang = lang;
@@ -83,6 +87,9 @@ const loadContent = async (lang) => {
         if (!pageData) {
             console.warn(`Dati non trovati per la chiave pagina: ${pageId} nel file JSON per la lingua: ${lang}.`);
             updateTextContent('pageTitle', `[ERRORE] Dati mancanti (${pageId}/${lang})`);
+            
+            // Rendi visibile anche in caso di errore dati, ma lascia l'errore in console
+            document.body.classList.add('content-loaded');
             return;
         }
 
@@ -117,6 +124,7 @@ const loadContent = async (lang) => {
         updateTextContent('mainText3', pageData.mainText3);
         updateTextContent('mainText4', pageData.mainText4);
         updateTextContent('mainText5', pageData.mainText5);
+        
         // 🔥 AGGIORNAMENTO INFORMAZIONI SULLA FONTE E DATA
         if (pageData.sourceText) {
             // Usiamo il testo come etichetta e valore
@@ -163,13 +171,18 @@ const loadContent = async (lang) => {
         }
 
         console.log(`✅ Contenuto caricato con successo per la lingua: ${lang} e pagina: ${pageId}`);
+        
+        // 🔥 CORREZIONE FOUT: Rendi visibile il corpo della pagina
+        document.body.classList.add('content-loaded');
 
     } catch (error) {
         console.error('Errore critico nel caricamento dei testi:', error);
         updateTextContent('pageTitle', `[ERRORE CRITICO] Caricamento fallito.`);
+        
+        // 🔥 CORREZIONE FOUT: Rendi comunque visibile il corpo per non lasciare la pagina vuota
+        document.body.classList.add('content-loaded');
     }
 };
-
 // ===========================================
 // FUNZIONI DI GESTIONE EVENTI AUDIO
 // ===========================================
