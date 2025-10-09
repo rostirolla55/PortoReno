@@ -23,12 +23,8 @@
     </script>
 
     <script>
-        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
-        function getDestinationPageName(pageId, langCode) {
-            // Es. ('index', 'en') -> index-en.html
-            // Es. ('pugliole', 'it') -> pugliole-it.html
-            return `${pageId}-${langCode}.html`;
-        }
+        // Rimuoviamo qui la definizione di getDestinationPageName e redirectToPage.
+        // Queste funzioni DEVONO essere definite SOLTANTO in public/main.js
 
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
         function setLanguage(langCode) {
@@ -40,9 +36,9 @@
             let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
             if (pageId === '') pageId = 'index';
 
-            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
-            const destinationPage = getDestinationPageName(pageId, langCode);
-            window.location.href = destinationPage;
+            // 3. 🔥 CHIAMATA CORRETTA: Chiamiamo redirectToPage() definita in main.js
+            // che ora saprà come costruire l'URL e reindirizzare.
+            redirectToPage(pageId, langCode);
         }
     </script>
 </head>
@@ -74,11 +70,16 @@
         </div>
     </header>
 
+    <div class="header-image-container">
+        <img id="headerImage" src="public/images/Panorama_Bologna.jpg" alt="Bologna Panorama">
+        <h1 class="header-title" id="pageTitle">Benvenuto nel Quartiere Porto</h1>
+    </div>
+
     <main class="content-body">
 
         <div class="header-image-container">
             <img id="headerImage" src="public/images/Panorama_Bologna.jpg" alt="Immagine di testata">
-            <h1 class="header-title" id="pageTitle">Titolo Pagina</h1>
+            <h1 class="header-title" id="pageTitle">Le Pugliole</h1>
         </div>
 
         <p id="mainText"></p>
@@ -96,14 +97,27 @@
         <audio id="audioPlayer" preload="auto"></audio>
         <button id="playAudio" class="play-style">Ascolta</button>
 
+        <img id="pageImage1" src="" style="display:none;">
+        <img id="pageImage2" src="" style="display:none;">
+        <img id="pageImage3" src="" style="display:none;">
+        <img id="pageImage4" src="" style="display:none;">
+        <img id="pageImage5" src="" style="display:none;">
 
         <div class="info-footer">
             <p><span id="infoSource"></span></p>
             <p>Data Creazione: <span id="infoCreatedDate"></span></p>
             <p>Ultimo Aggiornamento: <span id="infoUpdatedDate"></span></p>
         </div>
-
     </main>
+
+    <button id="show-contextual-menu" style="display: none;">
+        POI Trovati Nelle Vicinanze (GPS)
+    </button>
+
+    <div id="contextual-menu-container" class="contextual-nav">
+        <ul>
+        </ul>
+    </div>
 
     <script src="public/main.js"></script>
 
