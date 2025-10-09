@@ -105,9 +105,8 @@
     <div id="contextual-menu-container" class="contextual-nav">
         <ul>
         </ul>
-    </div>
-
-    <script src="public/main.js"></script>
+    </div <script src="public/main.js">
+    </script>
 </body>
 
 </html>
