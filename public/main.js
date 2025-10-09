@@ -1,4 +1,3 @@
-
 // ===========================================
 // DATI: Punti di Interesse GPS (DA COMPILARE)
 // ===========================================
@@ -28,7 +27,8 @@ const ARCO_LOCATIONS = [
 // ===========================================
 let audioPlayer;
 let playButton;
-
+let menuButton; // Riferimento al nuovo bottone
+let menuContainer; // Riferimento al nuovo menu
 
 // ===========================================
 // FUNZIONI UTILITY
@@ -55,16 +55,30 @@ const updateTextContent = (id, value) => {
     }
 };
 
-// ===========================================
-// LOGICA CARICAMENTO CONTENUTI (Requisito 5, 7, 8, 9, 11)
-// ===========================================
+// Funzione helper per ottenere il nome del file di destinazione
+const getDestinationPageName = (pageId, langCode) => {
+    return `${pageId}-${langCode}.html`;
+};
+
+// Funzione helper per il reindirizzamento (Ora definita SOLO qui)
+const redirectToPage = (targetId, currentLang) => {
+    const targetPage = getDestinationPageName(targetId, currentLang);
+    const currentPath = window.location.pathname;
+
+    // Evita un reindirizzamento infinito
+    if (!currentPath.includes(targetPage)) {
+        // Nascondi il menu prima di reindirizzare
+        hideContextualMenu(); 
+        console.log(`GPS: Reindirizzamento a ${targetPage}`);
+        window.location.href = targetPage;
+    }
+};
 
 // ===========================================
 // LOGICA CARICAMENTO CONTENUTI (Requisito 5, 7, 8, 9, 11)
 // ===========================================
 
 const loadContent = async (lang) => {
-
     document.documentElement.lang = lang;
 
     try {
@@ -245,19 +259,62 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 // ===========================================
-// FUNZIONI DI GEOLOCALIZZAZIONE (GPS) - Versione Stabile
+// FUNZIONI MENU CONTESTUALE GPS 🔥 NUOVE AGGIUNTE 🔥
 // ===========================================
-// Funzione di utilità per reindirizzare (se necessario)
-const redirectToPage = (targetId, currentLang) => {
-    const targetPage = `${targetId}-${currentLang}.html`;
-    const currentPath = window.location.pathname;
 
-    // Evita un reindirizzamento infinito
-    if (!currentPath.includes(targetPage)) {
-        console.log(`GPS: Reindirizzamento a ${targetPage}`);
-        window.location.href = targetPage;
+// 1. Nasconde il bottone e chiude il menu contestuale
+const hideContextualMenu = () => {
+    if (menuButton) {
+        menuButton.style.display = 'none';
+        menuButton.onclick = null; // Rimuove il listener di click
+    }
+    if (menuContainer) {
+        menuContainer.classList.remove('active');
     }
 };
+
+// 2. Mostra il bottone e popola il menu contestuale con i POI vicini
+const renderContextualMenu = (locations, currentLang) => {
+    if (!menuButton || !menuContainer) {
+        console.error("Mancano gli elementi HTML per il menu contestuale.");
+        return;
+    }
+
+    // 1. Popola il menu
+    let htmlContent = '';
+    
+    locations.forEach(location => {
+        // Usiamo l'ID e la distanza (in metri) per il testo
+        // Nota: se volessi i nomi tradotti, dovresti caricare il JSON qui
+        
+        // Reindirizzamento tramite la funzione globale redirectToPage
+        htmlContent += `
+            <li>
+                <a href="#" onclick="redirectToPage('${location.id}', '${currentLang}'); return false;">
+                    Vai a: ${location.id} (${location.distance} m)
+                </a>
+            </li>
+        `;
+    });
+    
+    // Inserisci il contenuto nella lista del menu
+    const ul = menuContainer.querySelector('ul');
+    if (ul) {
+        ul.innerHTML = htmlContent;
+    }
+
+    // 2. Rendi visibile il bottone e gestisci l'apertura del menu
+    menuButton.style.display = 'block';
+    
+    // Toggle menu: Se il bottone è cliccato, mostra/nascondi il contenitore
+    menuButton.onclick = () => {
+        menuContainer.classList.toggle('active');
+    };
+};
+
+// ===========================================
+// FUNZIONI DI GEOLOCALIZZAZIONE (GPS) - Versione Stabile
+// ===========================================
 
 const checkProximity = (position) => {
     const userLat = position.coords.latitude;
@@ -269,6 +326,8 @@ const checkProximity = (position) => {
     
     // Filtro critico: interveniamo solo dalla Home page
     if (!isOnHomePage) {
+        // Assicurati che il menu sia nascosto se l'utente si sposta dalla home
+        hideContextualMenu(); 
         return; 
     }
 
@@ -288,7 +347,6 @@ const checkProximity = (position) => {
     }
     
     // 2. ELIMINA I DUPLICATI E ORDINA PER DISTANZA
-    // Rimuoviamo le voci duplicate (es. se 'lastre' appare 3 volte in ARCO_LOCATIONS)
     const uniqueLocations = nearbyLocations.reduce((acc, current) => {
         const x = acc.find(item => item.id === current.id);
         if (!x) {
@@ -300,18 +358,19 @@ const checkProximity = (position) => {
     
     // 3. DECISIONE SUL DISPLAY
     if (uniqueLocations.length === 0) {
-        // Nessun POI vicino, non fare nulla (o nascondi il bottone se era visibile)
+        // Nessun POI vicino
         console.log("GPS: Nessun POI significativo nelle vicinanze.");
-        hideContextualMenu(); // Funzione da creare per nascondere il menu
+        hideContextualMenu(); 
     } else if (uniqueLocations.length === 1) {
-        // UN SOLO POI VICINO: Reindirizzamento immediato (comportamento attuale)
+        // UN SOLO POI VICINO: Reindirizzamento immediato
         console.log(`GPS: Trovato un solo POI: ${uniqueLocations[0].id}. Reindirizzamento automatico.`);
+        hideContextualMenu(); // Nascondi il bottone prima di reindirizzare
         redirectToPage(uniqueLocations[0].id, currentLang);
         
     } else {
         // DUE O PIÙ POI VICINI: Mostra il menu di selezione
         console.log(`GPS: Trovati ${uniqueLocations.length} POI concorrenti. Mostro menu.`);
-        renderContextualMenu(uniqueLocations, currentLang); // Funzione da creare
+        renderContextualMenu(uniqueLocations, currentLang); 
     }
 };
 
@@ -332,9 +391,12 @@ const startGeolocation = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 🔥 ASSEGNAZIONE SICURA DELLE VARIABILI GLOBALI
+    // 🔥 ASSEGNAZIONE SICURA DELLE VARIABILI GLOBALI (INCLUSI I NUOVI ELEMENTI)
     audioPlayer = document.getElementById('audioPlayer');
     playButton = document.getElementById('playAudio');
+    menuButton = document.getElementById('show-contextual-menu'); // Bottone GPS
+    menuContainer = document.getElementById('contextual-menu-container'); // Menu contenitore
+
 
     // Gestione Menu Hamburger (Requisito 5)
     const menuToggle = document.querySelector('.menu-toggle');
@@ -354,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentHTMLlang = document.documentElement.lang;
     loadContent(currentHTMLlang);
 
-        // 🔥 NUOVO BLOCCO: Invia la lingua corrente a Google Analytics
+    // 🔥 NUOVO BLOCCO: Invia la lingua corrente a Google Analytics
     if (typeof gtag === 'function') {
         gtag('set', {'lingua_pagina': currentHTMLlang});
         
