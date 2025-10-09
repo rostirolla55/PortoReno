@@ -247,6 +247,18 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 // ===========================================
 // FUNZIONI DI GEOLOCALIZZAZIONE (GPS) - Versione Stabile
 // ===========================================
+// Funzione di utilità per reindirizzare (se necessario)
+const redirectToPage = (targetId, currentLang) => {
+    const targetPage = `${targetId}-${currentLang}.html`;
+    const currentPath = window.location.pathname;
+
+    // Evita un reindirizzamento infinito
+    if (!currentPath.includes(targetPage)) {
+        console.log(`GPS: Reindirizzamento a ${targetPage}`);
+        window.location.href = targetPage;
+    }
+};
+
 const checkProximity = (position) => {
     const userLat = position.coords.latitude;
     const userLon = position.coords.longitude;
@@ -255,42 +267,51 @@ const checkProximity = (position) => {
     const currentPageId = document.body.id;
     const isOnHomePage = (currentPageId === 'index' || currentPageId === 'home');
     
-    // 🔥 FILTRO CRITICO: REINDIRIZZA SOLO DALLA HOME
-    // Se l'utente è su una pagina POI o Aneddoto, il GPS non interviene mai.
+    // Filtro critico: interveniamo solo dalla Home page
     if (!isOnHomePage) {
         return; 
     }
 
-    let closestLocation = null;
-    let minDistance = Infinity;
-
-    // 1. SCORRI TUTTI I POI PER TROVARE QUELLO PIÙ VICINO (CONFORME ALLA SOGLIA)
-    // Questo gestisce la tua necessità di avere più punti di innesco per la stessa pagina (es. 'lastre').
+    let nearbyLocations = []; // Array per collezionare TUTTI i POI vicini
+    
+    // 1. SCORRI TUTTI I POI PER TROVARE QUELLI NEL RAGGIO CONSENTITO
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
 
-        if (distance <= location.distanceThreshold) {
-            // Se è più vicino della distanza minima trovata finora, aggiorna
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestLocation = location;
-            }
+        if (distance <= 20) { // Usiamo 20 metri come soglia massima
+            // Aggiungiamo i dati necessari (ID pagina e distanza)
+            nearbyLocations.push({ 
+                id: location.id, 
+                distance: distance.toFixed(1) 
+            });
         }
     }
     
-    // 2. REINDIRIZZAMENTO AL POI PIÙ VICINO (SE TROVATO)
-    if (closestLocation) {
-        const targetPageId = closestLocation.id;
-        const targetPage = `${targetPageId}-${currentLang}.html`;
-        const currentPath = window.location.pathname;
-
-        console.log(`GPS: Trovato POI più vicino: ${targetPageId} a ${minDistance.toFixed(1)}m`);
-
-        // Evita un reindirizzamento infinito
-        if (!currentPath.includes(targetPage)) {
-            console.log(`GPS: Reindirizzamento dalla Home a ${targetPage}`);
-            window.location.href = targetPage;
+    // 2. ELIMINA I DUPLICATI E ORDINA PER DISTANZA
+    // Rimuoviamo le voci duplicate (es. se 'lastre' appare 3 volte in ARCO_LOCATIONS)
+    const uniqueLocations = nearbyLocations.reduce((acc, current) => {
+        const x = acc.find(item => item.id === current.id);
+        if (!x) {
+            return acc.concat([current]);
         }
+        return acc;
+    }, []).sort((a, b) => a.distance - b.distance); // Ordina dal più vicino al più lontano
+
+    
+    // 3. DECISIONE SUL DISPLAY
+    if (uniqueLocations.length === 0) {
+        // Nessun POI vicino, non fare nulla (o nascondi il bottone se era visibile)
+        console.log("GPS: Nessun POI significativo nelle vicinanze.");
+        hideContextualMenu(); // Funzione da creare per nascondere il menu
+    } else if (uniqueLocations.length === 1) {
+        // UN SOLO POI VICINO: Reindirizzamento immediato (comportamento attuale)
+        console.log(`GPS: Trovato un solo POI: ${uniqueLocations[0].id}. Reindirizzamento automatico.`);
+        redirectToPage(uniqueLocations[0].id, currentLang);
+        
+    } else {
+        // DUE O PIÙ POI VICINI: Mostra il menu di selezione
+        console.log(`GPS: Trovati ${uniqueLocations.length} POI concorrenti. Mostro menu.`);
+        renderContextualMenu(uniqueLocations, currentLang); // Funzione da creare
     }
 };
 
