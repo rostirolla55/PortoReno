@@ -17,7 +17,7 @@ const ARCO_LOCATIONS = [
     // ViaSanCarlo42_f.jpg
     { id: 'lastre', lat: 44.5004361111111, lon: 11.3406416666667, distanceThreshold: 10 },
     // Tanari_11.jpg
-    { id: 'lastre', lat: 44.4992472222222, lon: 11.3407194444444, distanceThreshold: 10 }, 
+    { id: 'lastre', lat: 44.4992472222222, lon: 11.3407194444444, distanceThreshold: 10 },
     // Tanari_11.jpg
     { id: 'lastre', lat: 44.49925278, lon: 11.34074444, distanceThreshold: 10 }
 ];
@@ -61,14 +61,14 @@ const getDestinationPageName = (pageId, langCode) => {
 };
 
 // Funzione helper per il reindirizzamento (Ora definita SOLO qui)
-function redirectToPage (targetId, currentLang) {
+function redirectToPage(targetId, currentLang) {
     const targetPage = getDestinationPageName(targetId, currentLang);
     const currentPath = window.location.pathname;
 
     // Evita un reindirizzamento infinito
     if (!currentPath.includes(targetPage)) {
         // Nascondi il menu prima di reindirizzare
-        hideContextualMenu(); 
+        hideContextualMenu();
         console.log(`GPS: Reindirizzamento a ${targetPage}`);
         window.location.href = targetPage;
     }
@@ -101,7 +101,7 @@ const loadContent = async (lang) => {
         if (!pageData) {
             console.warn(`Dati non trovati per la chiave pagina: ${pageId} nel file JSON per la lingua: ${lang}.`);
             updateTextContent('pageTitle', `[ERRORE] Dati mancanti (${pageId}/${lang})`);
-            
+
             // Rendi visibile anche in caso di errore dati, ma lascia l'errore in console
             document.body.classList.add('content-loaded');
             return;
@@ -138,7 +138,7 @@ const loadContent = async (lang) => {
         updateTextContent('mainText3', pageData.mainText3);
         updateTextContent('mainText4', pageData.mainText4);
         updateTextContent('mainText5', pageData.mainText5);
-        
+
         // 🔥 AGGIORNAMENTO INFORMAZIONI SULLA FONTE E DATA
         if (pageData.sourceText) {
             // Usiamo il testo come etichetta e valore
@@ -185,14 +185,14 @@ const loadContent = async (lang) => {
         }
 
         console.log(`✅ Contenuto caricato con successo per la lingua: ${lang} e pagina: ${pageId}`);
-        
+
         // 🔥 CORREZIONE FOUT: Rendi visibile il corpo della pagina
         document.body.classList.add('content-loaded');
 
     } catch (error) {
         console.error('Errore critico nel caricamento dei testi:', error);
         updateTextContent('pageTitle', `[ERRORE CRITICO] Caricamento fallito.`);
-        
+
         // 🔥 CORREZIONE FOUT: Rendi comunque visibile il corpo per non lasciare la pagina vuota
         document.body.classList.add('content-loaded');
     }
@@ -282,11 +282,11 @@ const renderContextualMenu = (locations, currentLang) => {
 
     // 1. Popola il menu
     let htmlContent = '';
-    
+
     locations.forEach(location => {
         // Usiamo l'ID e la distanza (in metri) per il testo
         // Nota: se volessi i nomi tradotti, dovresti caricare il JSON qui
-        
+
         // Reindirizzamento tramite la funzione globale redirectToPage
         htmlContent += `
             <li>
@@ -296,7 +296,7 @@ const renderContextualMenu = (locations, currentLang) => {
             </li>
         `;
     });
-    
+
     // Inserisci il contenuto nella lista del menu
     const ul = menuContainer.querySelector('ul');
     if (ul) {
@@ -305,7 +305,7 @@ const renderContextualMenu = (locations, currentLang) => {
 
     // 2. Rendi visibile il bottone e gestisci l'apertura del menu
     menuButton.style.display = 'block';
-    
+
     // Toggle menu: Se il bottone è cliccato, mostra/nascondi il contenitore
     menuButton.onclick = () => {
         menuContainer.classList.toggle('active');
@@ -320,32 +320,32 @@ const checkProximity = (position) => {
     const userLat = position.coords.latitude;
     const userLon = position.coords.longitude;
     const currentLang = document.documentElement.lang || 'it';
-    
+
     const currentPageId = document.body.id;
     const isOnHomePage = (currentPageId === 'index' || currentPageId === 'home');
-    
+
     // Filtro critico: interveniamo solo dalla Home page
     if (!isOnHomePage) {
         // Assicurati che il menu sia nascosto se l'utente si sposta dalla home
-        hideContextualMenu(); 
-        return; 
+        hideContextualMenu();
+        return;
     }
 
     let nearbyLocations = []; // Array per collezionare TUTTI i POI vicini
-    
+
     // 1. SCORRI TUTTI I POI PER TROVARE QUELLI NEL RAGGIO CONSENTITO
     for (const location of ARCO_LOCATIONS) {
         const distance = calculateDistance(userLat, userLon, location.lat, location.lon);
 
         if (distance <= 20) { // Usiamo 20 metri come soglia massima
             // Aggiungiamo i dati necessari (ID pagina e distanza)
-            nearbyLocations.push({ 
-                id: location.id, 
-                distance: distance.toFixed(1) 
+            nearbyLocations.push({
+                id: location.id,
+                distance: distance.toFixed(1)
             });
         }
     }
-    
+
     // 2. ELIMINA I DUPLICATI E ORDINA PER DISTANZA
     const uniqueLocations = nearbyLocations.reduce((acc, current) => {
         const x = acc.find(item => item.id === current.id);
@@ -355,22 +355,22 @@ const checkProximity = (position) => {
         return acc;
     }, []).sort((a, b) => a.distance - b.distance); // Ordina dal più vicino al più lontano
 
-    
+
     // 3. DECISIONE SUL DISPLAY
     if (uniqueLocations.length === 0) {
         // Nessun POI vicino
         console.log("GPS: Nessun POI significativo nelle vicinanze.");
-        hideContextualMenu(); 
+        hideContextualMenu();
     } else if (uniqueLocations.length === 1) {
         // UN SOLO POI VICINO: Reindirizzamento immediato
         console.log(`GPS: Trovato un solo POI: ${uniqueLocations[0].id}. Reindirizzamento automatico.`);
         hideContextualMenu(); // Nascondi il bottone prima di reindirizzare
         redirectToPage(uniqueLocations[0].id, currentLang);
-        
+
     } else {
         // DUE O PIÙ POI VICINI: Mostra il menu di selezione
         console.log(`GPS: Trovati ${uniqueLocations.length} POI concorrenti. Mostro menu.`);
-        renderContextualMenu(uniqueLocations, currentLang); 
+        renderContextualMenu(uniqueLocations, currentLang);
     }
 };
 
@@ -418,8 +418,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 🔥 NUOVO BLOCCO: Invia la lingua corrente a Google Analytics
     if (typeof gtag === 'function') {
-        gtag('set', {'lingua_pagina': currentHTMLlang});
-        
+        gtag('set', { 'lingua_pagina': currentHTMLlang });
+
         // Invia un evento di visualizzazione di pagina con il dato della lingua associato
         gtag('event', 'page_view', {
             'page_title': document.title,
