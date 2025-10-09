@@ -61,7 +61,7 @@ const getDestinationPageName = (pageId, langCode) => {
 };
 
 // Funzione helper per il reindirizzamento (Ora definita SOLO qui)
-const redirectToPage = (targetId, currentLang) => {
+function redirectToPage = (targetId, currentLang) {
     const targetPage = getDestinationPageName(targetId, currentLang);
     const currentPath = window.location.pathname;
 
