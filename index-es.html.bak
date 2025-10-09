@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -12,23 +12,23 @@
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-28GJXYWCQW"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      // 🔥 CONFIGURAZIONE: Associa 'dimension1' al nome parametro 'lingua_pagina'
-      gtag('config', 'G-28GJXYWCQW', {
-          'custom_map': {'dimension1': 'lingua_pagina'} 
-      });
+        // 🔥 CONFIGURAZIONE: Associa 'dimension1' al nome parametro 'lingua_pagina'
+        gtag('config', 'G-28GJXYWCQW', {
+            'custom_map': { 'dimension1': 'lingua_pagina' }
+        });
     </script>
 
     <script>
-         // Rimuoviamo qui la definizione di getDestinationPageName e redirectToPage.
-        // Queste funzioni DEVONO essere definite SOLTANTO in public/main.js
- 
- 
- 
-        
+        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
+        function getDestinationPageName(pageId, langCode) {
+            // Es. ('index', 'en') -> index-en.html
+            // Es. ('pugliole', 'it') -> pugliole-es.html
+            return `${pageId}-${langCode}.html`;
+        }
 
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
         function setLanguage(langCode) {
@@ -40,12 +40,13 @@
             let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
             if (pageId === '') pageId = 'index';
 
-            // 3. 🔥 CHIAMATA CORRETTA: Chiamiamo redirectToPage() definita in main.js
-            // che ora saprà come costruire l'URL e reindirizzare.
-            redirectToPage(pageId, langCode); 
+            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
+            const destinationPage = getDestinationPageName(pageId, langCode);
+            window.location.href = destinationPage;
         }
     </script>
 </head>
+
 <body id="home">
     <header class="main-header">
 
@@ -57,10 +58,10 @@
 
         <nav class="nav-bar nav-list">
             <ul class="nav-links">
-                <li><a id="navHome" href="index-en.html">Home</a></li>
-                <li><a id="navPugliole" href="pugliole-en.html">Pugliole</a></li>
-                <li><a id="navLastre" href="lastre-en.html">Lastre</a></li>
-                <li><a id="navCarracci" href="carracci-en.html">Carracci</a></li>
+                <li><a id="navHome" href="index-es.html">Home</a></li>
+                <li><a id="navPugliole" href="pugliole-es.html">Pugliole</a></li>
+                <li><a id="navLastre" href="lastre-es.html">Lastre</a></li>
+                <li><a id="navCarracci" href="carracci-es.html">Carracci</a></li>
             </ul>
         </nav>
 
@@ -96,19 +97,11 @@
 
         <div class="info-footer">
             <p><span id="infoSource"></span></p>
-            <p>Creation Date: <span id="infoCreatedDate"></span></p>
-            <p>Last Updated: <span id="infoUpdatedDate"></span></p>
+            <p>Fecha de creación: <span id="infoCreatedDate"></span></p>
+            <p>Última actualización: <span id="infoUpdatedDate"></span></p>
         </div>
     </main>
 
-    <button id="show-contextual-menu" style="display: none;">
-        POI Trovati Nelle Vicinanze (GPS)
-    </button>
-
-    <div id="contextual-menu-container" class="contextual-nav">
-        <ul>
-            </ul>
-    </div
     <script src="public/main.js"></script>
 </body>
 

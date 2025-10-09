@@ -23,12 +23,12 @@
     </script>
 
     <script>
-         // Rimuoviamo qui la definizione di getDestinationPageName e redirectToPage.
-        // Queste funzioni DEVONO essere definite SOLTANTO in public/main.js
- 
- 
- 
-        
+        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
+        function getDestinationPageName(pageId, langCode) {
+            // Es. ('index', 'en') -> index-en.html
+            // Es. ('pugliole', 'it') -> pugliole-en.html
+            return `${pageId}-${langCode}.html`;
+        }
 
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
         function setLanguage(langCode) {
@@ -40,9 +40,9 @@
             let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
             if (pageId === '') pageId = 'index';
 
-            // 3. 🔥 CHIAMATA CORRETTA: Chiamiamo redirectToPage() definita in main.js
-            // che ora saprà come costruire l'URL e reindirizzare.
-            redirectToPage(pageId, langCode); 
+            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
+            const destinationPage = getDestinationPageName(pageId, langCode);
+            window.location.href = destinationPage;
         }
     </script>
 </head>
@@ -101,14 +101,6 @@
         </div>
     </main>
 
-    <button id="show-contextual-menu" style="display: none;">
-        POI Trovati Nelle Vicinanze (GPS)
-    </button>
-
-    <div id="contextual-menu-container" class="contextual-nav">
-        <ul>
-            </ul>
-    </div
     <script src="public/main.js"></script>
 </body>
 
