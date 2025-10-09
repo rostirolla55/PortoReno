@@ -240,3 +240,80 @@ body.content-loaded {
 .info-footer p {
     margin: 5px 0;
 }
+
+/* =========================================== */
+/* 🔥 STILI AGGIUNTI PER MENU CONTESTUALE GPS */
+/* =========================================== */
+
+#show-contextual-menu {
+    /* Bottone fisso in basso per attivare la scelta POI */
+    position: fixed;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 998; /* Sotto l'header ma sopra il contenuto */
+    
+    background-color: #007bff; /* Blu per attirare l'attenzione */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    
+    /* Il JS lo imposta su display: none; quando non è necessario */
+}
+
+.contextual-nav {
+    /* Contenitore che si apre sopra il bottone */
+    position: fixed;
+    bottom: 70px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    background-color: #ffffff;
+    border: 1px solid #007bff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    
+    /* Inizialmente nascosto e fuori dallo schermo */
+    visibility: hidden; 
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px); 
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.contextual-nav.active {
+    /* Mostrato quando il JS aggiunge la classe 'active' */
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.contextual-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contextual-nav li:last-child a {
+    border-bottom: none;
+}
+
+.contextual-nav a {
+    display: block;
+    padding: 15px 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.contextual-nav a:hover {
+    background-color: #f0f0f0;
+}

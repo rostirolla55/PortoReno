@@ -30,6 +30,16 @@
             return `${pageId}-${langCode}.html`;
         }
 
+        // Funzione helper per il reindirizzamento (chiamata dal JS e dai nuovi link contestuali)
+        function redirectToPage(targetId, currentLang) {
+            const targetPage = getDestinationPageName(targetId, currentLang);
+            const currentPath = window.location.pathname;
+        
+            if (!currentPath.includes(targetPage)) {
+                window.location.href = targetPage;
+            }
+        }
+
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
         function setLanguage(langCode) {
             // 1. Salva la lingua scelta dall'utente (Requisito 11)
@@ -100,6 +110,15 @@
             <p>Ultimo Aggiornamento: <span id="infoUpdatedDate"></span></p>
         </div>
     </main>
+
+    <button id="show-contextual-menu" style="display: none;">
+        POI Trovati Nelle Vicinanze (GPS)
+    </button>
+
+    <div id="contextual-menu-container" class="contextual-nav">
+        <ul>
+            </ul>
+    </div>
 
     <script src="public/main.js"></script>
 </body>
