@@ -11,20 +11,20 @@
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-28GJXYWCQW"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      // 🔥 CONFIGURAZIONE: Associa 'dimension1' al nome parametro 'lingua_pagina'
-      gtag('config', 'G-28GJXYWCQW', {
-          'custom_map': {'dimension1': 'lingua_pagina'} 
-      });
+        // 🔥 CONFIGURAZIONE: Associa 'dimension1' al nome parametro 'lingua_pagina'
+        gtag('config', 'G-28GJXYWCQW', {
+            'custom_map': { 'dimension1': 'lingua_pagina' }
+        });
     </script>
 
     <script>
         // Rimuoviamo qui la definizione di getDestinationPageName e redirectToPage.
         // Queste funzioni DEVONO essere definite SOLTANTO in public/main.js
-        
+
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
         function setLanguage(langCode) {
             // 1. Salva la lingua scelta dall'utente (Requisito 11)
@@ -37,7 +37,7 @@
 
             // 3. 🔥 CHIAMATA CORRETTA: Chiamiamo redirectToPage() definita in main.js
             // che ora saprà come costruire l'URL e reindirizzare.
-            redirectToPage(pageId, langCode); 
+            redirectToPage(pageId, langCode);
         }
     </script>
 </head>
@@ -103,7 +103,7 @@
 
     <div id="contextual-menu-container" class="contextual-nav">
         <ul>
-            </ul>
+        </ul>
     </div>
 
     <script src="public/main.js"></script>
