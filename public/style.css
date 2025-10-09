@@ -2,14 +2,15 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding-top: 60px; /* Spazio per l'header fisso */
+    padding-top: 60px;
+    /* Spazio per l'header fisso */
     background-color: #f4f4f4;
     box-sizing: border-box;
 
     /* 🔥 CORREZIONE FOUT: Nasconde il contenuto statico all'avvio */
     opacity: 0;
     /* Aggiunge una transizione per un effetto di dissolvenza più fluido */
-    transition: opacity 0.3s ease-in; 
+    transition: opacity 0.3s ease-in;
 }
 
 /* 🔥 CORREZIONE FOUT: La classe per rendere il contenuto visibile quando il JS è pronto */
@@ -46,7 +47,8 @@ body.content-loaded {
 .header-image-container {
     position: relative;
     width: 100%;
-    height: 200px; /* Altezza fissa per l'immagine */
+    height: 200px;
+    /* Altezza fissa per l'immagine */
     overflow: hidden;
     margin-bottom: 20px;
 }
@@ -62,11 +64,11 @@ body.content-loaded {
     position: absolute;
     bottom: 0;
     left: 0;
-    
+
     /* FIX: Assicura che la larghezza si adatti al contenuto */
-    width: auto; 
-    display: inline-block; 
-    
+    width: auto;
+    display: inline-block;
+
     /* Manteniamo gli stili di sfondo e testo */
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
@@ -74,9 +76,9 @@ body.content-loaded {
     margin: 0;
     font-size: 1.5em;
     box-sizing: border-box;
-    
+
     /* Opzionale: Aggiungiamo un piccolo margine sinistro per staccarlo dall'angolo */
-    margin-left: 10px; 
+    margin-left: 10px;
 }
 
 /* --- LOGICA MENU HAMBURGER (Requisito 5) --- */
@@ -86,6 +88,7 @@ body.content-loaded {
     .menu-toggle {
         display: none;
     }
+
     .nav-bar {
         position: static;
         display: flex;
@@ -96,10 +99,12 @@ body.content-loaded {
         z-index: auto;
         overflow-y: visible;
     }
+
     .nav-bar .nav-links {
         display: flex;
         gap: 15px;
     }
+
     .nav-bar .nav-links li a {
         color: #333;
         padding: 0;
@@ -130,9 +135,11 @@ body.content-loaded {
 .menu-toggle.active .bar:nth-child(2) {
     opacity: 0;
 }
+
 .menu-toggle.active .bar:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
+
 .menu-toggle.active .bar:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
 }
@@ -144,40 +151,46 @@ body.content-loaded {
     left: 0;
     width: 100%;
     height: 100%;
-    
+
     /* FIX: Fondo nero opaco e non trasparente */
-    background-color: #000000; 
-    
-    transform: translateX(-100%); /* Nascosto per default */
+    background-color: #000000;
+
+    transform: translateX(-100%);
+    /* Nascosto per default */
     transition: transform 0.3s ease-in-out;
-    padding-top: 60px; /* Spazio sotto l'header */
+    padding-top: 60px;
+    /* Spazio sotto l'header */
     z-index: 999;
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
 .nav-bar.active {
-    transform: translateX(0); /* Mostrato quando ha la classe 'active' */
+    transform: translateX(0);
+    /* Mostrato quando ha la classe 'active' */
 }
 
 /* Link del menu in colonna */
 .nav-bar .nav-links {
     list-style: none;
-    margin: 0; 
-    padding: 0; 
-    display: flex; /* Mantiene flexbox */
-    flex-direction: column; /* FORZA la colonna */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Mantiene flexbox */
+    flex-direction: column;
+    /* FORZA la colonna */
     text-align: center;
 }
 
 .nav-bar .nav-links li a {
-    color: white; /* I link sono bianchi sullo sfondo nero */
+    color: white;
+    /* I link sono bianchi sullo sfondo nero */
     text-decoration: none;
     font-size: 1.2em;
     display: block;
     padding: 15px 0;
-    
+
     /* Se vuoi eliminare le righe alternate, RIMUOVI questa riga: */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* --- Selettore Lingua --- */
@@ -216,15 +229,18 @@ body.content-loaded {
 }
 
 .play-style {
-    background-color: #3d1ce3; /* Blu */
+    background-color: #3d1ce3;
+    /* Blu */
 }
 
 .pause-style {
-    background-color: #f44336; /* Rosso */
+    background-color: #f44336;
+    /* Rosso */
 }
 
 #audioPlayer {
-    display: none; /* Nasconde il player nativo */
+    display: none;
+    /* Nasconde il player nativo */
 }
 
 /* --- Informazioni Footer --- */
@@ -232,7 +248,7 @@ body.content-loaded {
     border-top: 1px solid #ccc;
     padding-top: 15px;
     margin-top: 30px;
-    font-size: 0.85em; 
+    font-size: 0.85em;
     color: #666;
     line-height: 1.4;
 }
@@ -248,12 +264,14 @@ body.content-loaded {
 #show-contextual-menu {
     /* Bottone fisso in basso per attivare la scelta POI */
     position: fixed;
-    bottom: 20px; 
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 998; /* Sotto l'header ma sopra il contenuto */
-    
-    background-color: #007bff; /* Blu per attirare l'attenzione */
+    z-index: 998;
+    /* Sotto l'header ma sopra il contenuto */
+
+    background-color: #007bff;
+    /* Blu per attirare l'attenzione */
     color: white;
     padding: 12px 25px;
     border: none;
@@ -261,14 +279,14 @@ body.content-loaded {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    
+
     /* Il JS lo imposta su display: none; quando non è necessario */
 }
 
 .contextual-nav {
     /* Contenitore che si apre sopra il bottone */
     position: fixed;
-    bottom: 70px; 
+    bottom: 70px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -277,11 +295,11 @@ body.content-loaded {
     border: 1px solid #007bff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 999;
-    
+
     /* Inizialmente nascosto e fuori dallo schermo */
-    visibility: hidden; 
+    visibility: hidden;
     opacity: 0;
-    transform: translateX(-50%) translateY(10px); 
+    transform: translateX(-50%) translateY(10px);
     transition: all 0.3s ease-in-out;
     border-radius: 8px;
     overflow: hidden;
