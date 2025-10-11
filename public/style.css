@@ -43,44 +43,20 @@ body.content-loaded {
     text-align: justify;
 }
 
-/* Immagine di Testata (Requisito 8) */
-.header-image-container {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    /* Altezza fissa per l'immagine */
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.header-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
+/* Il titolo rimane posizionato in modo assoluto sul fondo */
 .header-title {
-    /* Manteniamo 'position: absolute' per sovrapporre all'immagine */
-    position: absolute;
-    bottom: 0;
+    position: absolute; 
+    bottom: 0; 
     left: 0;
-
-    /* FIX: Assicura che la larghezza si adatti al contenuto */
-    width: auto;
-    display: inline-block;
-
-    /* Manteniamo gli stili di sfondo e testo */
+    width: 100%; 
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
     padding: 10px 15px;
     margin: 0;
     font-size: 1.5em;
     box-sizing: border-box;
-
-    /* Opzionale: Aggiungiamo un piccolo margine sinistro per staccarlo dall'angolo */
-    margin-left: 10px;
+    text-align: center;
 }
-
 /* --- LOGICA MENU HAMBURGER (Requisito 5) --- */
 
 /* Nasconde la navigazione e il toggle su schermi grandi */
