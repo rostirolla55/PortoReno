@@ -43,43 +43,45 @@ body.content-loaded {
     text-align: justify;
 }
 
-/* Immagine di Testata (Requisito 8) */
+/* Contenitore dell'immagine di testata */
 .header-image-container {
     position: relative;
     width: 100%;
-    height: 200px;
-    /* Altezza fissa per l'immagine */
+
+    /* 🔥 FIX: Usa aspect-ratio per mantenere la proporzione 16:9 su tutti i dispositivi. */
+    aspect-ratio: 16 / 9;
+    height: auto;
+    /* L'altezza è ora gestita dal rapporto, non da un valore fisso */
+
     overflow: hidden;
     margin-bottom: 20px;
+    margin-top: 0;
 }
 
+/* L'immagine stessa all'interno del container */
 .header-image-container img {
+    /* L'immagine deve occupare il 100% dell'area definita dall'aspect-ratio */
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
+/* Il titolo rimane posizionato in modo assoluto sul fondo */
 .header-title {
-    /* Manteniamo 'position: absolute' per sovrapporre all'immagine */
     position: absolute;
     bottom: 0;
     left: 0;
-
-    /* FIX: Assicura che la larghezza si adatti al contenuto */
-    width: auto;
-    display: inline-block;
-
-    /* Manteniamo gli stili di sfondo e testo */
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
     padding: 10px 15px;
     margin: 0;
     font-size: 1.5em;
     box-sizing: border-box;
-
-    /* Opzionale: Aggiungiamo un piccolo margine sinistro per staccarlo dall'angolo */
-    margin-left: 10px;
+    text-align: center;
 }
+
 
 /* --- LOGICA MENU HAMBURGER (Requisito 5) --- */
 
