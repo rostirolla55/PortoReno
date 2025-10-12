@@ -9,9 +9,9 @@ const ARCO_LOCATIONS = [
     // Pugliole_2.jpg
     { id: 'Pugliole_2.jpg', lat: 44.4990527777778, lon: 11.3394472222222, distanceThreshold: 5 },// ViaPoleseVerticale_F.jpg
     // Pugliole.jpg
-    { id: 'carracci', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 20 },
+    { id: 'pugliole', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 5 },
     // viaPolese_f.jpg
-    { id: 'pugliole', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 20 },
+    { id: 'pugliole', lat: 44.5001944444444, lon: 11.3399861111111, distanceThreshold: 5 },
     // ViaSanCarlo19_f.jpg
     { id: 'carracci', lat: 44.5000722222222, lon: 11.3404333333333, distanceThreshold: 5 },
     // ViaSanCarlo45_f.jpg
