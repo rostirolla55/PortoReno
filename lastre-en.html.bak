@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
 
-    <title>Le Pugliole a Bologna</title>
+    <title>Numerazione dei civici</title>
 
     <link rel="stylesheet" href="public/style.css">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-28GJXYWCQW"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -22,8 +23,12 @@
     </script>
 
     <script>
-        // Rimuoviamo qui la definizione di getDestinationPageName e redirectToPage.
-        // Queste funzioni DEVONO essere definite SOLTANTO in public/main.js
+        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
+        function getDestinationPageName(pageId, langCode) {
+            // Es. ('index', 'en') -> index-en.html
+            // Es. ('pugliole', 'it') -> pugliole-it.html
+            return `${pageId}-${langCode}.html`;
+        }
 
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
         function setLanguage(langCode) {
@@ -35,14 +40,15 @@
             let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
             if (pageId === '') pageId = 'index';
 
-            // 3. 🔥 CHIAMATA CORRETTA: Chiamiamo redirectToPage() definita in main.js
-            // che ora saprà come costruire l'URL e reindirizzare.
-            redirectToPage(pageId, langCode);
+            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
+            const destinationPage = getDestinationPageName(pageId, langCode);
+            window.location.href = destinationPage;
         }
     </script>
 </head>
 
-<body id="pugliole">
+<body id="lastre">
+
     <header class="main-header">
 
         <button class="menu-toggle" aria-label="Toggle menu">
@@ -68,45 +74,39 @@
         </div>
     </header>
 
-
     <main class="content-body">
+
         <div class="header-image-container">
-            <img id="headerImage" src="public\images\viaPolese.jpg" alt="Via Polese">
-            <h1 class="header-title" id="pageTitle">the Pugliole in Bologna</h1>
+            <img id="headerImage" src="public/images/Panorama_Bologna.jpg" alt="Immagine di testata">
+            <h1 class="header-title" id="pageTitle">Titolo Pagina</h1>
         </div>
+
         <p id="mainText"></p>
+
+        <img id="pageImage1" src="" alt="Immagine di lastre" style="display: none;">
+
         <p id="mainText1"></p>
+
         <p id="mainText2"></p>
+
         <p id="mainText3"></p>
+
         <p id="mainText4"></p>
-        <p id="mainText5"></p>
 
-        <img id="pageImage1" src="" style="display:none;">
-        <img id="pageImage2" src="" style="display:none;">
-        <img id="pageImage3" src="" style="display:none;">
-        <img id="pageImage4" src="" style="display:none;">
-        <img id="pageImage5" src="" style="display:none;">
+        <audio id="audioPlayer" preload="auto"></audio>
+        <button id="playAudio" class="play-style">Ascolta</button>
 
-        <button id="playAudio" class="play-style">Ascolta l'audio!</button>
-        <audio id="audioPlayer"></audio>
 
         <div class="info-footer">
             <p><span id="infoSource"></span></p>
             <p>Data Creazione: <span id="infoCreatedDate"></span></p>
             <p>Ultimo Aggiornamento: <span id="infoUpdatedDate"></span></p>
         </div>
+
     </main>
 
-    <button id="show-contextual-menu" style="display: none;">
-        POI Trovati Nelle Vicinanze (GPS)
-    </button>
-
-    <div id="contextual-menu-container" class="contextual-nav">
-        <ul>
-        </ul>
-    </div>
-
     <script src="public/main.js"></script>
+
 </body>
 
 </html>

@@ -23,12 +23,8 @@
     </script>
 
     <script>
-        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
-        function getDestinationPageName(pageId, langCode) {
-            // Es. ('index', 'en') -> index-en.html
-            // Es. ('pugliole', 'it') -> pugliole-it.html
-            return `${pageId}-${langCode}.html`;
-        }
+        // Rimuoviamo qui la definizione di getDestinationPageName e redirectToPage.
+        // Queste funzioni DEVONO essere definite SOLTANTO in public/main.js
 
         // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
         function setLanguage(langCode) {
@@ -40,9 +36,9 @@
             let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
             if (pageId === '') pageId = 'index';
 
-            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
-            const destinationPage = getDestinationPageName(pageId, langCode);
-            window.location.href = destinationPage;
+            // 3. 🔥 CHIAMATA CORRETTA: Chiamiamo redirectToPage() definita in main.js
+            // che ora saprà come costruire l'URL e reindirizzare.
+            redirectToPage(pageId, langCode);
         }
     </script>
 </head>
@@ -74,11 +70,12 @@
         </div>
     </header>
 
+
     <main class="content-body">
 
         <div class="header-image-container">
             <img id="headerImage" src="public/images/Panorama_Bologna.jpg" alt="Immagine di testata">
-            <h1 class="header-title" id="pageTitle">Titolo Pagina</h1>
+            <h1 class="header-title" id="pageTitle">Slabs and house numbers</h1>
         </div>
 
         <p id="mainText"></p>
