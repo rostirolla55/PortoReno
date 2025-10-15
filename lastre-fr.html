@@ -20,31 +20,6 @@
         gtag('config', 'G-28GJXYWCQW', {
             'custom_map': { 'dimension1': 'lingua_pagina' }
         });
-    </script>
-
-    <script>
-        // Funzione helper per ottenere il nome del file di destinazione (coerente con la nuova struttura)
-        function getDestinationPageName(pageId, langCode) {
-            // Es. ('index', 'en') -> index-en.html
-            // Es. ('pugliole', 'it') -> pugliole-it.html
-            return `${pageId}-${langCode}.html`;
-        }
-
-        // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
-        function setLanguage(langCode) {
-            // 1. Salva la lingua scelta dall'utente (Requisito 11)
-            localStorage.setItem('userLanguage', langCode);
-
-            // 2. Determina l'ID base della pagina corrente (es. 'index', 'pugliole')
-            const path = window.location.pathname;
-            let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
-            if (pageId === '') pageId = 'index';
-
-            // 3. Reindirizza alla pagina HTML corretta (es. pugliole-en.html)
-            const destinationPage = getDestinationPageName(pageId, langCode);
-            window.location.href = destinationPage;
-        }
-    </script>
 </head>
 
 <body id="lastre">
