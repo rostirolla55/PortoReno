@@ -10,8 +10,6 @@
 
     <link rel="stylesheet" href="public/style.css">
 
-    <script src="public/main.js"></script>
-    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-28GJXYWCQW"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -22,6 +20,26 @@
         gtag('config', 'G-28GJXYWCQW', {
             'custom_map': { 'dimension1': 'lingua_pagina' }
         });
+    </script>
+
+    <script>
+        // Rimuoviamo qui la definizione di getDestinationPageName e redirectToPage.
+        // Queste funzioni DEVONO essere definite SOLTANTO in public/main.js
+
+        // 🖱️ CAMBIO MANUALE LINGUA (Chiamato dai pulsanti bandiera)
+        function setLanguage(langCode) {
+            // 1. Salva la lingua scelta dall'utente (Requisito 11)
+            localStorage.setItem('userLanguage', langCode);
+
+            // 2. Determina l'ID base della pagina corrente (es. 'index', 'pugliole')
+            const path = window.location.pathname;
+            let pageId = path.substring(path.lastIndexOf('/') + 1).replace(/-[a-z]{2}\.html/i, '').replace('.html', '').toLowerCase();
+            if (pageId === '') pageId = 'index';
+
+            // 3. 🔥 CHIAMATA CORRETTA: Chiamiamo redirectToPage() definita in main.js
+            // che ora saprà come costruire l'URL e reindirizzare.
+            redirectToPage(pageId, langCode);
+        }
     </script>
 </head>
 
@@ -52,11 +70,12 @@
         </div>
     </header>
 
+
     <main class="content-body">
 
         <div class="header-image-container">
             <img id="headerImage" src="public/images/Panorama_Bologna.jpg" alt="Immagine di testata">
-            <h1 class="header-title" id="pageTitle">Dalles et numéros de maison</h1>
+            <h1 class="header-title" id="pageTitle">Slabs and house numbers</h1>
         </div>
 
         <p id="mainText"></p>
@@ -83,7 +102,7 @@
 
     </main>
 
-
+    <script src="public/main.js"></script>
 
 </body>
 
