@@ -43,15 +43,16 @@ body.content-loaded {
     text-align: justify;
 }
 
+/* -------------------- CONTENUTO (Immagine, Audio, Footer) -------------------- */
+
 /* Contenitore dell'immagine di testata */
 .header-image-container {
     position: relative;
     width: 100%;
 
-    /* 🔥 FIX: Usa aspect-ratio per mantenere la proporzione 16:9 su tutti i dispositivi. */
+    /* 🔥 La regola chiave: imposta il rapporto 16:9 */
     aspect-ratio: 16 / 9;
     height: auto;
-    /* L'altezza è ora gestita dal rapporto, non da un valore fisso */
 
     overflow: hidden;
     margin-bottom: 20px;
@@ -60,7 +61,7 @@ body.content-loaded {
 
 /* L'immagine stessa all'interno del container */
 .header-image-container img {
-    /* L'immagine deve occupare il 100% dell'area definita dall'aspect-ratio */
+    /* Assicura che l'immagine copra completamente il contenitore 16:9 */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -79,10 +80,11 @@ body.content-loaded {
     margin: 0;
     font-size: 1.5em;
     box-sizing: border-box;
-    text-align: center;
+    text-align: center; /* Ho mantenuto center per l'uniformità */
 }
 
-
+/* Contenitore dell'immagine di testata */
+c
 /* --- LOGICA MENU HAMBURGER (Requisito 5) --- */
 
 /* Nasconde la navigazione e il toggle su schermi grandi */
